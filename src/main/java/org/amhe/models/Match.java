@@ -20,7 +20,7 @@ public class Match implements Serializable {
     private Combattant rouge;
     private int scoreBleu;
     private int scoreRouge;
-    private long timer;
-    private long timerMax;
-    private boolean timerSens;
+    private long timerStart;
+    private long timerEnd;
+    private Boolean timerReverse;
 }

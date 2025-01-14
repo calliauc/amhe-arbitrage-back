@@ -55,9 +55,10 @@ public class CoupResource {
     }
 
     @PUT
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editCoup(final Coup coup) {
+    public Response editCoup(@PathParam("match_id") final Long match_id, final Coup coup) {
         Coup coupCree = coupRepo.editCoup(coup);
         return Response.status(200).entity(coupCree).build();
     }

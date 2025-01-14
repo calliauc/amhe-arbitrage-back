@@ -4,6 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.amhe.logiques.MatchLogique;
 import org.amhe.models.Match;
 import org.amhe.repos.MatchRepo;
 
@@ -13,6 +14,8 @@ import java.util.List;
 public class MatchResource {
     @Inject
     MatchRepo matchRepo;
+    @Inject
+    MatchLogique matchLogique;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -48,8 +51,9 @@ public class MatchResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response editMatch(@PathParam("id") final Long id, final Match match) {
-        Match matchCree = matchRepo.editMatch(id, match);
-        return Response.status(200).entity(matchCree).build();
+        Match matchModifie = matchLogique.modifiePartiellementMatch(id, match);
+        return Response.status(200).entity(match).build();
+
     }
 
     @DELETE
