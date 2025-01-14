@@ -1,4 +1,4 @@
-FROM amazoncorretto:latest
+FROM registry.access.redhat.com/ubi8/openjdk-17:1.20
 LABEL authors="Makhai"
 ENV LANGUAGE='fr_FR:fr'
 
@@ -14,3 +14,5 @@ USER 185
 ENV AB_JOLOKIA_OFF=""
 ENV JAVA_OPTS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
+
+ENTRYPOINT [ "/opt/jboss/container/java/run/run-java.sh" ]
