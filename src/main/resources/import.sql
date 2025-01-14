@@ -4,7 +4,7 @@ insert into CLUB (id, nomCourt, nomComplet, Ville) values(2, 'Mesnie', 'La Mesni
 alter sequence CLUB_SEQ restart with 3;
 -- COMBATTANTS
 insert into COMBATTANT(id, nom, prenom, pseudo, club_id) values(1, 'Calliau', 'Clement', 'Makhai', 1);
-insert into COMBATTANT(id, nom, prenom, pseudo, club_id) values(2, 'Damien', 'Le Bras', 'Hache', 2);
+insert into COMBATTANT(id, nom, prenom, pseudo, club_id) values(2, 'Le Bras', 'Damien', 'Hache', 2);
 alter sequence COMBATTANT_SEQ restart with 3;
 -- MATCHS
 INSERT INTO match(id, bleu_id, rouge_id,scorebleu, scorerouge, timerstart, timerend, timerreverse)
