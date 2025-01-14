@@ -25,7 +25,7 @@ public class CoupRepo {
 
     @Transactional
     public List<Coup> getCoupsByMatchId(final Long match_id) {
-        return em.createQuery("from Coup where match = :match_id", Coup.class)
+        return em.createQuery("FROM Coup WHERE matchId = :match_id", Coup.class)
                 .setParameter("match_id", match_id).getResultList();
     }
 
