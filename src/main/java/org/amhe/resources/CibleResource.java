@@ -35,6 +35,17 @@ public class CibleResource {
         return Response.status(200).entity(cible).build();
     }
 
+    @GET
+    @Path("/ruleset")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCibleByRuleset(final List<Long> ids) {
+        List<Cible> cibles = cibleRepo.getListCibleRuleset(ids);
+        if (null == cibles) {
+            return Response.status(204).tag("tag").build();
+        }
+        return Response.status(200).entity(cibles).build();
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -44,9 +55,10 @@ public class CibleResource {
     }
 
     @PUT
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editCible(final Cible cible) {
+    public Response editCible(@PathParam("id") final Long id, final Cible cible) {
         Cible cibleCree = cibleRepo.editCible(cible);
         return Response.status(200).entity(cibleCree).build();
     }

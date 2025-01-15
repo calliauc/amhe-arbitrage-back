@@ -23,13 +23,11 @@ public class VulnerantRepo {
         return em.find(Vulnerant.class, id);
     }
 
-/*
     @Transactional
-    public List<Vulnerant> getVulnerantsByMatchId(final Long match_id) {
-        return em.createQuery("from Vulnerant where match = :match_id", Vulnerant.class)
-                .setParameter("match_id", match_id).getResultList();
+    public List<Vulnerant> getListVulnerantsRuleset(final List<Long> ids) {
+        return em.createQuery("from Vulnerant where id IN (:ids)", Vulnerant.class)
+                .setParameter("ids", ids).getResultList();
     }
-*/
 
     @Transactional
     public Vulnerant createVulnerant(final Vulnerant nouveauVulnerant) {

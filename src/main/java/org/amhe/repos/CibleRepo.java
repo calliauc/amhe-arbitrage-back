@@ -23,14 +23,12 @@ public class CibleRepo {
         return em.find(Cible.class, id);
     }
 
-/*
     @Transactional
-    public List<Cible> getCiblesByMatchId(final Long match_id) {
-        return em.createQuery("from Cible where match = :match_id", Cible.class)
-                .setParameter("match_id", match_id).getResultList();
+    public List<Cible> getListCibleRuleset(final List<Long> ids) {
+        return em.createQuery("from Cible where id IN (:ids)", Cible.class)
+                .setParameter("ids", ids).getResultList();
     }
-*/
-
+    
     @Transactional
     public Cible createCible(final Cible nouveauCible) {
         return em.merge(nouveauCible);

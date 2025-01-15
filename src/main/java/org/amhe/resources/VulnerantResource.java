@@ -35,6 +35,17 @@ public class VulnerantResource {
         return Response.status(200).entity(vulnerant).build();
     }
 
+    @GET
+    @Path("/ruleset")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVulnerantsByRuleset(final List<Long> ids) {
+        List<Vulnerant> vulnerants = vulnerantRepo.getListVulnerantsRuleset(ids);
+        if (null == vulnerants) {
+            return Response.status(204).tag("tag").build();
+        }
+        return Response.status(200).entity(vulnerants).build();
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
