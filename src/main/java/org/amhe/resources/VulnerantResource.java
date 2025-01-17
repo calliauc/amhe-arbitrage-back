@@ -55,9 +55,10 @@ public class VulnerantResource {
     }
 
     @PUT
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editVulnerant(final Vulnerant vulnerant) {
+    public Response editVulnerant(@PathParam("id") final Long id, final Vulnerant vulnerant) {
         Vulnerant vulnerantCree = vulnerantRepo.editVulnerant(vulnerant);
         return Response.status(200).entity(vulnerantCree).build();
     }

@@ -44,9 +44,10 @@ public class CombattantResource {
     }
 
     @PUT
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editCombattant(final Combattant combattant) {
+    public Response editCombattant(@PathParam("id") final Long id, final Combattant combattant) {
         Combattant combattantCree = combattantRepo.editCombattant(combattant);
         return Response.status(200).entity(combattantCree).build();
     }

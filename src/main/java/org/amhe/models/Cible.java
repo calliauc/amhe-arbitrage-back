@@ -11,8 +11,8 @@ import java.io.Serializable;
 @Setter
 public class Cible implements Serializable {
     @Id
-    @SequenceGenerator(name = "seq", sequenceName = "CIBLE_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+    @SequenceGenerator(name = "cible_seq", sequenceName = "CIBLE_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cible_seq")
     private Long id;
     private String code;
     private String libelle;

@@ -11,8 +11,8 @@ import java.io.Serializable;
 @Setter
 public class Match implements Serializable {
     @Id
-    @SequenceGenerator(name = "seq", sequenceName = "MATCH_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+    @SequenceGenerator(name = "match_seq", sequenceName = "MATCH_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "match_seq")
     private Long id;
     @ManyToOne
     private Combattant bleu;

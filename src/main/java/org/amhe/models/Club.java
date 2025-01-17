@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 public class Club {
     @Id
-    @SequenceGenerator(name = "seq", sequenceName = "CLUB_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+    @SequenceGenerator(name = "club_seq", sequenceName = "CLUB_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "club_seq")
     private Long id;
     private String nomCourt;
     private String nomComplet;

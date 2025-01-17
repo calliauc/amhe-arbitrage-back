@@ -12,13 +12,12 @@ import java.util.List;
 @Setter
 public class Ruleset implements Serializable {
     @Id
-    @SequenceGenerator(name = "seq", sequenceName = "RULESET_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+    @SequenceGenerator(name = "ruleset_seq", sequenceName = "RULESET_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ruleset_seq")
     private Long id;
     private String nom;
     private String description;
-    private long timerStart;
-    private long timerEnd;
+    private long timerLimite;
     private Boolean timerReverse;
     private List<Long> vulnerants;
     private List<Long> cibles;

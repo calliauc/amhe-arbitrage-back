@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 public class Combattant {
     @Id
-    @SequenceGenerator(name = "seq", sequenceName = "COMBATTANT_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+    @SequenceGenerator(name = "combattant_seq", sequenceName = "COMBATTANT_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "combattant_seq")
     private Long id;
     private String nom;
     private String prenom;

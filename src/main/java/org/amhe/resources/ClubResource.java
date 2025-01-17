@@ -44,9 +44,10 @@ public class ClubResource {
     }
 
     @PUT
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editClub(final Club club) {
+    public Response editClub(@PathParam("id") final Long id, final Club club) {
         Club clubCree = clubRepo.editClub(club);
         return Response.status(200).entity(clubCree).build();
     }

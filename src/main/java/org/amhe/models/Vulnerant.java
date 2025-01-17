@@ -11,8 +11,8 @@ import java.io.Serializable;
 @Setter
 public class Vulnerant implements Serializable {
     @Id
-    @SequenceGenerator(name = "seq", sequenceName = "VULNERANT_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+    @SequenceGenerator(name = "vulnerant_seq", sequenceName = "VULNERANT_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vulnerant_seq")
     private Long id;
     private String code;
     private String libelle;

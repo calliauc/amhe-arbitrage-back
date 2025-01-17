@@ -11,8 +11,8 @@ import java.io.Serializable;
 @Setter
 public class Coup implements Serializable {
     @Id
-    @SequenceGenerator(name = "seq", sequenceName = "COUP_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+    @SequenceGenerator(name = "coup_seq", sequenceName = "COUP_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "coup_seq")
     private Long id;
     @Column(name = "match_id")
     private Long matchId;
