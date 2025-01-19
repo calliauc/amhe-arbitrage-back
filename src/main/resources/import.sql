@@ -7,8 +7,8 @@ insert into COMBATTANT(id, nom, prenom, pseudo, club_id) values(1, 'Calliau', 'C
 insert into COMBATTANT(id, nom, prenom, pseudo, club_id) values(2, 'Le Bras', 'Damien', 'Hache', 2);
 alter sequence COMBATTANT_SEQ restart with 3;
 -- MATCHS
-INSERT INTO match(id, bleu_id, rouge_id,scorebleu, scorerouge, timerstart, timerend, timerreverse)
-        VALUES (1, 1, 2, 0, 0, 0, 240, false);
+INSERT INTO match(id, id_a, id_b, score_a, score_b, couleur_a, couleur_b, timer)
+        VALUES (1, 1, 2, 0, 0, 'bleu', 'rouge', 0);
 alter sequence MATCH_SEQ restart with 2;
 -- VULNERANTS
 INSERT INTO VULNERANT(id, code, libelle) VALUES(1, 'estoc', ' porte un estoc');

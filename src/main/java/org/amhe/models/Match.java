@@ -15,12 +15,19 @@ public class Match implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "match_seq")
     private Long id;
     @ManyToOne
-    private Combattant bleu;
+    @JoinColumn(name = "id_a")
+    private Combattant infosA;
     @ManyToOne
-    private Combattant rouge;
-    private int scoreBleu;
-    private int scoreRouge;
-    private long timerStart;
-    private long timerEnd;
-    private Boolean timerReverse;
+    @JoinColumn(name = "id_b")
+    private Combattant infosB;
+    @Column(name = "couleur_a")
+    private String couleurA;
+    @Column(name = "couleur_b")
+    private String couleurB;
+    @Column(name = "score_a")
+    private int scoreA;
+    @Column(name = "score_b")
+    private int scoreB;
+    private int timer;
+    private Ruleset ruleset;
 }

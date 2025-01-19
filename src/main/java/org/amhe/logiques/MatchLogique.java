@@ -21,19 +21,18 @@ public class MatchLogique {
     }
 
     protected Match mapPartiellementMatch(final Match matchAModifier, Match matchBase) {
-        if (Objects.nonNull(matchAModifier.getBleu())) {
-            matchBase.setBleu(matchAModifier.getBleu());
+        if (Objects.nonNull(matchAModifier.getInfosA())) {
+            matchBase.setInfosB(matchAModifier.getInfosA());
         }
-        if (Objects.nonNull(matchAModifier.getRouge())) {
-            matchBase.setRouge(matchAModifier.getRouge());
+        if (Objects.nonNull(matchAModifier.getInfosB())) {
+            matchBase.setInfosB(matchAModifier.getInfosB());
         }
-        if (Objects.nonNull(matchAModifier.getTimerReverse())) {
-            matchBase.setTimerReverse(matchAModifier.getTimerReverse());
+        if (Objects.nonNull(matchAModifier.getRuleset())) {
+            matchBase.setRuleset(matchAModifier.getRuleset());
         }
-        matchBase.setScoreBleu(matchAModifier.getScoreBleu());
-        matchBase.setScoreRouge(matchAModifier.getScoreRouge());
-        matchBase.setTimerStart(matchAModifier.getTimerStart());
-        matchBase.setTimerEnd(matchAModifier.getTimerEnd());
+        matchBase.setScoreA(matchAModifier.getScoreA());
+        matchBase.setScoreB(matchAModifier.getScoreB());
+        matchBase.setTimer(matchAModifier.getTimer());
         return matchBase;
     }
 }
