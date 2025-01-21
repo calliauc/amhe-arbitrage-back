@@ -25,7 +25,7 @@ public class MatchResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMatchs() {
-        List<Match> matchs = matchRepo.getMatchs();
+        List<MatchExpo> matchs = matchMapper.listeBaseVersExpo(matchRepo.getMatchs());
         if (matchs.isEmpty()) {
             return Response.status(204).build();
         }
@@ -36,7 +36,7 @@ public class MatchResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMatchById(@PathParam("id") final Long id) {
-        Match match = matchRepo.getMatchById(id);
+        MatchExpo match = matchMapper.baseVersExpo(matchRepo.getMatchById(id));
         if (null == match) {
             return Response.status(204).build();
         }
