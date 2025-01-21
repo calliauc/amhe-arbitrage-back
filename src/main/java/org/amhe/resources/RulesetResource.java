@@ -4,12 +4,14 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.amhe.mappers.RulesetMapper;
 import org.amhe.models.RulesetExpo;
 import org.amhe.repos.RulesetRepo;
 
 import java.util.List;
 
+@Slf4j
 @Path("/rulesets")
 public class RulesetResource {
     @Inject
@@ -51,7 +53,7 @@ public class RulesetResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response editRuleset(@PathParam("id") final Long id, final RulesetExpo ruleset) {
-        RulesetExpo rulesetCree = rulesetMapper.baseVersExpo(rulesetRepo.createRuleset(rulesetMapper.expoVersBase(ruleset)));
+        RulesetExpo rulesetCree = rulesetMapper.baseVersExpo(rulesetRepo.editRuleset(rulesetMapper.expoVersBase(ruleset)));
         return Response.status(200).entity(rulesetCree).build();
     }
 

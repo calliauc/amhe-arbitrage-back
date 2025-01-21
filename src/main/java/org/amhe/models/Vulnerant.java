@@ -1,6 +1,7 @@
 package org.amhe.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,9 +12,6 @@ import java.io.Serializable;
 @Setter
 public class Vulnerant implements Serializable {
     @Id
-    @SequenceGenerator(name = "vulnerant_seq", sequenceName = "VULNERANT_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vulnerant_seq")
-    private Long id;
     private String code;
     private String libelle;
 }

@@ -8,21 +8,26 @@ insert into COMBATTANT(id, nom, prenom, pseudo, club_id) values(2, 'Le Bras', 'D
 alter sequence COMBATTANT_SEQ restart with 3;
 -- MATCHS
 INSERT INTO match(id, id_a, id_b, score_a, score_b, couleur_a, couleur_b, timer)
-        VALUES (1, 1, 2, 0, 0, 'bleu', 'rouge', 0);
+        VALUES (1, 1, 2, 0, 0, 'rgb(68, 143, 255)', 'rgb(252, 102, 102)', 0);
 alter sequence MATCH_SEQ restart with 2;
 -- VULNERANTS
-INSERT INTO VULNERANT(id, code, libelle) VALUES(1, 'estoc', ' porte un estoc');
-INSERT INTO VULNERANT(id, code, libelle) VALUES(2, 'taille', ' porte un coup de taille');
-INSERT INTO VULNERANT(id, code, libelle) VALUES(3, 'entaille', ' inflige une entaille');
-INSERT INTO VULNERANT(id, code, libelle) VALUES(4, 'lutte', ' remporte la lutte contre ');
-alter sequence VULNERANT_SEQ restart with 5;
+INSERT INTO VULNERANT(code, libelle) VALUES('estoc', ' porte un estoc');
+INSERT INTO VULNERANT(code, libelle) VALUES('taille', ' porte un coup de taille');
+INSERT INTO VULNERANT(code, libelle) VALUES('entaille', ' inflige une entaille');
+INSERT INTO VULNERANT(code, libelle) VALUES('lutte', ' remporte la lutte contre ');
+--alter sequence VULNERANT_SEQ restart with 5;
 -- CIBLES
-INSERT INTO CIBLE(id, code, libelle) VALUES(1, 'tête', ' à la tête de ');
-INSERT INTO CIBLE(id, code, libelle) VALUES(2, 'torse', ' au torse de ');
-INSERT INTO CIBLE(id, code, libelle) VALUES(3, 'bras', ' au bras de ');
-alter sequence CIBLE_SEQ restart with 4;
+INSERT INTO CIBLE(code, libelle) VALUES('tête', ' à la tête de ');
+INSERT INTO CIBLE(code, libelle) VALUES('torse', ' au torse de ');
+INSERT INTO CIBLE(code, libelle) VALUES('bras', ' au bras de ');
+--alter sequence CIBLE_SEQ restart with 4;
+
+-- RULESETS
+INSERT INTO ruleset(id, nom, description, timerlimite, timerreverse, vulnerants, cibles)
+VALUES (1, 'Longsword', 'Longsword test', '300', true, '{estoc, taille}', '{tête, torse}');
+alter sequence RULESET_SEQ restart with 2;
 
 --COUPS
-INSERT INTO COUP(id, match_id, attaquant_id, attaquant_couleur, defenseur_id, defenseur_couleur, vulnerant_id, cible_id)
-    VALUES(1, 1, 1, 'bleu', 2, 'rouge', 1, 1);
+INSERT INTO COUP(id, match_id, attaquant_id, attaquant_couleur, defenseur_id, defenseur_couleur, vulnerant_code, cible_code)
+    VALUES(1, 1, 1, 'rgb(68, 143, 255)', 2, 'rgb(252, 102, 102)', 'estoc', 'torse');
 alter sequence COUP_SEQ restart with 4;

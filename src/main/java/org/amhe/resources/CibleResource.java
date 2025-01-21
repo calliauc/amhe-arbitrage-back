@@ -25,21 +25,21 @@ public class CibleResource {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/{code}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCibleById(@PathParam("id") final Long id) {
-        Cible cible = cibleRepo.getCibleById(id);
+    public Response getCibleById(@PathParam("code") final String code) {
+        Cible cible = cibleRepo.getCibleByCode(code);
         if (null == cible) {
             return Response.status(204).tag("tag").build();
         }
         return Response.status(200).entity(cible).build();
     }
 
-    @GET
+    @POST
     @Path("/ruleset")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCibleByRuleset(final List<Long> ids) {
-        List<Cible> cibles = cibleRepo.getListCibleRuleset(ids);
+    public Response getCibleByRuleset(final List<String> codes) {
+        List<Cible> cibles = cibleRepo.getListCibleRuleset(codes);
         if (null == cibles) {
             return Response.status(204).tag("tag").build();
         }
@@ -55,20 +55,20 @@ public class CibleResource {
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/{code}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editCible(@PathParam("id") final Long id, final Cible cible) {
+    public Response editCible(@PathParam("code") final String code, final Cible cible) {
         Cible cibleCree = cibleRepo.editCible(cible);
         return Response.status(200).entity(cibleCree).build();
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/{code}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response deleteCible(@PathParam("id") final Long id) {
-        cibleRepo.deleteCible(id);
+    public Response deleteCible(@PathParam("code") final String code) {
+        cibleRepo.deleteCible(code);
         return Response.status(200).build();
     }
 }

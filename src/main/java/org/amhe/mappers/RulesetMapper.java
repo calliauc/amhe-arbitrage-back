@@ -2,7 +2,6 @@ package org.amhe.mappers;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import lombok.extern.slf4j.Slf4j;
 import org.amhe.models.*;
 import org.amhe.repos.CibleRepo;
 import org.amhe.repos.VulnerantRepo;
@@ -10,7 +9,6 @@ import org.amhe.repos.VulnerantRepo;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 @ApplicationScoped
 public class RulesetMapper {
     @Inject
@@ -41,8 +39,8 @@ public class RulesetMapper {
         ruleset.setDescription(rulesetExpo.getDescription());
         ruleset.setTimerLimite(rulesetExpo.getTimerLimite());
         ruleset.setTimerReverse(rulesetExpo.getTimerReverse());
-        ruleset.setVulnerants(rulesetExpo.getVulnerants().stream().filter(RulesetRefExpo::isChecked).map(RulesetRefExpo::getId).toList());
-        ruleset.setCibles(rulesetExpo.getCibles().stream().filter(RulesetRefExpo::isChecked).map(RulesetRefExpo::getId).toList());
+        ruleset.setVulnerants(rulesetExpo.getVulnerants().stream().filter(RulesetRefExpo::isChecked).map(RulesetRefExpo::getCode).toList());
+        ruleset.setCibles(rulesetExpo.getCibles().stream().filter(RulesetRefExpo::isChecked).map(RulesetRefExpo::getCode).toList());
         return ruleset;
     }
 
@@ -58,20 +56,20 @@ public class RulesetMapper {
         return rulesetExpo;
     }
 
-    List<RulesetRefExpo> hydraterVulnerants(final List<Long> ids) {
+    List<RulesetRefExpo> hydraterVulnerants(final List<String> codes) {
         List<RulesetRefExpo> vulnerantsExpo = this.vulnerantsVersExpo(vulnerantRepo.getVulnerants());
         vulnerantsExpo.forEach(v -> {
-            if (ids.contains(v.getId())) {
+            if (codes.contains(v.getCode())) {
                 v.setChecked(true);
             }
         });
         return vulnerantsExpo;
     }
 
-    List<RulesetRefExpo> hydraterCibles(final List<Long> ids) {
+    List<RulesetRefExpo> hydraterCibles(final List<String> codes) {
         List<RulesetRefExpo> ciblesExpo = this.ciblesVersExpo(cibleRepo.getCibles());
         ciblesExpo.forEach(c -> {
-            if (ids.contains(c.getId())) {
+            if (codes.contains(c.getCode())) {
                 c.setChecked(true);
             }
         });
@@ -82,7 +80,6 @@ public class RulesetMapper {
         List<RulesetRefExpo> rulesetsRefExpo = new ArrayList<>();
         vulnerants.forEach(vulnerant -> {
             RulesetRefExpo rulesetRefExpo = new RulesetRefExpo();
-            rulesetRefExpo.setId(vulnerant.getId());
             rulesetRefExpo.setCode(vulnerant.getCode());
             rulesetRefExpo.setLibelle(vulnerant.getLibelle());
             rulesetRefExpo.setChecked(false);
@@ -95,7 +92,6 @@ public class RulesetMapper {
         List<RulesetRefExpo> rulesetsRefExpo = new ArrayList<>();
         cibles.forEach(cible -> {
             RulesetRefExpo rulesetRefExpo = new RulesetRefExpo();
-            rulesetRefExpo.setId(cible.getId());
             rulesetRefExpo.setCode(cible.getCode());
             rulesetRefExpo.setLibelle(cible.getLibelle());
             rulesetRefExpo.setChecked(false);

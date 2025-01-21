@@ -19,14 +19,14 @@ public class CibleRepo {
     }
 
     @Transactional
-    public Cible getCibleById(final Long id) {
-        return em.find(Cible.class, id);
+    public Cible getCibleByCode(final String code) {
+        return em.find(Cible.class, code);
     }
 
     @Transactional
-    public List<Cible> getListCibleRuleset(final List<Long> ids) {
-        return em.createQuery("from Cible where id IN (:ids)", Cible.class)
-                .setParameter("ids", ids).getResultList();
+    public List<Cible> getListCibleRuleset(final List<String> codes) {
+        return em.createQuery("from Cible where code IN (:codes)", Cible.class)
+                .setParameter("codes", codes).getResultList();
     }
     
     @Transactional
@@ -40,8 +40,8 @@ public class CibleRepo {
     }
 
     @Transactional
-    public void deleteCible(final Long id) {
-        Cible cibleASpprimer = this.getCibleById(id);
+    public void deleteCible(final String code) {
+        Cible cibleASpprimer = this.getCibleByCode(code);
         em.remove(cibleASpprimer);
     }
 

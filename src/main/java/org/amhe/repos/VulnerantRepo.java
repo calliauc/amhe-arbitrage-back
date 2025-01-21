@@ -19,14 +19,14 @@ public class VulnerantRepo {
     }
 
     @Transactional
-    public Vulnerant getVulnerantById(final Long id) {
-        return em.find(Vulnerant.class, id);
+    public Vulnerant getVulnerantByCode(final String code) {
+        return em.find(Vulnerant.class, code);
     }
 
     @Transactional
-    public List<Vulnerant> getListVulnerantsRuleset(final List<Long> ids) {
-        return em.createQuery("from Vulnerant where id IN (:ids)", Vulnerant.class)
-                .setParameter("ids", ids).getResultList();
+    public List<Vulnerant> getListVulnerantsRuleset(final List<String> codes) {
+        return em.createQuery("from Vulnerant where code IN (:codes)", Vulnerant.class)
+                .setParameter("codes", codes).getResultList();
     }
 
     @Transactional
@@ -40,8 +40,8 @@ public class VulnerantRepo {
     }
 
     @Transactional
-    public void deleteVulnerant(final Long id) {
-        Vulnerant vulnerantASpprimer = this.getVulnerantById(id);
+    public void deleteVulnerant(final String code) {
+        Vulnerant vulnerantASpprimer = this.getVulnerantByCode(code);
         em.remove(vulnerantASpprimer);
     }
 

@@ -5,7 +5,9 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.amhe.logiques.MatchLogique;
+import org.amhe.mappers.MatchMapper;
 import org.amhe.models.Match;
+import org.amhe.models.MatchExpo;
 import org.amhe.repos.MatchRepo;
 
 import java.util.List;
@@ -16,6 +18,9 @@ public class MatchResource {
     MatchRepo matchRepo;
     @Inject
     MatchLogique matchLogique;
+    @Inject
+    MatchMapper matchMapper;
+
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -41,8 +46,8 @@ public class MatchResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createMatch(final Match nouveauMatch) {
-        Match matchCree = matchRepo.createMatch(nouveauMatch);
+    public Response createMatch(final MatchExpo nouveauMatch) {
+        MatchExpo matchCree = matchMapper.baseVersExpo(matchRepo.createMatch(matchMapper.expoVersBase(nouveauMatch)));
         return Response.status(201).entity(matchCree).build();
     }
 

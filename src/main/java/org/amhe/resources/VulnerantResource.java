@@ -25,21 +25,21 @@ public class VulnerantResource {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/{code}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getVulnerantById(@PathParam("id") final Long id) {
-        Vulnerant vulnerant = vulnerantRepo.getVulnerantById(id);
+    public Response getVulnerantById(@PathParam("code") final String code) {
+        Vulnerant vulnerant = vulnerantRepo.getVulnerantByCode(code);
         if (null == vulnerant) {
             return Response.status(204).tag("tag").build();
         }
         return Response.status(200).entity(vulnerant).build();
     }
 
-    @GET
+    @POST
     @Path("/ruleset")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getVulnerantsByRuleset(final List<Long> ids) {
-        List<Vulnerant> vulnerants = vulnerantRepo.getListVulnerantsRuleset(ids);
+    public Response getVulnerantsByRuleset(final List<String> codes) {
+        List<Vulnerant> vulnerants = vulnerantRepo.getListVulnerantsRuleset(codes);
         if (null == vulnerants) {
             return Response.status(204).tag("tag").build();
         }
@@ -55,20 +55,20 @@ public class VulnerantResource {
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/{code}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editVulnerant(@PathParam("id") final Long id, final Vulnerant vulnerant) {
+    public Response editVulnerant(@PathParam("code") final String code, final Vulnerant vulnerant) {
         Vulnerant vulnerantCree = vulnerantRepo.editVulnerant(vulnerant);
         return Response.status(200).entity(vulnerantCree).build();
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/{code}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response deleteVulnerant(@PathParam("id") final Long id) {
-        vulnerantRepo.deleteVulnerant(id);
+    public Response deleteVulnerant(@PathParam("code") final String code) {
+        vulnerantRepo.deleteVulnerant(code);
         return Response.status(200).build();
     }
 }

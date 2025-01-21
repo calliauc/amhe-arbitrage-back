@@ -24,6 +24,10 @@ public class Coup implements Serializable {
     private String attaquantCouleur;
     @Column(name = "defenseur_couleur")
     private String defenseurCouleur;
+    @Column(name = "attaquant_score")
+    private Long attaquantScore;
+    @Column(name = "defenseur_score")
+    private Long defenseurScore;
     @ManyToOne
     private Vulnerant vulnerant;
     @ManyToOne
