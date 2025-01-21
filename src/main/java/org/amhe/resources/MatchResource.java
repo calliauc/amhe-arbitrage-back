@@ -6,7 +6,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.amhe.logiques.MatchLogique;
 import org.amhe.mappers.MatchMapper;
-import org.amhe.models.Match;
 import org.amhe.models.MatchExpo;
 import org.amhe.repos.MatchRepo;
 
@@ -55,9 +54,9 @@ public class MatchResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editMatch(@PathParam("id") final Long id, final Match match) {
-        Match matchModifie = matchLogique.modifiePartiellementMatch(id, match);
-        return Response.status(200).entity(match).build();
+    public Response editMatch(@PathParam("id") final Long id, final MatchExpo match) {
+        MatchExpo matchModifie = matchMapper.baseVersExpo(matchRepo.editMatch(id, matchMapper.expoVersBase(match)));
+        return Response.status(200).entity(matchModifie).build();
 
     }
 
