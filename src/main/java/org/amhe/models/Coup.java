@@ -28,6 +28,7 @@ public class Coup implements Serializable {
     private Long attaquantScore;
     @Column(name = "defenseur_score")
     private Long defenseurScore;
+    private boolean doubleTouche;
     @ManyToOne
     private Vulnerant vulnerant;
     @ManyToOne
