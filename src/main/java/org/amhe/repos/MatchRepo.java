@@ -4,10 +4,12 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.amhe.models.Match;
 
 import java.util.List;
 
+@Slf4j
 @ApplicationScoped
 public class MatchRepo {
     @Inject
@@ -30,6 +32,7 @@ public class MatchRepo {
 
     @Transactional
     public Match editMatch(final Long id, final Match matchModifie) {
+        log.info("Passage repo Match");
         return em.merge(matchModifie);
     }
 

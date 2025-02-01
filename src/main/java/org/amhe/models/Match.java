@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -28,6 +29,10 @@ public class Match implements Serializable {
     private int scoreA;
     @Column(name = "score_b")
     private int scoreB;
+    private LocalDateTime dateCreation;
+    private LocalDateTime dateDebut;
+    private LocalDateTime dateFin;
+    private String statut;
     private int timer;
     private Ruleset ruleset;
 }

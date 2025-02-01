@@ -39,6 +39,10 @@ public class MatchMapper {
         match.setScoreA(matchExpo.getScoreA());
         match.setScoreB(matchExpo.getScoreB());
         match.setTimer(matchExpo.getTimer());
+        match.setDateCreation(matchExpo.getDateCreation());
+        match.setDateDebut(matchExpo.getDateDebut());
+        match.setDateFin(matchExpo.getDateFin());
+        match.setStatut(matchExpo.getStatut());
         match.setRuleset(this.rulesetMapper.expoVersBase(matchExpo.getRuleset()));
         return match;
     }
@@ -52,6 +56,10 @@ public class MatchMapper {
         matchExpo.setCouleurB(match.getCouleurB());
         matchExpo.setScoreA(match.getScoreA());
         matchExpo.setScoreB(match.getScoreB());
+        matchExpo.setDateCreation(match.getDateCreation());
+        matchExpo.setDateDebut(match.getDateDebut());
+        matchExpo.setDateFin(match.getDateFin());
+        matchExpo.setStatut(match.getStatut());
         matchExpo.setTimer(match.getTimer());
         matchExpo.setRuleset(this.rulesetMapper.baseVersExpo(match.getRuleset()));
         return matchExpo;
