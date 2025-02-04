@@ -12,6 +12,7 @@ INSERT INTO VULNERANT(code, libelle) VALUES('estoc', ' porte un estoc');
 INSERT INTO VULNERANT(code, libelle) VALUES('taille', ' porte un coup de taille');
 INSERT INTO VULNERANT(code, libelle) VALUES('entaille', ' inflige une entaille');
 INSERT INTO VULNERANT(code, libelle) VALUES('lutte', ' remporte la lutte contre ');
+INSERT INTO VULNERANT(code, libelle) VALUES('dague', ' porte un coup de dague ');
 INSERT INTO VULNERANT(code, libelle) VALUES('croix', ' porte un coup de croix ');
 INSERT INTO VULNERANT(code, libelle) VALUES('talon', ' porte un coup du talon ');
 -- CIBLES
@@ -26,7 +27,7 @@ INSERT INTO CIBLE(code, libelle) VALUES('gorge', ' à la gorge de ');
 INSERT INTO ruleset(id, nom, description, timerlimite, timerreverse, vulnerants, cibles)
 VALUES (1, 'Longsword', 'Longsword test', '300', true, '{estoc, taille, entaille, lutte}', '{tête, torse, bras, main, jambe}');
 INSERT INTO ruleset(id, nom, description, timerlimite, timerreverse, vulnerants, cibles)
-VALUES (2, 'hache', 'Hache arme test', '300', true, '{estoc, lutte, croix, talon}', '{tête, gorge}');
+VALUES (2, 'hache', 'Hache arme test', '300', true, '{dague, croix, talon, lutte}', '{tête, gorge}');
 alter sequence RULESET_SEQ restart with 3;
 
 -- MATCHS
