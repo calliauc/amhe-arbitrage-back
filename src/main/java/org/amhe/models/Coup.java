@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -28,6 +29,7 @@ public class Coup implements Serializable {
     private Long attaquantScore;
     @Column(name = "defenseur_score")
     private Long defenseurScore;
+    private LocalDateTime timecode;
     private boolean doubleTouche;
     @ManyToOne
     private Vulnerant vulnerant;

@@ -27,7 +27,7 @@ INSERT INTO CIBLE(code, libelle) VALUES('gorge', ' à la gorge de ');
 INSERT INTO ruleset(id, nom, description, timerlimite, timerreverse, vulnerants, cibles)
 VALUES (1, 'Longsword', 'Longsword test', '300', true, '{estoc, taille, entaille, lutte}', '{tête, torse, bras, main, jambe}');
 INSERT INTO ruleset(id, nom, description, timerlimite, timerreverse, vulnerants, cibles)
-VALUES (2, 'hache', 'Hache arme test', '300', true, '{dague, croix, talon, lutte}', '{tête, gorge}');
+VALUES (2, 'Hache', 'Hache arme test', '300', false, '{dague, croix, talon, lutte}', '{tête, gorge}');
 alter sequence RULESET_SEQ restart with 3;
 
 -- MATCHS
