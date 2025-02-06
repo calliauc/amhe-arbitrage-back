@@ -4,11 +4,13 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.amhe.models.Coup;
 import org.amhe.repos.CoupRepo;
 
 import java.util.List;
 
+@Slf4j
 @Path("/coups")
 public class CoupResource {
     @Inject
@@ -45,6 +47,18 @@ public class CoupResource {
         }
         return Response.status(200).entity(coup).build();
     }
+
+    @GET
+    @Path("/attaquant/{attaquant_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCoupByAttaquantId(@PathParam("attaquant_id") final Long attaquant_id) {
+        List<Coup> coup = coupRepo.getCoupsByAttaquantId(attaquant_id);
+        if (null == coup) {
+            return Response.status(204).build();
+        }
+        return Response.status(200).entity(coup).build();
+    }
+
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)

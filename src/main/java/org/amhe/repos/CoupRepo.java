@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import org.amhe.models.Combattant;
 import org.amhe.models.Coup;
 
 import java.util.List;
@@ -27,6 +28,14 @@ public class CoupRepo {
     public List<Coup> getCoupsByMatchId(final Long match_id) {
         return em.createQuery("FROM Coup WHERE matchId = :match_id", Coup.class)
                 .setParameter("match_id", match_id).getResultList();
+    }
+
+    @Transactional
+    public List<Coup> getCoupsByAttaquantId(final Long attaquant_id) {
+        Combattant attaquant = new Combattant();
+        attaquant.setId(attaquant_id);
+        return em.createQuery("FROM Coup WHERE attaquant = :attaquant", Coup.class)
+                .setParameter("attaquant", attaquant).getResultList();
     }
 
     @Transactional

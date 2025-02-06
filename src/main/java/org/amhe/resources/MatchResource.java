@@ -50,10 +50,8 @@ public class MatchResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createMatch(final MatchExpo nouveauMatch) {
-        log.info("Date creation : " + nouveauMatch.getDateCreation());
         nouveauMatch.setStatut("nouveau");
         MatchExpo matchCree = matchMapper.baseVersExpo(matchRepo.createMatch(matchMapper.expoVersBase(nouveauMatch)));
-        log.info("Date creation : " + matchCree.getDateCreation());
         return Response.status(201).entity(matchCree).build();
     }
 

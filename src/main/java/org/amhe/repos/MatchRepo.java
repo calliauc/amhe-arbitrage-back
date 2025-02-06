@@ -32,7 +32,6 @@ public class MatchRepo {
 
     @Transactional
     public Match editMatch(final Long id, final Match matchModifie) {
-        log.info("Passage repo Match");
         return em.merge(matchModifie);
     }
 
