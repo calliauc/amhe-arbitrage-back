@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,5 +35,6 @@ public class Match implements Serializable {
     private LocalDateTime dateFin;
     private String statut;
     private int timer;
+    private List<Long> tags;
     private Ruleset ruleset;
 }

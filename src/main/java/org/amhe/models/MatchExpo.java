@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,5 +22,6 @@ public class MatchExpo implements Serializable {
     private LocalDateTime dateFin;
     private int timer;
     private String statut;
+    private List<Tag> tags;
     private RulesetExpo ruleset;
 }

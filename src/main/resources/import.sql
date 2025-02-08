@@ -7,6 +7,11 @@ insert into COMBATTANT(id, nom, prenom, pseudo, club_id) values(1, 'Calliau', 'C
 insert into COMBATTANT(id, nom, prenom, pseudo, club_id) values(2, 'Goches', 'Alex', 'Walter', 1);
 insert into COMBATTANT(id, nom, prenom, pseudo, club_id) values(3, 'Le Bras', 'Damien', 'Hache', 2);
 alter sequence COMBATTANT_SEQ restart with 4;
+-- TAGS
+insert into TAG (id, code) values(1, 'Poule A');
+insert into TAG (id, code) values(2, 'Poule B');
+insert into TAG (id, code) values(3, 'Finale');
+alter sequence TAG_SEQ restart with 4;
 -- VULNERANTS
 INSERT INTO VULNERANT(code, libelle) VALUES('estoc', ' porte un estoc');
 INSERT INTO VULNERANT(code, libelle) VALUES('taille', ' porte un coup de taille');

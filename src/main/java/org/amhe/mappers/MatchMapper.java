@@ -4,6 +4,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.amhe.models.Match;
 import org.amhe.models.MatchExpo;
+import org.amhe.models.Tag;
+import org.amhe.repos.TagRepo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,9 @@ import java.util.List;
 public class MatchMapper {
     @Inject
     RulesetMapper rulesetMapper;
+
+    @Inject
+    TagRepo tagRepo;
 
     public List<Match> listeExpoVersBase(final List<MatchExpo> matchsExpo) {
         List<Match> matchs = new ArrayList<>();
@@ -43,6 +48,7 @@ public class MatchMapper {
         match.setDateDebut(matchExpo.getDateDebut());
         match.setDateFin(matchExpo.getDateFin());
         match.setStatut(matchExpo.getStatut());
+        match.setTags(matchExpo.getTags().stream().map(Tag::getId).toList());
         match.setRuleset(this.rulesetMapper.expoVersBase(matchExpo.getRuleset()));
         return match;
     }
@@ -61,6 +67,7 @@ public class MatchMapper {
         matchExpo.setDateFin(match.getDateFin());
         matchExpo.setStatut(match.getStatut());
         matchExpo.setTimer(match.getTimer());
+        matchExpo.setTags(tagRepo.getListTags(match.getTags()));
         matchExpo.setRuleset(this.rulesetMapper.baseVersExpo(match.getRuleset()));
         return matchExpo;
     }
