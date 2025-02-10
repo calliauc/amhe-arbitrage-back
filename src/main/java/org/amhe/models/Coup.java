@@ -31,6 +31,8 @@ public class Coup implements Serializable {
     private Long defenseurScore;
     private Date timecode;
     private boolean doubleTouche;
+    private boolean simultanee;
+    private boolean faute;
     @ManyToOne
     private Vulnerant vulnerant;
     @ManyToOne
