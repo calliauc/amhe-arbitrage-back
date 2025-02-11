@@ -30,7 +30,9 @@ public class Coup implements Serializable {
     @Column(name = "defenseur_score")
     private Long defenseurScore;
     private Date timecode;
-    private boolean doubleTouche;
+    private boolean doubleAtk;
+    private boolean doubleDef;
+    private boolean afterblow;
     private boolean simultanee;
     private boolean faute;
     @ManyToOne
