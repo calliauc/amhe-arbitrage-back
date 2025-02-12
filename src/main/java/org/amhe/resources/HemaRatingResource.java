@@ -23,13 +23,26 @@ public class HemaRatingResource {
     MatchLogique matchLogique;
 
     @GET
+    @Path("/creer-csv")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCible() {
+    public Response creerCsv() {
         List<String[]> lines = matchLogique.getMatchsCsvReady();
         log.info("Ressource");
         log.info("Lignes : " + Arrays.toString(lines.get(0)));
         try {
             csvLogique.writeLineByLine(lines);
+        } catch (Exception e) {
+            return Response.status(500).build();
+        }
+        return Response.status(200).build();
+    }
+
+    @GET
+    @Path("/get-csv")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCsv() {
+        try {
+            csvLogique.getCsv();
         } catch (Exception e) {
             return Response.status(500).build();
         }
