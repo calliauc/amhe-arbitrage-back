@@ -16,7 +16,7 @@ import java.util.List;
 @ApplicationScoped
 public class CsvLogique {
 
-    String RESULTS_ROOT = "results/";
+    String RESULTS_ROOT = "";
 
     public void writeLineByLine(List<String[]> lines) throws Exception {
         log.info("Entrée dans le writter");
