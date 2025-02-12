@@ -30,14 +30,14 @@ public class CsvLogique {
     }
 
     public String getCsv() throws IOException, CsvValidationException {
-        String file;
+        StringBuilder file = new StringBuilder();
         try (CSVReader reader = new CSVReader(new FileReader(RESULTS_ROOT + "results.csv"))) {
             String[] nextLine;
             while ((nextLine = reader.readNext()) != null) {
                 log.info("Ligne : " + Arrays.toString(nextLine));
-//                file+=nextLine;
+                file.append(String.join(";", nextLine)).append("\n");
             }
         }
-        return "";
+        return file.toString();
     }
 }

@@ -39,14 +39,15 @@ public class HemaRatingResource {
 
     @GET
     @Path("/get-csv")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public Response getCsv() {
+        String file = "";
         try {
-            csvLogique.getCsv();
+            file = csvLogique.getCsv();
         } catch (Exception e) {
             return Response.status(500).build();
         }
-        return Response.status(200).build();
+        return Response.status(200).entity(file).build();
     }
 
 
