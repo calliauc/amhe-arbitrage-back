@@ -49,10 +49,10 @@ public class CoupResource {
     }
 
     @GET
-    @Path("/attaquant/{attaquant_id}")
+    @Path("/combattant/{combattant_id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCoupByAttaquantId(@PathParam("attaquant_id") final Long attaquant_id) {
-        List<Coup> coup = coupRepo.getCoupsByAttaquantId(attaquant_id);
+    public Response getCoupByAttaquantId(@PathParam("combattant_id") final Long combattantId) {
+        List<Coup> coup = coupRepo.getCoupsByCombattantId(combattantId);
         if (null == coup) {
             return Response.status(204).build();
         }

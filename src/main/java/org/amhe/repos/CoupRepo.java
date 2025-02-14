@@ -31,11 +31,27 @@ public class CoupRepo {
     }
 
     @Transactional
-    public List<Coup> getCoupsByAttaquantId(final Long attaquant_id) {
+    public List<Coup> getCoupsByAtkId(final Long atk_id) {
         Combattant attaquant = new Combattant();
-        attaquant.setId(attaquant_id);
+        attaquant.setId(atk_id);
         return em.createQuery("FROM Coup WHERE attaquant = :attaquant", Coup.class)
                 .setParameter("attaquant", attaquant).getResultList();
+    }
+
+    @Transactional
+    public List<Coup> getCoupsByDefId(final Long def_id) {
+        Combattant attaquant = new Combattant();
+        attaquant.setId(def_id);
+        return em.createQuery("FROM Coup WHERE attaquant = :attaquant", Coup.class)
+                .setParameter("attaquant", attaquant).getResultList();
+    }
+
+    @Transactional
+    public List<Coup> getCoupsByCombattantId(final Long combattantId) {
+        Combattant combattant = new Combattant();
+        combattant.setId(combattantId);
+        return em.createQuery("FROM Coup WHERE attaquant = :attaquant OR defenseur = :defenseur", Coup.class)
+                .setParameter("attaquant", combattant).setParameter("defenseur", combattant).getResultList();
     }
 
     @Transactional

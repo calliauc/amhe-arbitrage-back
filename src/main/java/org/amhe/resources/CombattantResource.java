@@ -6,9 +6,12 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.amhe.logiques.CombattantLogique;
 import org.amhe.models.Combattant;
+import org.amhe.models.CombattantDetails;
+import org.amhe.models.TagsFiltres;
 import org.amhe.repos.CombattantRepo;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Path("/combattants")
@@ -50,6 +53,18 @@ public class CombattantResource {
             return Response.status(204).tag("tag").build();
         }
         return Response.status(200).entity(combattants).build();
+    }
+
+    @POST
+    @Path("/details/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getCombattantsByMatchtags(@PathParam("id") final Long id, final TagsFiltres tagsFiltres) {
+        CombattantDetails details = combattantLogique.getDetailsCombattant(id, tagsFiltres);
+        if (Objects.isNull(details)) {
+            return Response.status(204).build();
+        }
+        return Response.status(200).entity(details).build();
     }
 
     @POST

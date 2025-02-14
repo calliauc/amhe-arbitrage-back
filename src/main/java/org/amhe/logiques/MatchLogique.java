@@ -2,17 +2,18 @@ package org.amhe.logiques;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
 import org.amhe.mappers.MatchMapper;
 import org.amhe.models.Match;
 import org.amhe.models.MatchExpo;
 import org.amhe.models.Tag;
+import org.amhe.models.TagsFiltres;
 import org.amhe.repos.MatchRepo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @ApplicationScoped
 public class MatchLogique {
     @Inject
@@ -47,5 +48,45 @@ public class MatchLogique {
         }
         String tags = match.getTags().stream().map(Tag::getCode).collect(Collectors.joining(","));
         return new String[]{a, b, resultA, resultB, tags};
+    }
+
+//    public List<MatchExpo> getMatchsParTagsFiltres(final TagsFiltres tagsFiltres) {
+//        List<MatchExpo> matchs = matchMapper.listeBaseVersExpo(matchRepo.getMatchs());
+//        // Filtrage aucun tag exclu
+//        // Filtrage tout les tags obligatoires
+//        // Filtrage au moins un des tags optionnels
+//        matchs = matchs.stream().filter(match -> Collections.disjoint(match.getTags(), tagsFiltres.getTagsExclus()))
+//                .filter(match -> match.getTags().containsAll(tagsFiltres.getTagsRequis()))
+//                .filter(match -> !Collections.disjoint(match.getTags(), tagsFiltres.getTagsOptions()))
+//                .toList();
+//        return matchs;
+//    }
+
+    public List<MatchExpo> getMatchsExpo() {
+        return matchMapper.listeBaseVersExpo(matchRepo.getMatchs());
+    }
+
+    public List<MatchExpo> getMatchsParCombattantIdEtTagsFiltres(final Long id, final TagsFiltres tagsFiltres) {
+        List<MatchExpo> matchs = getMatchsExpo();
+        matchs = filtrerMatchsParTagsFiltres(tagsFiltres, matchs);
+        matchs = filtrerMatchsParCombattantId(id, matchs);
+        return matchs;
+    }
+
+    public List<MatchExpo> filtrerMatchsParTagsFiltres(final TagsFiltres tagsFiltres, final List<MatchExpo> matchs) {
+        // Filtrage des tags exclu
+        // Filtrage des tags obligatoires
+        // Filtrage au moins un des tags optionnels
+        return matchs.stream().filter(match -> tagsFiltres.getTagsExclus().isEmpty() || Collections.disjoint(match.getTags(), tagsFiltres.getTagsExclus()))
+                .filter(match -> tagsFiltres.getTagsRequis().isEmpty() || new HashSet<>(match.getTags()).containsAll(tagsFiltres.getTagsRequis()))
+                .filter(match -> tagsFiltres.getTagsOptions().isEmpty() || !Collections.disjoint(match.getTags(), tagsFiltres.getTagsOptions()))
+                .toList();
+    }
+
+    public List<MatchExpo> filtrerMatchsParCombattantId(final Long id, final List<MatchExpo> matchs) {
+        return matchs.stream()
+                .filter(match ->
+                        Objects.equals(match.getInfosA().getId(), id) || Objects.equals(match.getInfosB().getId(), id))
+                .toList();
     }
 }
