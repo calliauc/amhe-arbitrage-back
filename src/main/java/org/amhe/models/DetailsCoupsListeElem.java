@@ -9,6 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class DetailsCoupsListeElem {
     private String code;
-    private Long valeur;
-    private Long pourcentage;
+    private int valeur;
+    private float pourcentage;
 }

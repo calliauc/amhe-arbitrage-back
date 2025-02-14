@@ -76,20 +76,87 @@ public class CombattantLogique {
         CombattantDetailsCoups detailsCoupsMarques = new CombattantDetailsCoups();
         detailsCoupsMarques.setTotal(coupsMarques.size());
 
+        Set<String> setCiblesString = coupsMarques.stream().map(coup -> coup.getCible().getCode()).collect(Collectors.toSet());
+        detailsCoupsMarques.setCibles(calculerDetailCoupCibleElem(setCiblesString, coupsMarques, detailsCoupsMarques.getTotal()));
+
+        Set<String> setVulnerantsString = coupsMarques.stream().map(coup -> coup.getVulnerant().getCode()).collect(Collectors.toSet());
+        detailsCoupsMarques.setVulnerants(calculerDetailCoupVulnerantElem(setVulnerantsString, coupsMarques, detailsCoupsMarques.getTotal()));
+
+        detailsCoupsMarques.setDetails(calculerDetailCoupDetailsElem(details, coupsMarques, detailsCoupsMarques.getTotal()));
         return detailsCoupsMarques;
     }
 
-    protected CombattantDetailsCoups calculerCoupsSubis(CombattantDetails details, List<Coup> coups) {
+    protected CombattantDetailsCoups calculerCoupsSubis(final CombattantDetails details, final List<Coup> coups) {
         List<Coup> coupsSubis = coups.stream()
                 .filter(coup -> !Objects.equals(coup.getAttaquant().getId(), details.getCombattant().getId()))
                 .toList();
         CombattantDetailsCoups detailsCoupsSubis = new CombattantDetailsCoups();
         detailsCoupsSubis.setTotal(coupsSubis.size());
+
+        Set<String> setCiblesString = coupsSubis.stream().map(coup -> coup.getCible().getCode()).collect(Collectors.toSet());
+        detailsCoupsSubis.setCibles(calculerDetailCoupCibleElem(setCiblesString, coupsSubis, detailsCoupsSubis.getTotal()));
+
+        Set<String> setVulnerantsString = coupsSubis.stream().map(coup -> coup.getVulnerant().getCode()).collect(Collectors.toSet());
+        detailsCoupsSubis.setVulnerants(calculerDetailCoupVulnerantElem(setVulnerantsString, coupsSubis, detailsCoupsSubis.getTotal()));
+
+        detailsCoupsSubis.setDetails(calculerDetailCoupDetailsElem(details, coupsSubis, detailsCoupsSubis.getTotal()));
         return detailsCoupsSubis;
     }
 
 
+    protected Set<DetailsCoupsListeElem> calculerDetailCoupCibleElem(
+            final Set<String> setElemString,
+            final List<Coup> coups,
+            final float total
+    ) {
+        return setElemString.stream().map(elem -> {
+            long nbElem = coups.stream().filter(coup -> Objects.equals(coup.getCible().getCode(), elem)).count();
+            return new DetailsCoupsListeElem(
+                    elem,
+                    (int) nbElem,
+                    pourcent(total, (float) nbElem));
+        }).collect(Collectors.toSet());
+    }
+
+    protected Set<DetailsCoupsListeElem> calculerDetailCoupVulnerantElem(
+            final Set<String> setElemString,
+            final List<Coup> coups,
+            final float total
+    ) {
+        return setElemString.stream().map(elem -> {
+            long nbElem = coups.stream().filter(coup -> Objects.equals(coup.getVulnerant().getCode(), elem)).count();
+            return new DetailsCoupsListeElem(
+                    elem,
+                    (int) nbElem,
+                    pourcent(total, (float) nbElem));
+        }).collect(Collectors.toSet());
+    }
+
+    protected Set<DetailsCoupsListeElem> calculerDetailCoupDetailsElem(
+            final CombattantDetails details,
+            final List<Coup> coups,
+            final float total
+    ) {
+        long nbSimu = coups.stream().filter(Coup::isSimultanee).count();
+        DetailsCoupsListeElem elemSimultane = new DetailsCoupsListeElem("simultane", (int) nbSimu, pourcent(total, nbSimu));
+
+        long nbDoubleAtk = coups.stream().filter(Coup::isDoubleAtk).count();
+        DetailsCoupsListeElem elemDoubleAtk = new DetailsCoupsListeElem("double atk", (int) nbDoubleAtk, pourcent(total, nbDoubleAtk));
+
+        long nbDoubleDef = coups.stream().filter(Coup::isDoubleDef).count();
+        DetailsCoupsListeElem elemDoubleDef = new DetailsCoupsListeElem("double def", (int) nbDoubleDef, pourcent(total, nbDoubleDef));
+
+        long nbAfterblow = coups.stream().filter(Coup::isAfterblow).count();
+        DetailsCoupsListeElem elemAfterblow = new DetailsCoupsListeElem("afterblow", (int) nbAfterblow, pourcent(total, nbAfterblow));
+
+        return new HashSet<>(Arrays.asList(elemSimultane, elemDoubleAtk, elemDoubleDef, elemAfterblow));
+    }
+
     protected boolean isA(final CombattantDetails details, final MatchExpo match) {
         return Objects.equals(details.getCombattant().getId(), match.getInfosA().getId());
+    }
+
+    protected float pourcent(final float total, final float partion) {
+        return (partion / total) * 100F;
     }
 }

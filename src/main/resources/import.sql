@@ -39,6 +39,7 @@ INSERT INTO VULNERANT(code, libelle) VALUES('croix', ' porte un coup de croix ')
 INSERT INTO VULNERANT(code, libelle) VALUES('talon', ' porte un coup du talon ');
 
 -- CIBLES
+INSERT INTO CIBLE(code, libelle) VALUES('lutte', ' ');
 INSERT INTO CIBLE(code, libelle) VALUES('tête', ' à la tête de ');
 INSERT INTO CIBLE(code, libelle) VALUES('torse', ' au torse de ');
 INSERT INTO CIBLE(code, libelle) VALUES('bras', ' au bras de ');
