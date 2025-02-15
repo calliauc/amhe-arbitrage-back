@@ -149,7 +149,15 @@ public class CombattantLogique {
         long nbAfterblow = coups.stream().filter(Coup::isAfterblow).count();
         DetailsCoupsListeElem elemAfterblow = new DetailsCoupsListeElem("afterblow", (int) nbAfterblow, pourcent(total, nbAfterblow));
 
-        return new HashSet<>(Arrays.asList(elemSimultane, elemDoubleAtk, elemDoubleDef, elemAfterblow));
+        long nbClair = coups.stream().filter(
+                coup -> !coup.isSimultanee()
+                        && !coup.isDoubleAtk()
+                        && !coup.isDoubleDef()
+                        && !coup.isAfterblow()
+        ).count();
+        DetailsCoupsListeElem elemClair = new DetailsCoupsListeElem("clair", (int) nbClair, pourcent(total, nbClair));
+
+        return new HashSet<>(Arrays.asList(elemSimultane, elemDoubleAtk, elemDoubleDef, elemAfterblow, elemClair));
     }
 
     protected boolean isA(final CombattantDetails details, final MatchExpo match) {
