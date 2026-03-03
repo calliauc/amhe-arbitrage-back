@@ -7,15 +7,15 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <properties>
-        <compiler-plugin.version>3.13.0</compiler-plugin.version>
-        <maven.compiler.release>17</maven.compiler.release>
+        <compiler-plugin.version>3.15.0</compiler-plugin.version>
+        <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.17.6</quarkus.platform.version>
+        <quarkus.platform.version>3.32.1</quarkus.platform.version>
         <skipITs>true</skipITs>
-        <surefire-plugin.version>3.5.0</surefire-plugin.version>
+        <surefire-plugin.version>3.5.5</surefire-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -38,6 +38,7 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy</artifactId>
+            <version>${quarkus.platform.version}</version>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -46,7 +47,7 @@
         <dependency>
             <groupId>io.quarkiverse.groovy</groupId>
             <artifactId>quarkus-groovy-junit5</artifactId>
-            <version>3.17.2</version>
+            <version>3.32.1</version>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -69,12 +70,12 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.36</version>
+            <version>1.18.42</version>
         </dependency>
         <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
-            <version>5.10</version>
+            <version>5.12.0</version>
         </dependency>
     </dependencies>
 
