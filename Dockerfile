@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/openjdk-21:0.10
+FROM mcr.microsoft.com/openjdk/jdk:21-ubuntu
 LABEL authors="Makhai"
 ENV LANGUAGE='fr_FR:fr'
 
