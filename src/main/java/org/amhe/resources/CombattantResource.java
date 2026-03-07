@@ -43,11 +43,22 @@ public class CombattantResource {
         return Response.status(200).entity(combattant).build();
     }
 
+    @GET
+    @Path("/recherche/{nom}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response chercherCombattantByNom(@PathParam("nom") final String nom) {
+        List<Combattant> combattants = combattantRepo.chercherCombattantsParNom(nom);
+        if (null == combattants) {
+            return Response.status(204).tag("tag").build();
+        }
+        return Response.status(200).entity(combattants).build();
+    }
+
     @POST
     @Path("/tags")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getCombattantsByMatchtags(final List<Long> tags) {
+    public Response getCombattantsByMatchTags(final List<Long> tags) {
         Set<Combattant> combattants = combattantLogique.getCombattantsByMatchTags(tags);
         if (combattants.isEmpty()) {
             return Response.status(204).tag("tag").build();
@@ -59,7 +70,7 @@ public class CombattantResource {
     @Path("/details/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getCombattantsByMatchtags(@PathParam("id") final Long id, final TagsFiltres tagsFiltres) {
+    public Response getCombattantsByMatchTags(@PathParam("id") final Long id, final TagsFiltres tagsFiltres) {
         CombattantDetails details = combattantLogique.getDetailsCombattant(id, tagsFiltres);
         if (Objects.isNull(details)) {
             return Response.status(204).build();
