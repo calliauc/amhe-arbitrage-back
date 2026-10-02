@@ -40,7 +40,7 @@ public class SecuResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createClub(final Secu nouveauSecu) {
+    public Response createSecu(final Secu nouveauSecu) {
         try {
             if (Objects.isNull(secuRepo.findSecuByCode(nouveauSecu.getCode()))) {
                 Secu secu = secuRepo.createSecu(nouveauSecu);
