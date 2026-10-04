@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.amhe.models.Combattant;
 
 import java.util.List;
+import java.util.Objects;
 
 @ApplicationScoped
 public class CombattantRepo {
@@ -29,6 +30,9 @@ public class CombattantRepo {
 
     @Transactional
     public List<Combattant> chercherCombattantsParNom(final String nom) {
+        if (Objects.isNull(nom)) {
+            return this.getCombattants();
+        }
         String likeNom = "%" + nom.toLowerCase() + "%";
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Combattant> query = cb.createQuery(Combattant.class);

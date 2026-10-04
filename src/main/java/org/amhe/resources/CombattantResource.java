@@ -43,10 +43,10 @@ public class CombattantResource {
         return Response.status(200).entity(combattant).build();
     }
 
-    @GET
-    @Path("/recherche/{nom}")
+    @POST
+    @Path("/recherche/nom")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response chercherCombattantByNom(@PathParam("nom") final String nom) {
+    public Response chercherCombattantByNom(final String nom) {
         List<Combattant> combattants = combattantRepo.chercherCombattantsParNom(nom);
         if (null == combattants) {
             return Response.status(204).tag("tag").build();
