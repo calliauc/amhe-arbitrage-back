@@ -1,14 +1,14 @@
 -- CLUBS
 insert into CLUB (id, nomCourt, nomComplet, Ville) values(1, 'BEC', 'BEC Escrime', 'Bordeaux');
 insert into CLUB (id, nomCourt, nomComplet, Ville) values(2, 'Lames du foyer', 'Les lames du foyer', 'Poitiers');
-insert into CLUB (id, nomCourt, nomComplet, Ville) values(3, 'DFDA', 'De feu et d Acier', 'Clermont');
+insert into CLUB (id, nomCourt, nomComplet, Ville) values(3, 'Chapitre', 'le Chapitre des Armes', 'Paris');
 alter sequence CLUB_SEQ restart with 4;
 
 -- COMBATTANTS
 insert into COMBATTANT(id, nom, prenom, pseudo, club_id) values(1, 'Calliau', 'Alix', 'Makhai', 1);
 insert into COMBATTANT(id, nom, prenom, pseudo, club_id) values(2, 'Goches', 'Alex', 'Walter', 1);
 insert into COMBATTANT(id, nom, prenom, pseudo, club_id) values(3, 'Biron', 'Hyppolyte', null, 2);
-insert into COMBATTANT(id, nom, prenom, pseudo, club_id) values(4, 'Tardio', 'Gabriel', null, 3);
+insert into COMBATTANT(id, nom, prenom, pseudo, club_id) values(4, 'Pommellet', 'Adrien', null, 3);
 alter sequence COMBATTANT_SEQ restart with 5;
 
 -- TAGS

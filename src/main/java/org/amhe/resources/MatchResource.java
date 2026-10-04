@@ -6,6 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.amhe.mappers.MatchMapper;
+import org.amhe.models.CriteresRechercheMatchs;
 import org.amhe.models.Match;
 import org.amhe.models.MatchExpo;
 import org.amhe.repos.MatchRepo;
@@ -32,7 +33,7 @@ public class MatchResource {
         if (matchs.isEmpty()) {
             return Response.status(204).build();
         }
-        return Response.status(200).entity(matchs).build();
+        return Response.status(200).entity(matchs).header("nombre-matchs", matchs.size()).build();
     }
 
     @GET
@@ -44,6 +45,18 @@ public class MatchResource {
             return Response.status(204).build();
         }
         return Response.status(200).entity(match).build();
+    }
+
+    @POST
+    @Path("/recherche")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response rechercheMatchsParCriteres(final CriteresRechercheMatchs criteres) {
+        List<MatchExpo> matchs = matchMapper.listeBaseVersExpo(matchRepo.rechercheMatchsParCriteres(criteres));
+        if (matchs.isEmpty()) {
+            return Response.status(204).build();
+        }
+        return Response.status(200).entity(matchs).header("nombre-matchs", matchs.size()).build();
     }
 
     @POST
