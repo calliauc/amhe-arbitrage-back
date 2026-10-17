@@ -1,4 +1,4 @@
-package org.amhe.models;
+package org.amhe.models.trier;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +10,6 @@ import java.util.ArrayList;
 @Setter
 @AllArgsConstructor
 public class CriteresRechercheMatchs {
-    private Long idCombattant;
+    private Long idInscrit;
     private ArrayList<Long> idTags;
 }

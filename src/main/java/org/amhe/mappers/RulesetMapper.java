@@ -2,12 +2,18 @@ package org.amhe.mappers;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.amhe.models.*;
+import org.amhe.models.dtos.RulesetApercuDto;
+import org.amhe.models.dtos.RulesetDto;
+import org.amhe.models.entites.Cible;
+import org.amhe.models.entites.Ruleset;
+import org.amhe.models.entites.Vulnerant;
+import org.amhe.models.trier.RulesetRefExpo;
 import org.amhe.repos.CibleRepo;
 import org.amhe.repos.VulnerantRepo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @ApplicationScoped
 public class RulesetMapper {
@@ -16,88 +22,121 @@ public class RulesetMapper {
     @Inject
     CibleRepo cibleRepo;
 
-    public List<Ruleset> listeExpoVersBase(final List<RulesetExpo> rulesetsExpo) {
+    /**
+     * APERCU
+     */
+    public List<RulesetApercuDto> listeBaseVersApercuDto(final List<Ruleset> rulesets) {
+        List<RulesetApercuDto> rulesetsDto = new ArrayList<>();
+        rulesets.forEach(ruleset ->
+                rulesetsDto.add(this.baseVersApercuDto(ruleset))
+        );
+        return rulesetsDto;
+    }
+
+    public RulesetApercuDto baseVersApercuDto(final Ruleset ruleset) {
+        RulesetApercuDto rulesetDto = new RulesetApercuDto();
+        if (Objects.nonNull(ruleset)) {
+            rulesetDto.setNom(ruleset.getNom());
+            rulesetDto.setDescription(ruleset.getDescription());
+            rulesetDto.setTimerLimite(ruleset.getTimerLimite());
+            rulesetDto.setTimerReverse(ruleset.getTimerReverse());
+            rulesetDto.setVulnerants(ruleset.getVulnerants());
+            rulesetDto.setCibles(ruleset.getCibles());
+        }
+        return rulesetDto;
+    }
+
+    /**
+     * DTO COMPLET
+     */
+
+    public List<Ruleset> listeDtoVersBase(final List<RulesetDto> rulesetsDto) {
         List<Ruleset> rulesets = new ArrayList<>();
-        rulesetsExpo.forEach(rulesetExpo ->
-                rulesets.add(this.expoVersBase(rulesetExpo))
+        rulesetsDto.forEach(rulesetDto ->
+                rulesets.add(this.dtoVersBase(rulesetDto))
         );
         return rulesets;
     }
 
-    public List<RulesetExpo> listeBaseVersExpo(final List<Ruleset> rulesets) {
-        List<RulesetExpo> rulesetsExpo = new ArrayList<>();
+    public List<RulesetDto> listeBaseVersDto(final List<Ruleset> rulesets) {
+        List<RulesetDto> rulesetsDto = new ArrayList<>();
         rulesets.forEach(ruleset ->
-                rulesetsExpo.add(this.baseVersExpo(ruleset))
+                rulesetsDto.add(this.baseVersDto(ruleset))
         );
-        return rulesetsExpo;
+        return rulesetsDto;
     }
 
-    public Ruleset expoVersBase(final RulesetExpo rulesetExpo) {
+    public Ruleset dtoVersBase(final RulesetDto rulesetDto) {
         Ruleset ruleset = new Ruleset();
-        ruleset.setId(rulesetExpo.getId());
-        ruleset.setNom(rulesetExpo.getNom());
-        ruleset.setDescription(rulesetExpo.getDescription());
-        ruleset.setTimerLimite(rulesetExpo.getTimerLimite());
-        ruleset.setTimerReverse(rulesetExpo.getTimerReverse());
-        ruleset.setVulnerants(rulesetExpo.getVulnerants().stream().filter(RulesetRefExpo::isChecked).map(RulesetRefExpo::getCode).toList());
-        ruleset.setCibles(rulesetExpo.getCibles().stream().filter(RulesetRefExpo::isChecked).map(RulesetRefExpo::getCode).toList());
+        if (Objects.nonNull(rulesetDto)) {
+            ruleset.setId(rulesetDto.getId());
+            ruleset.setNom(rulesetDto.getNom());
+            ruleset.setDescription(rulesetDto.getDescription());
+            ruleset.setTimerLimite(rulesetDto.getTimerLimite());
+            ruleset.setTimerReverse(rulesetDto.getTimerReverse());
+            ruleset.setVulnerants(rulesetDto.getVulnerants().stream().filter(RulesetRefExpo::isChecked).map(RulesetRefExpo::getCode).toList());
+            ruleset.setCibles(rulesetDto.getCibles().stream().filter(RulesetRefExpo::isChecked).map(RulesetRefExpo::getCode).toList());
+        }
         return ruleset;
     }
 
-    public RulesetExpo baseVersExpo(final Ruleset ruleset) {
-        RulesetExpo rulesetExpo = new RulesetExpo();
-        rulesetExpo.setId(ruleset.getId());
-        rulesetExpo.setNom(ruleset.getNom());
-        rulesetExpo.setDescription(ruleset.getDescription());
-        rulesetExpo.setTimerLimite(ruleset.getTimerLimite());
-        rulesetExpo.setTimerReverse(ruleset.getTimerReverse());
-        rulesetExpo.setVulnerants(this.hydraterVulnerants(ruleset.getVulnerants()));
-        rulesetExpo.setCibles(this.hydraterCibles(ruleset.getCibles()));
-        return rulesetExpo;
+    public RulesetDto baseVersDto(final Ruleset ruleset) {
+        RulesetDto rulesetDto = new RulesetDto();
+        if (Objects.nonNull(ruleset)) {
+            rulesetDto.setId(ruleset.getId());
+            rulesetDto.setNom(ruleset.getNom());
+            rulesetDto.setDescription(ruleset.getDescription());
+            rulesetDto.setTimerLimite(ruleset.getTimerLimite());
+            rulesetDto.setTimerReverse(ruleset.getTimerReverse());
+            rulesetDto.setVulnerants(this.hydraterVulnerants(ruleset.getVulnerants()));
+            rulesetDto.setCibles(this.hydraterCibles(ruleset.getCibles()));
+        }
+        return rulesetDto;
     }
 
+
     List<RulesetRefExpo> hydraterVulnerants(final List<String> codes) {
-        List<RulesetRefExpo> vulnerantsExpo = this.vulnerantsVersExpo(vulnerantRepo.getVulnerants());
-        vulnerantsExpo.forEach(v -> {
+        List<RulesetRefExpo> vulnerantsDto = this.vulnerantsVersDto(vulnerantRepo.getVulnerants());
+        vulnerantsDto.forEach(v -> {
             if (codes.contains(v.getCode())) {
                 v.setChecked(true);
             }
         });
-        return vulnerantsExpo;
+        return vulnerantsDto;
     }
 
     List<RulesetRefExpo> hydraterCibles(final List<String> codes) {
-        List<RulesetRefExpo> ciblesExpo = this.ciblesVersExpo(cibleRepo.getCibles());
-        ciblesExpo.forEach(c -> {
+        List<RulesetRefExpo> ciblesDto = this.ciblesVersDto(cibleRepo.getCibles());
+        ciblesDto.forEach(c -> {
             if (codes.contains(c.getCode())) {
                 c.setChecked(true);
             }
         });
-        return ciblesExpo;
+        return ciblesDto;
     }
 
-    List<RulesetRefExpo> vulnerantsVersExpo(List<Vulnerant> vulnerants) {
-        List<RulesetRefExpo> rulesetsRefExpo = new ArrayList<>();
+    List<RulesetRefExpo> vulnerantsVersDto(List<Vulnerant> vulnerants) {
+        List<RulesetRefExpo> rulesetsRefDto = new ArrayList<>();
         vulnerants.forEach(vulnerant -> {
-            RulesetRefExpo rulesetRefExpo = new RulesetRefExpo();
-            rulesetRefExpo.setCode(vulnerant.getCode());
-            rulesetRefExpo.setLibelle(vulnerant.getLibelle());
-            rulesetRefExpo.setChecked(false);
-            rulesetsRefExpo.add(rulesetRefExpo);
+            RulesetRefExpo rulesetRefDto = new RulesetRefExpo();
+            rulesetRefDto.setCode(vulnerant.getCode());
+            rulesetRefDto.setLibelle(vulnerant.getLibelle());
+            rulesetRefDto.setChecked(false);
+            rulesetsRefDto.add(rulesetRefDto);
         });
-        return rulesetsRefExpo;
+        return rulesetsRefDto;
     }
 
-    List<RulesetRefExpo> ciblesVersExpo(List<Cible> cibles) {
-        List<RulesetRefExpo> rulesetsRefExpo = new ArrayList<>();
+    List<RulesetRefExpo> ciblesVersDto(List<Cible> cibles) {
+        List<RulesetRefExpo> rulesetsRefDto = new ArrayList<>();
         cibles.forEach(cible -> {
-            RulesetRefExpo rulesetRefExpo = new RulesetRefExpo();
-            rulesetRefExpo.setCode(cible.getCode());
-            rulesetRefExpo.setLibelle(cible.getLibelle());
-            rulesetRefExpo.setChecked(false);
-            rulesetsRefExpo.add(rulesetRefExpo);
+            RulesetRefExpo rulesetRefDto = new RulesetRefExpo();
+            rulesetRefDto.setCode(cible.getCode());
+            rulesetRefDto.setLibelle(cible.getLibelle());
+            rulesetRefDto.setChecked(false);
+            rulesetsRefDto.add(rulesetRefDto);
         });
-        return rulesetsRefExpo;
+        return rulesetsRefDto;
     }
 }
 

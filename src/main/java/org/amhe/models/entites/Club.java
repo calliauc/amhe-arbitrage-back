@@ -1,4 +1,4 @@
-package org.amhe.models;
+package org.amhe.models.entites;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -4,7 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.amhe.models.Secu;
+import org.amhe.models.trier.Secu;
 import org.amhe.repos.SecuRepo;
 
 import java.util.Objects;

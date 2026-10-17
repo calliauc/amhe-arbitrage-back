@@ -4,7 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.amhe.models.Cible;
+import org.amhe.models.entites.Cible;
 import org.amhe.repos.CibleRepo;
 
 import java.util.List;
@@ -55,10 +55,9 @@ public class CibleResource {
     }
 
     @PUT
-    @Path("/{code}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editCible(@PathParam("code") final String code, final Cible cible) {
+    public Response editCible(final Cible cible) {
         Cible cibleCree = cibleRepo.editCible(cible);
         return Response.status(200).entity(cibleCree).build();
     }

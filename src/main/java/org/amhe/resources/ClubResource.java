@@ -4,7 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.amhe.models.Club;
+import org.amhe.models.entites.Club;
 import org.amhe.repos.ClubRepo;
 
 import java.util.List;
@@ -44,10 +44,9 @@ public class ClubResource {
     }
 
     @PUT
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editClub(@PathParam("id") final Long id, final Club club) {
+    public Response editClub(final Club club) {
         Club clubCree = clubRepo.editClub(club);
         return Response.status(200).entity(clubCree).build();
     }

@@ -1,15 +1,17 @@
-package org.amhe.models;
+package org.amhe.models.entites;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Entity
 @Getter
 @Setter
-public class Secu {
+public class Vulnerant implements Serializable {
     @Id
     private String code;
-    private String secret;
+    private String libelle;
 }

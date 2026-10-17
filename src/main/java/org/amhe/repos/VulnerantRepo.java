@@ -4,7 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-import org.amhe.models.Vulnerant;
+import org.amhe.models.entites.Vulnerant;
 
 import java.util.List;
 

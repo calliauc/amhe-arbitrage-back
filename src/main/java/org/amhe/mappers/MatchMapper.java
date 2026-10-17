@@ -2,74 +2,83 @@ package org.amhe.mappers;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.amhe.models.Match;
-import org.amhe.models.MatchExpo;
-import org.amhe.models.Tag;
+import org.amhe.models.dtos.MatchDto;
+import org.amhe.models.entites.Match;
 import org.amhe.repos.TagRepo;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @ApplicationScoped
 public class MatchMapper {
+    @Inject
+    InscritMapper inscritMapper;
+
     @Inject
     RulesetMapper rulesetMapper;
 
     @Inject
     TagRepo tagRepo;
 
-    public List<Match> listeExpoVersBase(final List<MatchExpo> matchsExpo) {
-        List<Match> matchs = new ArrayList<>();
-        matchsExpo.forEach(matchExpo ->
-                matchs.add(this.expoVersBase(matchExpo))
-        );
+    public Set<Match> listeDtoVersBase(final Set<MatchDto> matchsDto) {
+        Set<Match> matchs = new HashSet<>();
+        if (Objects.nonNull(matchsDto))
+            matchsDto.forEach(matchDto -> matchs.add(this.dtoVersBase(matchDto)));
         return matchs;
     }
 
-    public List<MatchExpo> listeBaseVersExpo(final List<Match> matchs) {
-        List<MatchExpo> matchsExpo = new ArrayList<>();
-        matchs.forEach(match ->
-                matchsExpo.add(this.baseVersExpo(match))
-        );
-        return matchsExpo;
+    public List<Match> listeDtoVersBase(final List<MatchDto> matchsDto) {
+        List<Match> matchs = new ArrayList<>();
+        if (Objects.nonNull(matchsDto))
+            matchsDto.forEach(matchDto -> matchs.add(this.dtoVersBase(matchDto)));
+        return matchs;
     }
 
-    public Match expoVersBase(final MatchExpo matchExpo) {
+    public List<MatchDto> listeBaseVersDto(final List<Match> matchs) {
+        List<MatchDto> matchsDto = new ArrayList<>();
+        if (Objects.nonNull(matchs))
+            matchs.forEach(match -> matchsDto.add(this.baseVersDto(match)));
+        return matchsDto;
+    }
+
+    public Set<MatchDto> listeBaseVersDto(final Set<Match> matchs) {
+        Set<MatchDto> matchsDto = new HashSet<>();
+        if (Objects.nonNull(matchs))
+            matchs.forEach(match -> matchsDto.add(this.baseVersDto(match)));
+        return matchsDto;
+    }
+
+    public Match dtoVersBase(final MatchDto matchDto) {
         Match match = new Match();
-        match.setId(matchExpo.getId());
-        match.setInfosA(matchExpo.getInfosA());
-        match.setInfosB(matchExpo.getInfosB());
-        match.setCouleurA(matchExpo.getCouleurA());
-        match.setCouleurB(matchExpo.getCouleurB());
-        match.setScoreA(matchExpo.getScoreA());
-        match.setScoreB(matchExpo.getScoreB());
-        match.setTimer(matchExpo.getTimer());
-        match.setDateCreation(matchExpo.getDateCreation());
-        match.setDateDebut(matchExpo.getDateDebut());
-        match.setDateFin(matchExpo.getDateFin());
-        match.setStatut(matchExpo.getStatut());
-        match.setTags(matchExpo.getTags().stream().map(Tag::getId).toList());
-        match.setRuleset(this.rulesetMapper.expoVersBase(matchExpo.getRuleset()));
+        match.setId(matchDto.getId());
+        match.setInscritA(inscritMapper.dtoVersBase(matchDto.getInscritA()));
+        match.setInscritB(inscritMapper.dtoVersBase(matchDto.getInscritB()));
+        match.setScoreA(matchDto.getScoreA());
+        match.setScoreB(matchDto.getScoreB());
+        match.setTimer(matchDto.getTimer());
+        match.setDateCreation(matchDto.getDateCreation());
+        match.setDateDebut(matchDto.getDateDebut());
+        match.setDateFin(matchDto.getDateFin());
+        match.setStatut(matchDto.getStatut());
+//        match.setTags(matchDto.getTags().stream().map(Tag::getId).toList()); TODO
+//        match.setRuleset(this.rulesetMapper.expoVersBase(matchDto.getRuleset()));
         return match;
     }
 
-    public MatchExpo baseVersExpo(final Match match) {
-        MatchExpo matchExpo = new MatchExpo();
-        matchExpo.setId(match.getId());
-        matchExpo.setInfosA(match.getInfosA());
-        matchExpo.setInfosB(match.getInfosB());
-        matchExpo.setCouleurA(match.getCouleurA());
-        matchExpo.setCouleurB(match.getCouleurB());
-        matchExpo.setScoreA(match.getScoreA());
-        matchExpo.setScoreB(match.getScoreB());
-        matchExpo.setDateCreation(match.getDateCreation());
-        matchExpo.setDateDebut(match.getDateDebut());
-        matchExpo.setDateFin(match.getDateFin());
-        matchExpo.setStatut(match.getStatut());
-        matchExpo.setTimer(match.getTimer());
-        matchExpo.setTags(tagRepo.getListTags(match.getTags()));
-        matchExpo.setRuleset(this.rulesetMapper.baseVersExpo(match.getRuleset()));
-        return matchExpo;
+    public MatchDto baseVersDto(final Match match) {
+        MatchDto matchDto = new MatchDto();
+        matchDto.setId(match.getId());
+        matchDto.setInscritA(inscritMapper.baseVersDto(match.getInscritA()));
+        matchDto.setInscritB(inscritMapper.baseVersDto(match.getInscritB()));
+        matchDto.setScoreA(match.getScoreA());
+        matchDto.setScoreB(match.getScoreB());
+        matchDto.setDateCreation(match.getDateCreation());
+        matchDto.setDateDebut(match.getDateDebut());
+        matchDto.setDateFin(match.getDateFin());
+        matchDto.setStatut(match.getStatut());
+        matchDto.setTimer(match.getTimer());
+//        matchDto.setTags(tagRepo.getListTags(match.getTags()));   TODO
+//        matchDto.setRuleset(this.rulesetMapper.baseVersDto(match.getRuleset()));
+        return matchDto;
     }
 
 }

@@ -5,7 +5,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
-import org.amhe.models.Coup;
+import org.amhe.models.entites.Coup;
 import org.amhe.repos.CoupRepo;
 
 import java.util.List;
@@ -49,10 +49,10 @@ public class CoupResource {
     }
 
     @GET
-    @Path("/combattant/{combattant_id}")
+    @Path("/inscrit/{inscrit_id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCoupByAttaquantId(@PathParam("combattant_id") final Long combattantId) {
-        List<Coup> coup = coupRepo.getCoupsByCombattantId(combattantId);
+    public Response getCoupByAttaquantId(@PathParam("inscrit_id") final Long inscritId) {
+        List<Coup> coup = coupRepo.getCoupsByInscritId(inscritId);
         if (null == coup) {
             return Response.status(204).build();
         }
@@ -69,10 +69,9 @@ public class CoupResource {
     }
 
     @PUT
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editCoup(@PathParam("match_id") final Long match_id, final Coup coup) {
+    public Response editCoup(final Coup coup) {
         Coup coupCree = coupRepo.editCoup(coup);
         return Response.status(200).entity(coupCree).build();
     }

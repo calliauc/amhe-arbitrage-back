@@ -6,7 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.amhe.mappers.RulesetMapper;
-import org.amhe.models.RulesetExpo;
+import org.amhe.models.dtos.RulesetDto;
 import org.amhe.repos.RulesetRepo;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class RulesetResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRulesets() {
-        List<RulesetExpo> rulesets = rulesetMapper.listeBaseVersExpo(this.rulesetRepo.getRulesets());
+        List<RulesetDto> rulesets = rulesetMapper.listeBaseVersDto(this.rulesetRepo.getRulesets());
         if (rulesets.isEmpty()) {
             return Response.status(204).build();
         }
@@ -33,7 +33,7 @@ public class RulesetResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRulesetById(@PathParam("id") final Long id) {
-        RulesetExpo ruleset = rulesetMapper.baseVersExpo(rulesetRepo.getRulesetById(id));
+        RulesetDto ruleset = rulesetMapper.baseVersDto(rulesetRepo.getRulesetById(id));
         if (null == ruleset) {
             return Response.status(204).build();
         }
@@ -43,17 +43,16 @@ public class RulesetResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createRuleset(final RulesetExpo nouveauRuleset) {
-        RulesetExpo rulesetCree = rulesetMapper.baseVersExpo(rulesetRepo.createRuleset(rulesetMapper.expoVersBase(nouveauRuleset)));
+    public Response createRuleset(final RulesetDto nouveauRuleset) {
+        RulesetDto rulesetCree = rulesetMapper.baseVersDto(rulesetRepo.createRuleset(rulesetMapper.dtoVersBase(nouveauRuleset)));
         return Response.status(201).entity(rulesetCree).build();
     }
 
     @PUT
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editRuleset(@PathParam("id") final Long id, final RulesetExpo ruleset) {
-        RulesetExpo rulesetCree = rulesetMapper.baseVersExpo(rulesetRepo.editRuleset(rulesetMapper.expoVersBase(ruleset)));
+    public Response editRuleset(final RulesetDto ruleset) {
+        RulesetDto rulesetCree = rulesetMapper.baseVersDto(rulesetRepo.editRuleset(rulesetMapper.dtoVersBase(ruleset)));
         return Response.status(200).entity(rulesetCree).build();
     }
 

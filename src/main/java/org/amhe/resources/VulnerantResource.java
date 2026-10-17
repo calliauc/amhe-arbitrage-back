@@ -4,7 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.amhe.models.Vulnerant;
+import org.amhe.models.entites.Vulnerant;
 import org.amhe.repos.VulnerantRepo;
 
 import java.util.List;
@@ -55,10 +55,9 @@ public class VulnerantResource {
     }
 
     @PUT
-    @Path("/{code}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editVulnerant(@PathParam("code") final String code, final Vulnerant vulnerant) {
+    public Response editVulnerant(final Vulnerant vulnerant) {
         Vulnerant vulnerantCree = vulnerantRepo.editVulnerant(vulnerant);
         return Response.status(200).entity(vulnerantCree).build();
     }

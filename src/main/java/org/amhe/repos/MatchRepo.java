@@ -9,13 +9,12 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.amhe.models.CriteresRechercheMatchs;
-import org.amhe.models.Match;
+import org.amhe.models.entites.Evenement;
+import org.amhe.models.entites.Match;
+import org.amhe.models.trier.CriteresRechercheMatchs;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Slf4j
 @ApplicationScoped
@@ -34,31 +33,30 @@ public class MatchRepo {
     }
 
     @Transactional
+    public List<Match> getMatchsByEvent(final Long eventId) {
+        Evenement event = new Evenement();
+        event.setId(eventId);
+        return em.createQuery("FROM Match WHERE evenement = :event", Match.class)
+                .setParameter("event", event).getResultList();
+    }
+
+    @Transactional
     public List<Match> rechercheMatchsParCriteres(final CriteresRechercheMatchs criteres) {
 
         List<Match> matchs;
-        if (Objects.nonNull(criteres.getIdCombattant())) {
+        if (Objects.nonNull(criteres.getIdInscrit())) {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Match> query = cb.createQuery(Match.class);
             Root<Match> root = query.from(Match.class);
 
-            Predicate aPredicate = cb.equal(root.get("infosA").get("id"), criteres.getIdCombattant());
-            Predicate bPredicate = cb.equal(root.get("infosB").get("id"), criteres.getIdCombattant());
+            Predicate aPredicate = cb.equal(root.get("infosA").get("id"), criteres.getIdInscrit());
+            Predicate bPredicate = cb.equal(root.get("infosB").get("id"), criteres.getIdInscrit());
             Predicate cpredicate = cb.or(aPredicate, bPredicate);
             query.select(root).where(cpredicate);
 
             matchs = em.createQuery(query).getResultList();
         } else {
             matchs = getMatchs();
-        }
-        if (Objects.nonNull(criteres.getIdTags()) && !criteres.getIdTags().isEmpty()) {
-            Set<Long> tagsId = new HashSet<>(criteres.getIdTags());
-            matchs = matchs.stream()
-                    .filter(match -> {
-                        Set<Long> tagsMId = new HashSet<>(match.getTags());
-                        return tagsMId.containsAll(tagsId);
-                    })
-                    .toList();
         }
         return matchs;
     }

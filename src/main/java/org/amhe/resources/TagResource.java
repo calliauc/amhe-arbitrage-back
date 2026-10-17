@@ -4,7 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.amhe.models.Tag;
+import org.amhe.models.entites.Tag;
 import org.amhe.repos.TagRepo;
 
 import java.util.List;
@@ -56,10 +56,9 @@ public class TagResource {
     }
 
     @PUT
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editTag(@PathParam("id") final Long id, final Tag tag) {
+    public Response editTag(final Tag tag) {
         Tag tagCree = tagRepo.editTag(tag);
         return Response.status(200).entity(tagCree).build();
     }

@@ -4,7 +4,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-import org.amhe.models.Poule;
+import org.amhe.models.entites.Evenement;
+import org.amhe.models.entites.Poule;
 
 import java.util.List;
 
@@ -24,6 +25,14 @@ public class PouleRepo {
     }
 
     @Transactional
+    public List<Poule> getPoulesByEvent(final Long eventId) {
+        Evenement event = new Evenement();
+        event.setId(eventId);
+        return em.createQuery("FROM Poule WHERE evenement = :event", Poule.class)
+                .setParameter("event", event).getResultList();
+    }
+    
+    @Transactional
     public Poule createPoule(final Poule nouveauPoule) {
         return em.merge(nouveauPoule);
     }
@@ -38,5 +47,4 @@ public class PouleRepo {
         Poule pouleASpprimer = this.getPouleById(id);
         em.remove(pouleASpprimer);
     }
-
 }
