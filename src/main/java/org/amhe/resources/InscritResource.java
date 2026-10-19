@@ -40,6 +40,17 @@ public class InscritResource {
         return Response.status(200).entity(inscrit).build();
     }
 
+    @GET
+    @Path("/event/{idEvent}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getInscritByEvent(@PathParam("idEvent") final Long idEvent) {
+        List<InscritDto> inscrit = inscritMapper.listeBaseVersDto(inscritLogique.getInscritsByEvent(idEvent));
+        if (null == inscrit) {
+            return Response.status(204).tag("tag").build();
+        }
+        return Response.status(200).entity(inscrit).build();
+    }
+
     @POST
     @Path("/recherche/nom")
     @Produces(MediaType.APPLICATION_JSON)

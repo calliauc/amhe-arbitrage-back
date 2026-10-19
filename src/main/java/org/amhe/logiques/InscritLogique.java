@@ -35,6 +35,9 @@ public class InscritLogique {
         return inscritRepo.getInscritById(id);
     }
 
+    public List<Inscrit> getInscritsByEvent(final Long idEvent) {
+        return inscritRepo.getInscritsByEvent(idEvent);
+    }
 
     public List<Inscrit> chercherInscritsParNom(final String nom) {
         return inscritRepo.chercherInscritsParNom(nom);
