@@ -72,4 +72,10 @@ public class PouleMapper {
         return pouleDto;
     }
 
+    public Poule dtoVersBaseId(final PouleDto pouleDto) {
+        Poule poule = new Poule();
+        poule.setId(pouleDto.getId());
+        return poule;
+    }
+
 }

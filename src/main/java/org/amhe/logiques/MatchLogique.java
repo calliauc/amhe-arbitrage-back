@@ -10,6 +10,7 @@ import org.amhe.models.trier.CriteresRechercheMatchs;
 import org.amhe.models.trier.TagsFiltres;
 import org.amhe.repos.MatchRepo;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Slf4j
@@ -54,6 +55,7 @@ public class MatchLogique {
 
     // CREATION
     public Match creerMatch(final Match nouveauMatch) {
+        nouveauMatch.setDateCreation(LocalDateTime.now());
         nouveauMatch.setStatut("nouveau");
         return matchRepo.createMatch(nouveauMatch);
     }

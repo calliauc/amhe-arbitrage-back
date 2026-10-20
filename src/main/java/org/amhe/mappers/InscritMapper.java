@@ -65,5 +65,11 @@ public class InscritMapper {
         return inscritDto;
     }
 
+    public Inscrit dtoVersBaseId(final InscritDto inscritDto) {
+        Inscrit inscrit = new Inscrit();
+        inscrit.setId(inscritDto.getId());
+        return inscrit;
+    }
+
 }
 

@@ -2,6 +2,7 @@ package org.amhe.mappers;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.amhe.models.dtos.CreationMatchDto;
 import org.amhe.models.dtos.MatchDto;
 import org.amhe.models.entites.Match;
 import org.amhe.repos.TagRepo;
@@ -10,6 +11,12 @@ import java.util.*;
 
 @ApplicationScoped
 public class MatchMapper {
+    @Inject
+    EvenementMapper evenementMapper;
+
+    @Inject
+    PouleMapper pouleMapper;
+
     @Inject
     InscritMapper inscritMapper;
 
@@ -50,6 +57,8 @@ public class MatchMapper {
     public Match dtoVersBase(final MatchDto matchDto) {
         Match match = new Match();
         match.setId(matchDto.getId());
+        match.setEvenement(evenementMapper.dtoVersBase(matchDto.getEvenement()));
+        match.setPoule(pouleMapper.dtoVersBase(matchDto.getPoule()));
         match.setInscritA(inscritMapper.dtoVersBase(matchDto.getInscritA()));
         match.setInscritB(inscritMapper.dtoVersBase(matchDto.getInscritB()));
         match.setScoreA(matchDto.getScoreA());
@@ -67,6 +76,8 @@ public class MatchMapper {
     public MatchDto baseVersDto(final Match match) {
         MatchDto matchDto = new MatchDto();
         matchDto.setId(match.getId());
+        matchDto.setEvenement(evenementMapper.baseVersDto(match.getEvenement()));
+        matchDto.setPoule(pouleMapper.baseVersDto(match.getPoule()));
         matchDto.setInscritA(inscritMapper.baseVersDto(match.getInscritA()));
         matchDto.setInscritB(inscritMapper.baseVersDto(match.getInscritB()));
         matchDto.setScoreA(match.getScoreA());
@@ -79,6 +90,18 @@ public class MatchMapper {
 //        matchDto.setTags(tagRepo.getListTags(match.getTags()));   TODO
 //        matchDto.setRuleset(this.rulesetMapper.baseVersDto(match.getRuleset()));
         return matchDto;
+    }
+
+    public Match dtoCreationVersBase(final CreationMatchDto matchDto) {
+        Match match = new Match();
+        match.setInscritA(inscritMapper.dtoVersBaseId(matchDto.getInscritA()));
+        match.setInscritB(inscritMapper.dtoVersBaseId(matchDto.getInscritB()));
+        match.setEvenement(evenementMapper.dtoVersBase(matchDto.getEvenement()));
+        match.setPoule(pouleMapper.dtoVersBaseId(matchDto.getPoule()));
+        match.setTimer(matchDto.getTimer());
+//        match.setTags(matchDto.getTags().stream().map(Tag::getId).toList()); TODO
+        match.setRuleset(this.rulesetMapper.dtoVersBase(matchDto.getRuleset()));
+        return match;
     }
 
 }

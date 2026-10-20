@@ -31,18 +31,12 @@ public class EvenementMapper {
         return evenementsDto;
     }
 
-//    public Evenement dtoVersBase(final EvenementDto evenementDto) {
-//        Evenement evenement = new Evenement();
-//        if (Objects.nonNull(evenementDto.getRuleset())) {
-//            evenement.setId(evenementDto.getId());
-//            evenement.setNom(evenementDto.getNom());
-//            evenement.setDescription(evenementDto.getDescription());
-//            evenement.setInscrits(inscritMapper.listeDtoVersBase(evenementDto.getInscrits()));
-//            evenement.setRuleset(rulesetMapper.dtoVersBase(evenementDto.getRuleset()));
-//        }
-//        return evenement;
-//    }
-    
+    public Evenement dtoVersBase(final EvenementDto evenementDto) {
+        Evenement evenement = new Evenement();
+        evenement.setId(evenementDto.getId());
+        return evenement;
+    }
+
     public EvenementDto baseVersDto(final Evenement evenement) {
         EvenementDto evenementDto = new EvenementDto();
         evenementDto.setId(evenement.getId());

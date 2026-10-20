@@ -1,6 +1,5 @@
 package org.amhe.models.entites;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,11 +17,13 @@ public class Match implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "match_seq")
     private Long id;
 
+    @ManyToOne
     @JoinColumn(name = "evenement_id")
-    @JsonIgnoreProperties({"inscrits", "ruleset"})
+//    @JsonIgnoreProperties({"inscrits", "ruleset"})
     private Evenement evenement;
+    @ManyToOne
     @JoinColumn(name = "poule_id")
-    @JsonIgnoreProperties({"inscrits", "evenement"})
+//    @JsonIgnoreProperties({"inscrits", "evenement"})
     private Poule poule;
 
     @ManyToOne

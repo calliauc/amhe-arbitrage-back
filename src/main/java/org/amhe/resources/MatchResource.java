@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.amhe.logiques.MatchLogique;
 import org.amhe.mappers.InscritMapper;
 import org.amhe.mappers.MatchMapper;
+import org.amhe.models.dtos.CreationMatchDto;
 import org.amhe.models.dtos.MatchDto;
 import org.amhe.models.trier.CriteresRechercheMatchs;
 
@@ -61,8 +62,8 @@ public class MatchResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createMatch(final MatchDto nouveauMatch) {
-        MatchDto matchCree = matchMapper.baseVersDto(matchLogique.creerMatch(matchMapper.dtoVersBase(nouveauMatch)));
+    public Response createMatch(final CreationMatchDto nouveauMatch) {
+        MatchDto matchCree = matchMapper.baseVersDto(matchLogique.creerMatch(matchMapper.dtoCreationVersBase(nouveauMatch)));
         return Response.status(201).entity(matchCree).build();
     }
 
