@@ -2,7 +2,6 @@ package org.amhe.mappers;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.amhe.models.dtos.ItemDto;
 import org.amhe.models.dtos.RulesetApercuDto;
 import org.amhe.models.dtos.RulesetDto;
 import org.amhe.models.entites.Ruleset;
@@ -39,8 +38,8 @@ public class RulesetMapper {
             rulesetDto.setDescription(ruleset.getDescription());
             rulesetDto.setTimerLimite(ruleset.getTimerLimite());
             rulesetDto.setTimerReverse(ruleset.getTimerReverse());
-            rulesetDto.setVulnerants(this.recupererItems(ruleset.getVulnerants()));
-            rulesetDto.setCibles(this.recupererItems(ruleset.getCibles()));
+            rulesetDto.setVulnerants(itemMapper.recupererItems(ruleset.getVulnerants()));
+            rulesetDto.setCibles(itemMapper.recupererItems(ruleset.getCibles()));
         }
         return rulesetDto;
     }
@@ -73,8 +72,8 @@ public class RulesetMapper {
             ruleset.setDescription(rulesetDto.getDescription());
             ruleset.setTimerLimite(rulesetDto.getTimerLimite());
             ruleset.setTimerReverse(rulesetDto.getTimerReverse());
-            ruleset.setVulnerants(this.recupererIds(rulesetDto.getVulnerants()));
-            ruleset.setCibles(this.recupererIds(rulesetDto.getCibles()));
+            ruleset.setVulnerants(itemMapper.recupererIds(rulesetDto.getVulnerants()));
+            ruleset.setCibles(itemMapper.recupererIds(rulesetDto.getCibles()));
         }
         return ruleset;
     }
@@ -87,27 +86,10 @@ public class RulesetMapper {
             rulesetDto.setDescription(ruleset.getDescription());
             rulesetDto.setTimerLimite(ruleset.getTimerLimite());
             rulesetDto.setTimerReverse(ruleset.getTimerReverse());
-            rulesetDto.setVulnerants(this.recupererItems(ruleset.getVulnerants()));
-            rulesetDto.setCibles(this.recupererItems(ruleset.getCibles()));
+            rulesetDto.setVulnerants(itemMapper.recupererItems(ruleset.getVulnerants()));
+            rulesetDto.setCibles(itemMapper.recupererItems(ruleset.getCibles()));
         }
         return rulesetDto;
-    }
-
-    private List<ItemDto> recupererItems(final List<Long> refIds) {
-        if (Objects.isNull(refIds))
-            return new ArrayList<>();
-        return refIds.stream()
-                .map(id -> itemRepo.getItemById(id))
-                .map(item -> itemMapper.baseVersDto(item))
-                .toList();
-    }
-
-    private List<Long> recupererIds(final List<ItemDto> items) {
-        if (Objects.isNull(items))
-            return new ArrayList<>();
-        return items.stream()
-                .map(ItemDto::getId)
-                .toList();
     }
 }
 

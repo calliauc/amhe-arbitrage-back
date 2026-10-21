@@ -26,6 +26,6 @@ public class MatchDto implements Serializable {
     private LocalDateTime dateFin;
     private String statut;
     private int timer;
-    private List<Long> tags;
+    private List<ItemDto> tags;
     private RulesetDto ruleset;
 }

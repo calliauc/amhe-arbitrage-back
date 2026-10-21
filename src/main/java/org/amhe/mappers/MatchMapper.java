@@ -5,7 +5,6 @@ import jakarta.inject.Inject;
 import org.amhe.models.dtos.CreationMatchDto;
 import org.amhe.models.dtos.MatchDto;
 import org.amhe.models.entites.Match;
-import org.amhe.repos.TagRepo;
 
 import java.util.*;
 
@@ -24,7 +23,7 @@ public class MatchMapper {
     RulesetMapper rulesetMapper;
 
     @Inject
-    TagRepo tagRepo;
+    ItemMapper itemMapper;
 
     public Set<Match> listeDtoVersBase(final Set<MatchDto> matchsDto) {
         Set<Match> matchs = new HashSet<>();
@@ -68,8 +67,8 @@ public class MatchMapper {
         match.setDateDebut(matchDto.getDateDebut());
         match.setDateFin(matchDto.getDateFin());
         match.setStatut(matchDto.getStatut());
-//        match.setTags(matchDto.getTags().stream().map(Tag::getId).toList()); TODO
-//        match.setRuleset(this.rulesetMapper.expoVersBase(matchDto.getRuleset()));
+        match.setTags(itemMapper.recupererIds(matchDto.getTags()));
+        match.setRuleset(this.rulesetMapper.dtoVersBase(matchDto.getRuleset()));
         return match;
     }
 
@@ -87,7 +86,7 @@ public class MatchMapper {
         matchDto.setDateFin(match.getDateFin());
         matchDto.setStatut(match.getStatut());
         matchDto.setTimer(match.getTimer());
-//        matchDto.setTags(tagRepo.getListTags(match.getTags()));   TODO
+        matchDto.setTags(itemMapper.recupererItems(match.getTags()));
         matchDto.setRuleset(this.rulesetMapper.baseVersDto(match.getRuleset()));
         return matchDto;
     }

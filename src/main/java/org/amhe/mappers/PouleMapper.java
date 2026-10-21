@@ -5,18 +5,15 @@ import jakarta.inject.Inject;
 import org.amhe.logiques.EvenementLogique;
 import org.amhe.models.dtos.PouleDto;
 import org.amhe.models.entites.Poule;
-import org.amhe.models.entites.Tag;
-import org.amhe.repos.TagRepo;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class PouleMapper {
     @Inject
-    TagRepo tagRepo;
+    ItemMapper itemMapper;
 
     @Inject
     InscritMapper inscritMapper;
@@ -52,8 +49,7 @@ public class PouleMapper {
         poule.setEvenement(evenementLogique.getEvenementById(pouleDto.getEvenement().getId()));
         poule.setInscrits(inscritMapper.listeDtoVersBase(pouleDto.getInscrits()));
         poule.setMatchs(matchMapper.listeDtoVersBase(pouleDto.getMatchs()));
-        if (Objects.nonNull(pouleDto.getTags()) && !pouleDto.getTags().isEmpty())
-            poule.setTags(pouleDto.getTags().stream().map(Tag::getId).collect(Collectors.toSet()));
+        poule.setTags(itemMapper.recupererIds(pouleDto.getTags()));
         return poule;
     }
 
@@ -66,10 +62,7 @@ public class PouleMapper {
             pouleDto.setEvenement(evenementMapper.baseVersDto(poule.getEvenement()));
             pouleDto.setInscrits(inscritMapper.listeBaseVersDto(poule.getInscrits()));
             pouleDto.setMatchs(matchMapper.listeBaseVersDto(poule.getMatchs()));
-            if (Objects.nonNull(poule.getTags()))
-                pouleDto.setTags(poule.getTags().stream()
-                        .map(id -> tagRepo.getTagById(id))
-                        .collect(Collectors.toSet()));
+            pouleDto.setTags(itemMapper.recupererItems(poule.getTags()));
         }
         return pouleDto;
     }

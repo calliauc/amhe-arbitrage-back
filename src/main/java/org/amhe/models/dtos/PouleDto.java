@@ -3,7 +3,6 @@ package org.amhe.models.dtos;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
-import org.amhe.models.entites.Tag;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -19,5 +18,5 @@ public class PouleDto implements Serializable {
     @JsonIgnoreProperties(value = {"nomEvenement"})
     private Set<InscritDto> inscrits;
     private Set<MatchDto> matchs;
-    private Set<Tag> tags;
+    private Set<ItemDto> tags;
 }

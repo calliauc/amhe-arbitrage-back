@@ -15,7 +15,7 @@ public class ItemRepo {
 
     @Transactional
     public List<Item> getItems() {
-        return em.createQuery("from RULESET_REF", Item.class).getResultList();
+        return em.createQuery("from ITEM", Item.class).getResultList();
     }
 
     @Transactional
@@ -25,7 +25,7 @@ public class ItemRepo {
 
     @Transactional
     public List<Item> getListParCodesEtType(final List<String> codes, final String type) {
-        return em.createQuery("from RULESET_REF where code IN (:codes) and type = (:type)", Item.class)
+        return em.createQuery("from ITEM where code IN (:codes) and type = (:type)", Item.class)
                 .setParameter("codes", codes)
                 .setParameter("type", type).getResultList();
     }

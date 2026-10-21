@@ -2,14 +2,14 @@ package org.amhe.models.trier;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.amhe.models.entites.Tag;
+import org.amhe.models.entites.Item;
 
 import java.util.List;
 
 @Getter
 @Setter
 public class TagsFiltres {
-    private List<Tag> tagsRequis;
-    private List<Tag> tagsOptions;
-    private List<Tag> tagsExclus;
+    private List<Item> tagsRequis;
+    private List<Item> tagsOptions;
+    private List<Item> tagsExclus;
 }

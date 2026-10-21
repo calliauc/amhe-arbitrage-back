@@ -6,13 +6,13 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
-@Entity(name = "RULESET_REF")
+@Entity(name = "ITEM")
 @Getter
 @Setter
 public class Item implements Serializable {
     @Id
-    @SequenceGenerator(name = "ruleset_ref_seq", sequenceName = "RULESET_REF_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ruleset_ref_seq")
+    @SequenceGenerator(name = "item_seq", sequenceName = "ITEM_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_seq")
     private Long id;
     private String code;
     private String type;
