@@ -9,10 +9,11 @@ import java.util.List;
 @Getter
 @Setter
 public class RulesetApercuDto implements Serializable {
+    private Long id;
     private String nom;
     private String description;
     private long timerLimite;
     private Boolean timerReverse;
-    private List<String> vulnerants;
-    private List<String> cibles;
+    private List<ItemDto> vulnerants;
+    private List<ItemDto> cibles;
 }

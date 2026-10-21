@@ -19,23 +19,26 @@ insert into TAG (id, code) values(4, 'Petite finale');
 insert into TAG (id, code) values(5, 'Finale');
 alter sequence TAG_SEQ restart with 6;
 
+-- RULESET_REFS
 -- VULNERANTS
-INSERT INTO VULNERANT(code, libelle) VALUES('estoc', ' porte un estoc');
-INSERT INTO VULNERANT(code, libelle) VALUES('taille', ' porte un coup de taille');
-INSERT INTO VULNERANT(code, libelle) VALUES('entaille', ' inflige une entaille');
-INSERT INTO VULNERANT(code, libelle) VALUES('lutte', ' remporte la lutte contre ');
+INSERT INTO RULESET_REF(id, code, type, libelle) VALUES('1', 'estoc', 'vulnerant', ' porte un estoc');
+INSERT INTO RULESET_REF(id, code, type, libelle) VALUES('2', 'taille', 'vulnerant', ' porte un coup de taille');
+INSERT INTO RULESET_REF(id, code, type, libelle) VALUES('3', 'entaille', 'vulnerant', ' inflige une entaille');
+INSERT INTO RULESET_REF(id, code, type, libelle) VALUES('4', 'lutte', 'vulnerant', ' remporte la lutte contre ');
 
 -- CIBLES
-INSERT INTO CIBLE(code, libelle) VALUES('lutte', ' ');
-INSERT INTO CIBLE(code, libelle) VALUES('tête', ' à la tête de ');
-INSERT INTO CIBLE(code, libelle) VALUES('torse', ' au torse de ');
-INSERT INTO CIBLE(code, libelle) VALUES('bras', ' au bras de ');
-INSERT INTO CIBLE(code, libelle) VALUES('main', ' à la main de ');
-INSERT INTO CIBLE(code, libelle) VALUES('jambe', ' à la jambe de ');
+INSERT INTO RULESET_REF(id, code, type, libelle) VALUES('10', 'lutte', 'cible', ' ');
+INSERT INTO RULESET_REF(id, code, type, libelle) VALUES('5', 'tête', 'cible', ' à la tête de ');
+INSERT INTO RULESET_REF(id, code, type, libelle) VALUES('6', 'torse', 'cible', ' au torse de ');
+INSERT INTO RULESET_REF(id, code, type, libelle) VALUES('7', 'bras', 'cible', ' au bras de ');
+INSERT INTO RULESET_REF(id, code, type, libelle) VALUES('8', 'main', 'cible', ' à la main de ');
+INSERT INTO RULESET_REF(id, code, type, libelle) VALUES('9', 'jambe', 'cible', ' à la jambe de ');
+alter sequence RULESET_REF_SEQ restart with 11;
 
 -- RULESETS
 INSERT INTO ruleset(id, nom, description, timerlimite, timerreverse, vulnerants, cibles)
-VALUES (1, 'Longsword', 'Longsword test', '600', true, '{estoc, taille, entaille }', '{tête, torse, bras, main, jambe}');
+--VALUES (1, 'Longsword', 'Longsword test', '600', true, '{1, 2, 3 }', '{5, 6, 7, 8, 9}');
+VALUES (1, 'Longsword', 'Longsword test', '600', true, '{1, 2, 3 }', '{5, 6, 7, 8, 9}');
 alter sequence RULESET_SEQ restart with 2;
 
 -- EVENT

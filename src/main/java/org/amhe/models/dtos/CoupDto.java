@@ -2,8 +2,6 @@ package org.amhe.models.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.amhe.models.entites.Cible;
-import org.amhe.models.entites.Vulnerant;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -25,6 +23,6 @@ public class CoupDto implements Serializable {
     private boolean afterblow;
     private boolean simultanee;
     private boolean faute;
-    private Vulnerant vulnerant;
-    private Cible cible;
+    private ItemDto vulnerant;
+    private ItemDto cible;
 }

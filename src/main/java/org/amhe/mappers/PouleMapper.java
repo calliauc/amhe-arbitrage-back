@@ -59,20 +59,24 @@ public class PouleMapper {
 
     public PouleDto baseVersDto(final Poule poule) {
         PouleDto pouleDto = new PouleDto();
-        pouleDto.setId(poule.getId());
-        pouleDto.setNom(poule.getNom());
-        pouleDto.setDescription(poule.getDescription());
-        pouleDto.setEvenement(evenementMapper.baseVersDto(poule.getEvenement()));
-        pouleDto.setInscrits(inscritMapper.listeBaseVersDto(poule.getInscrits()));
-        pouleDto.setMatchs(matchMapper.listeBaseVersDto(poule.getMatchs()));
-        if (Objects.nonNull(poule.getTags()))
-            pouleDto.setTags(poule.getTags().stream()
-                    .map(id -> tagRepo.getTagById(id))
-                    .collect(Collectors.toSet()));
+        if (Objects.nonNull(poule)) {
+            pouleDto.setId(poule.getId());
+            pouleDto.setNom(poule.getNom());
+            pouleDto.setDescription(poule.getDescription());
+            pouleDto.setEvenement(evenementMapper.baseVersDto(poule.getEvenement()));
+            pouleDto.setInscrits(inscritMapper.listeBaseVersDto(poule.getInscrits()));
+            pouleDto.setMatchs(matchMapper.listeBaseVersDto(poule.getMatchs()));
+            if (Objects.nonNull(poule.getTags()))
+                pouleDto.setTags(poule.getTags().stream()
+                        .map(id -> tagRepo.getTagById(id))
+                        .collect(Collectors.toSet()));
+        }
         return pouleDto;
     }
 
     public Poule dtoVersBaseId(final PouleDto pouleDto) {
+        if (Objects.isNull(pouleDto))
+            return null;
         Poule poule = new Poule();
         poule.setId(pouleDto.getId());
         return poule;

@@ -41,7 +41,8 @@ public class MatchLogique {
 
     public List<Match> rechercheMatchsParCriteres(final CriteresRechercheMatchs criteres) {
         List<Match> matchs = matchRepo.rechercheMatchsParCriteres(criteres);
-        if (Objects.nonNull(criteres.getIdTags()) && !criteres.getIdTags().isEmpty()) {
+        if (false) {
+//        if (Objects.nonNull(criteres.getIdTags()) && !criteres.getIdTags().isEmpty()) {
             Set<Long> tagsId = new HashSet<>(criteres.getIdTags());
             matchs = matchs.stream()
                     .filter(match -> {

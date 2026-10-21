@@ -49,8 +49,8 @@ public class MatchRepo {
             CriteriaQuery<Match> query = cb.createQuery(Match.class);
             Root<Match> root = query.from(Match.class);
 
-            Predicate aPredicate = cb.equal(root.get("infosA").get("id"), criteres.getIdInscrit());
-            Predicate bPredicate = cb.equal(root.get("infosB").get("id"), criteres.getIdInscrit());
+            Predicate aPredicate = cb.equal(root.get("inscritA").get("id"), criteres.getIdInscrit());
+            Predicate bPredicate = cb.equal(root.get("inscritB").get("id"), criteres.getIdInscrit());
             Predicate cpredicate = cb.or(aPredicate, bPredicate);
             query.select(root).where(cpredicate);
 

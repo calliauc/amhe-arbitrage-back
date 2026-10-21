@@ -1,4 +1,4 @@
-package org.amhe.models.trier;
+package org.amhe.models.dtos;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
@@ -9,8 +9,10 @@ import java.io.Serializable;
 @Getter
 @Setter
 @JsonDeserialize
-public class RulesetRefExpo implements Serializable {
+public class ItemDto implements Serializable {
+    private Long id;
     private String code;
+    private String type;
     private String libelle;
     private boolean checked;
 }

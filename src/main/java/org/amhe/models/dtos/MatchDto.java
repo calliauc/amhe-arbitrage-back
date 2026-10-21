@@ -3,7 +3,6 @@ package org.amhe.models.dtos;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
-import org.amhe.models.entites.Ruleset;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -28,5 +27,5 @@ public class MatchDto implements Serializable {
     private String statut;
     private int timer;
     private List<Long> tags;
-    private Ruleset ruleset;
+    private RulesetDto ruleset;
 }

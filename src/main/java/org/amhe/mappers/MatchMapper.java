@@ -88,7 +88,7 @@ public class MatchMapper {
         matchDto.setStatut(match.getStatut());
         matchDto.setTimer(match.getTimer());
 //        matchDto.setTags(tagRepo.getListTags(match.getTags()));   TODO
-//        matchDto.setRuleset(this.rulesetMapper.baseVersDto(match.getRuleset()));
+        matchDto.setRuleset(this.rulesetMapper.baseVersDto(match.getRuleset()));
         return matchDto;
     }
 

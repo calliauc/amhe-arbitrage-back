@@ -2,14 +2,11 @@ package org.amhe.mappers;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.amhe.models.dtos.ItemDto;
 import org.amhe.models.dtos.RulesetApercuDto;
 import org.amhe.models.dtos.RulesetDto;
-import org.amhe.models.entites.Cible;
 import org.amhe.models.entites.Ruleset;
-import org.amhe.models.entites.Vulnerant;
-import org.amhe.models.trier.RulesetRefExpo;
-import org.amhe.repos.CibleRepo;
-import org.amhe.repos.VulnerantRepo;
+import org.amhe.repos.ItemRepo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +15,10 @@ import java.util.Objects;
 @ApplicationScoped
 public class RulesetMapper {
     @Inject
-    VulnerantRepo vulnerantRepo;
+    ItemMapper itemMapper;
+
     @Inject
-    CibleRepo cibleRepo;
+    ItemRepo itemRepo;
 
     /**
      * APERCU
@@ -36,12 +34,13 @@ public class RulesetMapper {
     public RulesetApercuDto baseVersApercuDto(final Ruleset ruleset) {
         RulesetApercuDto rulesetDto = new RulesetApercuDto();
         if (Objects.nonNull(ruleset)) {
+            rulesetDto.setId(ruleset.getId());
             rulesetDto.setNom(ruleset.getNom());
             rulesetDto.setDescription(ruleset.getDescription());
             rulesetDto.setTimerLimite(ruleset.getTimerLimite());
             rulesetDto.setTimerReverse(ruleset.getTimerReverse());
-            rulesetDto.setVulnerants(ruleset.getVulnerants());
-            rulesetDto.setCibles(ruleset.getCibles());
+            rulesetDto.setVulnerants(this.recupererItems(ruleset.getVulnerants()));
+            rulesetDto.setCibles(this.recupererItems(ruleset.getCibles()));
         }
         return rulesetDto;
     }
@@ -74,8 +73,8 @@ public class RulesetMapper {
             ruleset.setDescription(rulesetDto.getDescription());
             ruleset.setTimerLimite(rulesetDto.getTimerLimite());
             ruleset.setTimerReverse(rulesetDto.getTimerReverse());
-            ruleset.setVulnerants(rulesetDto.getVulnerants().stream().filter(RulesetRefExpo::isChecked).map(RulesetRefExpo::getCode).toList());
-            ruleset.setCibles(rulesetDto.getCibles().stream().filter(RulesetRefExpo::isChecked).map(RulesetRefExpo::getCode).toList());
+            ruleset.setVulnerants(this.recupererIds(rulesetDto.getVulnerants()));
+            ruleset.setCibles(this.recupererIds(rulesetDto.getCibles()));
         }
         return ruleset;
     }
@@ -88,55 +87,27 @@ public class RulesetMapper {
             rulesetDto.setDescription(ruleset.getDescription());
             rulesetDto.setTimerLimite(ruleset.getTimerLimite());
             rulesetDto.setTimerReverse(ruleset.getTimerReverse());
-            rulesetDto.setVulnerants(this.hydraterVulnerants(ruleset.getVulnerants()));
-            rulesetDto.setCibles(this.hydraterCibles(ruleset.getCibles()));
+            rulesetDto.setVulnerants(this.recupererItems(ruleset.getVulnerants()));
+            rulesetDto.setCibles(this.recupererItems(ruleset.getCibles()));
         }
         return rulesetDto;
     }
 
-
-    List<RulesetRefExpo> hydraterVulnerants(final List<String> codes) {
-        List<RulesetRefExpo> vulnerantsDto = this.vulnerantsVersDto(vulnerantRepo.getVulnerants());
-        vulnerantsDto.forEach(v -> {
-            if (codes.contains(v.getCode())) {
-                v.setChecked(true);
-            }
-        });
-        return vulnerantsDto;
+    private List<ItemDto> recupererItems(final List<Long> refIds) {
+        if (Objects.isNull(refIds))
+            return new ArrayList<>();
+        return refIds.stream()
+                .map(id -> itemRepo.getItemById(id))
+                .map(item -> itemMapper.baseVersDto(item))
+                .toList();
     }
 
-    List<RulesetRefExpo> hydraterCibles(final List<String> codes) {
-        List<RulesetRefExpo> ciblesDto = this.ciblesVersDto(cibleRepo.getCibles());
-        ciblesDto.forEach(c -> {
-            if (codes.contains(c.getCode())) {
-                c.setChecked(true);
-            }
-        });
-        return ciblesDto;
-    }
-
-    List<RulesetRefExpo> vulnerantsVersDto(List<Vulnerant> vulnerants) {
-        List<RulesetRefExpo> rulesetsRefDto = new ArrayList<>();
-        vulnerants.forEach(vulnerant -> {
-            RulesetRefExpo rulesetRefDto = new RulesetRefExpo();
-            rulesetRefDto.setCode(vulnerant.getCode());
-            rulesetRefDto.setLibelle(vulnerant.getLibelle());
-            rulesetRefDto.setChecked(false);
-            rulesetsRefDto.add(rulesetRefDto);
-        });
-        return rulesetsRefDto;
-    }
-
-    List<RulesetRefExpo> ciblesVersDto(List<Cible> cibles) {
-        List<RulesetRefExpo> rulesetsRefDto = new ArrayList<>();
-        cibles.forEach(cible -> {
-            RulesetRefExpo rulesetRefDto = new RulesetRefExpo();
-            rulesetRefDto.setCode(cible.getCode());
-            rulesetRefDto.setLibelle(cible.getLibelle());
-            rulesetRefDto.setChecked(false);
-            rulesetsRefDto.add(rulesetRefDto);
-        });
-        return rulesetsRefDto;
+    private List<Long> recupererIds(final List<ItemDto> items) {
+        if (Objects.isNull(items))
+            return new ArrayList<>();
+        return items.stream()
+                .map(ItemDto::getId)
+                .toList();
     }
 }
 

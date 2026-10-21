@@ -35,7 +35,7 @@ public class Coup {
     private boolean simultanee;
     private boolean faute;
     @ManyToOne
-    private Vulnerant vulnerant;
+    private Item vulnerant;
     @ManyToOne
-    private Cible cible;
+    private Item cible;
 }

@@ -43,5 +43,7 @@ public class Match implements Serializable {
     private String statut;
     private int timer;
     private List<Long> tags;
+    @ManyToOne
+    @JoinColumn(name = "id_ruleset")
     private Ruleset ruleset;
 }
