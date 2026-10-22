@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
@@ -16,5 +17,5 @@ public class CreationMatchDto implements Serializable {
     private InscritDto inscritB;
     private int timer;
     private RulesetDto ruleset;
-//    private List<Long> tags;
+    private List<Long> tags;
 }

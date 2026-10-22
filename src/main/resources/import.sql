@@ -62,14 +62,3 @@ alter sequence POULE_SEQ restart with 3;
 -- POULE_INSCRIT
 INSERT INTO poule_inscrit(poule_id, inscrits_id)
 VALUES (1, 1), (1, 2), (2, 3), (2, 4);
-
-
--- MATCHS
---INSERT INTO match(id, id_a, id_b, score_a, score_b, couleur_a, couleur_b, timer)
---        VALUES (1, 1, 2, 0, 0, 'rgb(68, 143, 255)', 'rgb(252, 102, 102)', 0);
---alter sequence MATCH_SEQ restart with 2;
-
---COUPS
---INSERT INTO COUP(id, match_id, attaquant_id, attaquant_couleur, defenseur_id, defenseur_couleur, vulnerant_code, cible_code)
---    VALUES(1, 1, 1, 'rgb(68, 143, 255)', 2, 'rgb(252, 102, 102)', 'estoc', 'torse');
---alter sequence COUP_SEQ restart with 4;

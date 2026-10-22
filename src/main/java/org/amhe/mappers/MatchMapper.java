@@ -98,7 +98,7 @@ public class MatchMapper {
         match.setEvenement(evenementMapper.dtoVersBase(matchDto.getEvenement()));
         match.setPoule(pouleMapper.dtoVersBaseId(matchDto.getPoule()));
         match.setTimer(matchDto.getTimer());
-//        match.setTags(matchDto.getTags().stream().map(Tag::getId).toList()); TODO
+        match.setTags(matchDto.getTags());
         match.setRuleset(this.rulesetMapper.dtoVersBase(matchDto.getRuleset()));
         return match;
     }

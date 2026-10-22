@@ -14,8 +14,9 @@ public class ItemRepo {
     EntityManager em;
 
     @Transactional
-    public List<Item> getItems() {
-        return em.createQuery("from ITEM", Item.class).getResultList();
+    public List<Item> getItems(final String type) {
+        return em.createQuery("from ITEM where type = (:type)", Item.class)
+                .setParameter("type", type).getResultList();
     }
 
     @Transactional

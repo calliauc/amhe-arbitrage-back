@@ -19,9 +19,10 @@ public class ItemRessource {
     ItemRepo itemRepo;
 
     @GET
+    @Path("/type/{type}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getItem() {
-        List<ItemDto> item = itemMapper.listeBaseVersDto(itemRepo.getItems());
+    public Response getItem(@PathParam("type") final String type) {
+        List<ItemDto> item = itemMapper.listeBaseVersDto(itemRepo.getItems(type));
         if (item.isEmpty()) {
             return Response.status(204).header("Message", "Aucun item trouvé").build();
         }
