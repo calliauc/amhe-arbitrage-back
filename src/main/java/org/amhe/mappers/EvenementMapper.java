@@ -2,8 +2,10 @@ package org.amhe.mappers;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.amhe.models.dtos.CreationEvenementDto;
 import org.amhe.models.dtos.EvenementDto;
 import org.amhe.models.entites.Evenement;
+import org.amhe.repos.RulesetRepo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,9 @@ public class EvenementMapper {
 
     @Inject
     RulesetMapper rulesetMapper;
+
+    @Inject
+    RulesetRepo rulesetRepo;
 
 //    public List<Evenement> listeDtoVersBase(final List<EvenementDto> evenementsDto) {
 //        List<Evenement> evenements = new ArrayList<>();
@@ -47,6 +52,16 @@ public class EvenementMapper {
         evenementDto.setInscrits(inscritMapper.listeBaseVersDto(evenement.getInscrits()));
         evenementDto.setRuleset(rulesetMapper.baseVersApercuDto(evenement.getRuleset()));
         return evenementDto;
+    }
+
+    public Evenement dtoVersBase(final CreationEvenementDto evenementDto) {
+        Evenement evenement = new Evenement();
+        evenement.setNom(evenementDto.getNom());
+        evenement.setDescription(evenementDto.getDescription());
+        evenement.setDateDebut(evenementDto.getDateDebut());
+        evenement.setDateFin(evenementDto.getDateFin());
+        evenement.setRuleset(rulesetRepo.getRulesetById(evenementDto.getRuleset().getId()));
+        return evenement;
     }
 
 }

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -18,8 +18,8 @@ public class Evenement implements Serializable {
     private Long id;
     private String nom;
     private String description;
-    private LocalDateTime dateDebut;
-    private LocalDateTime dateFin;
+    private LocalDate dateDebut;
+    private LocalDate dateFin;
     @OneToMany(targetEntity = Inscrit.class, mappedBy = "evenement", fetch = FetchType.EAGER)
     private List<Inscrit> inscrits;
     @ManyToOne

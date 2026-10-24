@@ -38,8 +38,13 @@ public class EvenementLogique {
         return evenementRepo.createEvenement(evenementACreer);
     }
 
-    public Evenement modifierEvenement(final Evenement evenementAModifier) {
-        return evenementRepo.editEvenement(evenementAModifier);
+    public Evenement modifierEvenement(final Long id, final Evenement evenementAModifier) {
+        Evenement event = evenementRepo.getEvenementById(id);
+        event.setNom(evenementAModifier.getNom());
+        event.setDescription(evenementAModifier.getDescription());
+        event.setDateDebut(evenementAModifier.getDateDebut());
+        event.setDateFin(evenementAModifier.getDateFin());
+        return evenementRepo.editEvenement(event);
     }
 
     public void supprimerEvenement(final Long id) {

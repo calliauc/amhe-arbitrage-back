@@ -6,6 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.amhe.logiques.EvenementLogique;
 import org.amhe.mappers.EvenementMapper;
+import org.amhe.models.dtos.CreationEvenementDto;
 import org.amhe.models.dtos.EvenementDto;
 import org.amhe.models.entites.Evenement;
 
@@ -44,17 +45,20 @@ public class EvenementResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createEvenement(final Evenement nouveauEvenement) {
-        EvenementDto evenementCree = evenementMapper.baseVersDto(evenementLogique.creerEvenement(nouveauEvenement));
+    public Response createEvenement(final CreationEvenementDto nouveauEvenement) {
+        Evenement event = evenementMapper.dtoVersBase(nouveauEvenement);
+        EvenementDto evenementCree = evenementMapper.baseVersDto(evenementLogique.creerEvenement(event));
         return Response.status(201).entity(evenementCree).build();
     }
 
     @PUT
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editEvenement(final Evenement evenement) {
-        EvenementDto evenementCree = evenementMapper.baseVersDto(evenementLogique.modifierEvenement(evenement));
-        return Response.status(200).entity(evenementCree).build();
+    public Response editEvenement(@PathParam("id") final Long id, final CreationEvenementDto evenement) {
+        Evenement event = evenementMapper.dtoVersBase(evenement);
+        EvenementDto evenementModifie = evenementMapper.baseVersDto(evenementLogique.modifierEvenement(id, event));
+        return Response.status(200).entity(evenementModifie).build();
     }
 
     @PUT
