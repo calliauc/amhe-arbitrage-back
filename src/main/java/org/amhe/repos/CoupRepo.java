@@ -5,7 +5,6 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.amhe.models.entites.Coup;
-import org.amhe.models.entites.Inscrit;
 
 import java.util.List;
 
@@ -22,36 +21,6 @@ public class CoupRepo {
     @Transactional
     public Coup getCoupById(final Long id) {
         return em.find(Coup.class, id);
-    }
-
-    @Transactional
-    public List<Coup> getCoupsByMatchId(final Long match_id) {
-        return em.createQuery("FROM Coup WHERE matchId = :match_id", Coup.class)
-                .setParameter("match_id", match_id).getResultList();
-    }
-
-    @Transactional
-    public List<Coup> getCoupsByAtkId(final Long atk_id) {
-        Inscrit attaquant = new Inscrit();
-        attaquant.setId(atk_id);
-        return em.createQuery("FROM Coup WHERE attaquant = :attaquant", Coup.class)
-                .setParameter("attaquant", attaquant).getResultList();
-    }
-
-    @Transactional
-    public List<Coup> getCoupsByDefId(final Long def_id) {
-        Inscrit attaquant = new Inscrit();
-        attaquant.setId(def_id);
-        return em.createQuery("FROM Coup WHERE attaquant = :attaquant", Coup.class)
-                .setParameter("attaquant", attaquant).getResultList();
-    }
-
-    @Transactional
-    public List<Coup> getCoupsByInscritId(final Long inscritId) {
-        Inscrit inscrit = new Inscrit();
-        inscrit.setId(inscritId);
-        return em.createQuery("FROM Coup WHERE attaquant = :attaquant OR defenseur = :defenseur", Coup.class)
-                .setParameter("attaquant", inscrit).setParameter("defenseur", inscrit).getResultList();
     }
 
     @Transactional

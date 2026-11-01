@@ -3,13 +3,13 @@ package org.amhe.logiques;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.amhe.models.dtos.MatchDto;
-import org.amhe.models.entites.Coup;
+import org.amhe.models.entites.Echange;
 import org.amhe.models.entites.Inscrit;
 import org.amhe.models.trier.DetailsCoupsListeElem;
 import org.amhe.models.trier.InscritDetails;
 import org.amhe.models.trier.InscritDetailsCoups;
 import org.amhe.models.trier.TagsFiltres;
-import org.amhe.repos.CoupRepo;
+import org.amhe.repos.EchangeRepo;
 import org.amhe.repos.InscritRepo;
 
 import java.util.*;
@@ -24,7 +24,7 @@ public class InscritLogique {
     MatchLogique matchLogique;
 
     @Inject
-    CoupRepo coupRepo;
+    EchangeRepo echangeRepo;
 
 
     public List<Inscrit> getInscrits() {
@@ -102,102 +102,107 @@ public class InscritLogique {
     }
 
     protected InscritDetails calculerCoupsInscrit(InscritDetails details) {
-        List<Coup> coups = new ArrayList<>();
-        details.getMatchs().forEach(match -> coups.addAll(coupRepo.getCoupsByMatchId(match.getId())));
-        details.setCoupsMarques(calculerCoupsMarques(details, coups));
-        details.setCoupsSubis(calculerCoupsSubis(details, coups));
+        List<Echange> echanges = new ArrayList<>();
+        details.getMatchs().forEach(match -> echanges.addAll(echangeRepo.getEchangesByMatchId(match.getId())));
+        details.setCoupsMarques(calculerCoupsMarques(details, echanges));
+        details.setCoupsSubis(calculerCoupsSubis(details, echanges));
         return details;
     }
 
-    protected InscritDetailsCoups calculerCoupsMarques(final InscritDetails details, final List<Coup> coups) {
-        List<Coup> coupsMarques = coups.stream()
-                .filter(coup -> Objects.equals(coup.getAttaquant().getId(), details.getInscrit().getId()))
-                .toList();
-        InscritDetailsCoups detailsCoupsMarques = new InscritDetailsCoups();
-        detailsCoupsMarques.setTotal(coupsMarques.size());
-
-        Set<String> setCiblesString = coupsMarques.stream().map(coup -> coup.getCible().getCode()).collect(Collectors.toSet());
-        detailsCoupsMarques.setCibles(calculerDetailCoupCibleElem(setCiblesString, coupsMarques, detailsCoupsMarques.getTotal()));
-
-        Set<String> setVulnerantsString = coupsMarques.stream().map(coup -> coup.getVulnerant().getCode()).collect(Collectors.toSet());
-        detailsCoupsMarques.setVulnerants(calculerDetailCoupVulnerantElem(setVulnerantsString, coupsMarques, detailsCoupsMarques.getTotal()));
-
-        detailsCoupsMarques.setDetails(calculerDetailCoupDetailsElem(details, coupsMarques, detailsCoupsMarques.getTotal()));
-        return detailsCoupsMarques;
+    protected InscritDetailsCoups calculerCoupsMarques(final InscritDetails details, final List<Echange> echanges) {
+//        List<Echange> coupsMarques = echanges.stream()
+//                .filter(echange -> Objects.equals(echange.getInscritA().getId(), details.getInscrit().getId()))
+//                .toList();
+//        InscritDetailsCoups detailsCoupsMarques = new InscritDetailsCoups();
+//        detailsCoupsMarques.setTotal(coupsMarques.size());
+//
+//        Set<String> setCiblesString = coupsMarques.stream().map(echange -> echange.getCible().getCode()).collect(Collectors.toSet());
+//        detailsCoupsMarques.setCibles(calculerDetailCoupCibleElem(setCiblesString, coupsMarques, detailsCoupsMarques.getTotal()));
+//
+//        Set<String> setVulnerantsString = coupsMarques.stream().map(echange -> echange.getVulnerant().getCode()).collect(Collectors.toSet());
+//        detailsCoupsMarques.setVulnerants(calculerDetailCoupVulnerantElem(setVulnerantsString, coupsMarques, detailsCoupsMarques.getTotal()));
+//
+//        detailsCoupsMarques.setDetails(calculerDetailCoupDetailsElem(details, coupsMarques, detailsCoupsMarques.getTotal()));
+//        return detailsCoupsMarques;
+        return new InscritDetailsCoups();
     }
 
-    protected InscritDetailsCoups calculerCoupsSubis(final InscritDetails details, final List<Coup> coups) {
-        List<Coup> coupsSubis = coups.stream()
-                .filter(coup -> !Objects.equals(coup.getAttaquant().getId(), details.getInscrit().getId()))
-                .toList();
-        InscritDetailsCoups detailsCoupsSubis = new InscritDetailsCoups();
-        detailsCoupsSubis.setTotal(coupsSubis.size());
-
-        Set<String> setCiblesString = coupsSubis.stream().map(coup -> coup.getCible().getCode()).collect(Collectors.toSet());
-        detailsCoupsSubis.setCibles(calculerDetailCoupCibleElem(setCiblesString, coupsSubis, detailsCoupsSubis.getTotal()));
-
-        Set<String> setVulnerantsString = coupsSubis.stream().map(coup -> coup.getVulnerant().getCode()).collect(Collectors.toSet());
-        detailsCoupsSubis.setVulnerants(calculerDetailCoupVulnerantElem(setVulnerantsString, coupsSubis, detailsCoupsSubis.getTotal()));
-
-        detailsCoupsSubis.setDetails(calculerDetailCoupDetailsElem(details, coupsSubis, detailsCoupsSubis.getTotal()));
-        return detailsCoupsSubis;
+    protected InscritDetailsCoups calculerCoupsSubis(final InscritDetails details, final List<Echange> echanges) {
+//        List<Echange> coupsSubis = echanges.stream()
+//                .filter(echange -> !Objects.equals(echange.getInscritA().getId(), details.getInscrit().getId()))
+//                .toList();
+//        InscritDetailsCoups detailsCoupsSubis = new InscritDetailsCoups();
+//        detailsCoupsSubis.setTotal(coupsSubis.size());
+//
+//        Set<String> setCiblesString = coupsSubis.stream().map(echange -> echange.getCible().getCode()).collect(Collectors.toSet());
+//        detailsCoupsSubis.setCibles(calculerDetailCoupCibleElem(setCiblesString, coupsSubis, detailsCoupsSubis.getTotal()));
+//
+//        Set<String> setVulnerantsString = coupsSubis.stream().map(echange -> echange.getVulnerant().getCode()).collect(Collectors.toSet());
+//        detailsCoupsSubis.setVulnerants(calculerDetailCoupVulnerantElem(setVulnerantsString, coupsSubis, detailsCoupsSubis.getTotal()));
+//
+//        detailsCoupsSubis.setDetails(calculerDetailCoupDetailsElem(details, coupsSubis, detailsCoupsSubis.getTotal()));
+//        return detailsCoupsSubis;
+        return new InscritDetailsCoups();
     }
 
 
     protected Set<DetailsCoupsListeElem> calculerDetailCoupCibleElem(
             final Set<String> setElemString,
-            final List<Coup> coups,
+            final List<Echange> echanges,
             final float total
     ) {
-        return setElemString.stream().map(elem -> {
-            long nbElem = coups.stream().filter(coup -> Objects.equals(coup.getCible().getCode(), elem)).count();
-            return new DetailsCoupsListeElem(
-                    elem,
-                    (int) nbElem,
-                    pourcent(total, (float) nbElem));
-        }).collect(Collectors.toSet());
+//        return setElemString.stream().map(elem -> {
+//            long nbElem = echanges.stream().filter(echange -> Objects.equals(echange.getCible().getCode(), elem)).count();
+//            return new DetailsCoupsListeElem(
+//                    elem,
+//                    (int) nbElem,
+//                    pourcent(total, (float) nbElem));
+//        }).collect(Collectors.toSet());
+        return new HashSet<>();
     }
 
     protected Set<DetailsCoupsListeElem> calculerDetailCoupVulnerantElem(
             final Set<String> setElemString,
-            final List<Coup> coups,
+            final List<Echange> echanges,
             final float total
     ) {
-        return setElemString.stream().map(elem -> {
-            long nbElem = coups.stream().filter(coup -> Objects.equals(coup.getVulnerant().getCode(), elem)).count();
-            return new DetailsCoupsListeElem(
-                    elem,
-                    (int) nbElem,
-                    pourcent(total, (float) nbElem));
-        }).collect(Collectors.toSet());
+//        return setElemString.stream().map(elem -> {
+//            long nbElem = echanges.stream().filter(echange -> Objects.equals(echange.getVulnerant().getCode(), elem)).count();
+//            return new DetailsCoupsListeElem(
+//                    elem,
+//                    (int) nbElem,
+//                    pourcent(total, (float) nbElem));
+//        }).collect(Collectors.toSet());
+        return new HashSet<>();
     }
 
     protected Set<DetailsCoupsListeElem> calculerDetailCoupDetailsElem(
             final InscritDetails details,
-            final List<Coup> coups,
+            final List<Echange> echanges,
             final float total
     ) {
-        long nbSimu = coups.stream().filter(Coup::isSimultanee).count();
-        DetailsCoupsListeElem elemSimultane = new DetailsCoupsListeElem("simultane", (int) nbSimu, pourcent(total, nbSimu));
-
-        long nbDoubleAtk = coups.stream().filter(Coup::isDoubleAtk).count();
-        DetailsCoupsListeElem elemDoubleAtk = new DetailsCoupsListeElem("double atk", (int) nbDoubleAtk, pourcent(total, nbDoubleAtk));
-
-        long nbDoubleDef = coups.stream().filter(Coup::isDoubleDef).count();
-        DetailsCoupsListeElem elemDoubleDef = new DetailsCoupsListeElem("double def", (int) nbDoubleDef, pourcent(total, nbDoubleDef));
-
-        long nbAfterblow = coups.stream().filter(Coup::isAfterblow).count();
-        DetailsCoupsListeElem elemAfterblow = new DetailsCoupsListeElem("afterblow", (int) nbAfterblow, pourcent(total, nbAfterblow));
-
-        long nbClair = coups.stream().filter(
-                coup -> !coup.isSimultanee()
-                        && !coup.isDoubleAtk()
-                        && !coup.isDoubleDef()
-                        && !coup.isAfterblow()
-        ).count();
-        DetailsCoupsListeElem elemClair = new DetailsCoupsListeElem("clair", (int) nbClair, pourcent(total, nbClair));
-
-        return new HashSet<>(Arrays.asList(elemSimultane, elemDoubleAtk, elemDoubleDef, elemAfterblow, elemClair));
+//        long nbSimu = echanges.stream().filter(Echange::isSimultanee).count();
+//        DetailsCoupsListeElem elemSimultane = new DetailsCoupsListeElem("simultane", (int) nbSimu, pourcent(total, nbSimu));
+//
+//        long nbDoubleAtk = echanges.stream().filter(Echange::isDoubleAtk).count();
+//        DetailsCoupsListeElem elemDoubleAtk = new DetailsCoupsListeElem("double atk", (int) nbDoubleAtk, pourcent(total, nbDoubleAtk));
+//
+//        long nbDoubleDef = echanges.stream().filter(Echange::isDoubleDef).count();
+//        DetailsCoupsListeElem elemDoubleDef = new DetailsCoupsListeElem("double def", (int) nbDoubleDef, pourcent(total, nbDoubleDef));
+//
+//        long nbAfterblow = echanges.stream().filter(Echange::isAfterblow).count();
+//        DetailsCoupsListeElem elemAfterblow = new DetailsCoupsListeElem("afterblow", (int) nbAfterblow, pourcent(total, nbAfterblow));
+//
+//        long nbClair = echanges.stream().filter(
+//                echange -> !echange.isSimultanee()
+//                        && !echange.isDoubleAtk()
+//                        && !echange.isDoubleDef()
+//                        && !echange.isAfterblow()
+//        ).count();
+//        DetailsCoupsListeElem elemClair = new DetailsCoupsListeElem("clair", (int) nbClair, pourcent(total, nbClair));
+//
+//        return new HashSet<>(Arrays.asList(elemSimultane, elemDoubleAtk, elemDoubleDef, elemAfterblow, elemClair));
+        return new HashSet<>();
     }
 
     protected boolean isA(final InscritDetails details, final MatchDto match) {

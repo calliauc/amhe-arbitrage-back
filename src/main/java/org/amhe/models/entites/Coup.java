@@ -4,38 +4,33 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@DiscriminatorColumn(name = "position_echange")
 @Getter
 @Setter
-public class Coup {
+public abstract class Coup {
     @Id
     @SequenceGenerator(name = "coup_seq", sequenceName = "COUP_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "coup_seq")
     private Long id;
-    @Column(name = "match_id")
-    private Long matchId;
+    @OneToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "echange_id", referencedColumnName = "id")
+    private Echange echange;
+
     @ManyToOne
-    private Inscrit attaquant;
+    @JoinColumn(name = "inscrit_id")
+    private Inscrit inscrit;
     @ManyToOne
-    private Inscrit defenseur;
-    //    @Column(name = "attaquant_couleur")
-//    private String attaquantCouleur;
-//    @Column(name = "defenseur_couleur")
-//    private String defenseurCouleur;
-    @Column(name = "attaquant_score")
-    private Long attaquantScore;
-    @Column(name = "defenseur_score")
-    private Long defenseurScore;
-    private LocalDateTime timecode;
-    private boolean doubleAtk;
-    private boolean doubleDef;
-    private boolean afterblow;
-    private boolean simultanee;
-    private boolean faute;
+    @JoinColumn(name = "opposant_id")
+    private Inscrit opposant;
+
     @ManyToOne
     private Item vulnerant;
     @ManyToOne
     private Item cible;
+
+    @ManyToOne
+    private Item penalite;
+
 }

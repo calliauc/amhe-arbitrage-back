@@ -3,7 +3,7 @@ package org.amhe.logiques;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.amhe.models.entites.Individu;
-import org.amhe.repos.CoupRepo;
+import org.amhe.repos.EchangeRepo;
 import org.amhe.repos.IndividuRepo;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public class IndividuLogique {
     MatchLogique matchLogique;
 
     @Inject
-    CoupRepo coupRepo;
+    EchangeRepo echangeRepo;
 
 
     public List<Individu> getIndividus() {

@@ -34,24 +34,26 @@ public class ItemMapper {
     }
 
     public Item dtoVersBase(final ItemDto itemDto) {
-        Item ruleset = new Item();
-        if (Objects.nonNull(itemDto)) {
-            ruleset.setId(itemDto.getId());
-            ruleset.setCode(itemDto.getCode());
-            ruleset.setType(itemDto.getType());
-            ruleset.setLibelle(itemDto.getLibelle());
+        if (Objects.isNull(itemDto)) {
+            return null;
         }
+        Item ruleset = new Item();
+        ruleset.setId(itemDto.getId());
+        ruleset.setCode(itemDto.getCode());
+        ruleset.setType(itemDto.getType());
+        ruleset.setLibelle(itemDto.getLibelle());
         return ruleset;
     }
 
-    public ItemDto baseVersDto(final Item ruleset) {
-        ItemDto itemDto = new ItemDto();
-        if (Objects.nonNull(ruleset)) {
-            itemDto.setId(ruleset.getId());
-            itemDto.setCode(ruleset.getCode());
-            itemDto.setType(ruleset.getType());
-            itemDto.setLibelle(ruleset.getLibelle());
+    public ItemDto baseVersDto(final Item item) {
+        if (Objects.isNull(item)) {
+            return null;
         }
+        ItemDto itemDto = new ItemDto();
+        itemDto.setId(item.getId());
+        itemDto.setCode(item.getCode());
+        itemDto.setType(item.getType());
+        itemDto.setLibelle(item.getLibelle());
         return itemDto;
     }
 

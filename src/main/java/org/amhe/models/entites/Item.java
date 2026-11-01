@@ -14,7 +14,7 @@ public class Item implements Serializable {
     @SequenceGenerator(name = "item_seq", sequenceName = "ITEM_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_seq")
     private Long id;
-    private String code;
     private String type;
+    private String code;
     private String libelle;
 }

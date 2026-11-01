@@ -1,5 +1,6 @@
 package org.amhe.models.entites;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,8 +38,11 @@ public class Match implements Serializable {
     @Column(name = "score_b")
     private int scoreB;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:s")
     private LocalDateTime dateCreation;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:s")
     private LocalDateTime dateDebut;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:s")
     private LocalDateTime dateFin;
     private String statut;
     private int timer;

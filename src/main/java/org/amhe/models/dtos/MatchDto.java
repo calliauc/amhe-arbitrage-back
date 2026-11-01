@@ -1,5 +1,6 @@
 package org.amhe.models.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,8 +22,11 @@ public class MatchDto implements Serializable {
     private int scoreA;
     private int scoreB;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:s")
     private LocalDateTime dateCreation;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:s")
     private LocalDateTime dateDebut;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:s")
     private LocalDateTime dateFin;
     private String statut;
     private int timer;
