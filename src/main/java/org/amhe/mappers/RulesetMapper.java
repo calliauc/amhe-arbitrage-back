@@ -38,6 +38,7 @@ public class RulesetMapper {
             rulesetDto.setDescription(ruleset.getDescription());
             rulesetDto.setTimerLimite(ruleset.getTimerLimite());
             rulesetDto.setTimerReverse(ruleset.getTimerReverse());
+            rulesetDto.setTypesEchange(itemMapper.recupererItems(ruleset.getTypesEchange()));
             rulesetDto.setVulnerants(itemMapper.recupererItems(ruleset.getVulnerants()));
             rulesetDto.setCibles(itemMapper.recupererItems(ruleset.getCibles()));
         }
@@ -72,6 +73,7 @@ public class RulesetMapper {
             ruleset.setDescription(rulesetDto.getDescription());
             ruleset.setTimerLimite(rulesetDto.getTimerLimite());
             ruleset.setTimerReverse(rulesetDto.getTimerReverse());
+            ruleset.setTypesEchange(itemMapper.recupererIds(rulesetDto.getTypesEchange()));
             ruleset.setVulnerants(itemMapper.recupererIds(rulesetDto.getVulnerants()));
             ruleset.setCibles(itemMapper.recupererIds(rulesetDto.getCibles()));
         }
@@ -86,6 +88,7 @@ public class RulesetMapper {
             rulesetDto.setDescription(ruleset.getDescription());
             rulesetDto.setTimerLimite(ruleset.getTimerLimite());
             rulesetDto.setTimerReverse(ruleset.getTimerReverse());
+            rulesetDto.setTypesEchange(itemMapper.recupererItems(ruleset.getTypesEchange()));
             rulesetDto.setVulnerants(itemMapper.recupererItems(ruleset.getVulnerants()));
             rulesetDto.setCibles(itemMapper.recupererItems(ruleset.getCibles()));
         }

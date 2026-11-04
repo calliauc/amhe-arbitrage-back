@@ -7,6 +7,7 @@ import org.amhe.models.dtos.EchangeNouveauDto;
 import org.amhe.models.entites.CoupA;
 import org.amhe.models.entites.CoupB;
 import org.amhe.models.entites.Echange;
+import org.amhe.models.entites.Match;
 import org.amhe.repos.EchangeRepo;
 import org.amhe.repos.ItemRepo;
 
@@ -25,6 +26,9 @@ public class EchangeLogique {
     @Inject
     ItemRepo itemRepo;
 
+    @Inject
+    MatchLogique matchLogique;
+
 
     public List<Echange> getEchanges() {
         return echangeRepo.getEchanges();
@@ -32,6 +36,11 @@ public class EchangeLogique {
 
     public Echange getEchangeById(final Long id) {
         return echangeRepo.getEchangeById(id);
+    }
+
+    public List<Echange> getEchangeByMatchId(final Long id) {
+        Match match = matchLogique.getMatchById(id);
+        return echangeRepo.getEchangesByMatchId(match);
     }
 
     public Echange creerEchange(final EchangeNouveauDto echangeNouveauDto) {

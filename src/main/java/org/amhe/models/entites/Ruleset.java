@@ -19,6 +19,7 @@ public class Ruleset implements Serializable {
     private String description;
     private long timerLimite;
     private Boolean timerReverse;
+    private List<Long> typesEchange;
     private List<Long> vulnerants;
     private List<Long> cibles;
 }

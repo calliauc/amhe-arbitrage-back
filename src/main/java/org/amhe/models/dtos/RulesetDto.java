@@ -14,6 +14,7 @@ public class RulesetDto implements Serializable {
     private String description;
     private long timerLimite;
     private Boolean timerReverse;
+    private List<ItemDto> typesEchange;
     private List<ItemDto> vulnerants;
     private List<ItemDto> cibles;
 }

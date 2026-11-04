@@ -103,7 +103,7 @@ public class InscritLogique {
 
     protected InscritDetails calculerCoupsInscrit(InscritDetails details) {
         List<Echange> echanges = new ArrayList<>();
-        details.getMatchs().forEach(match -> echanges.addAll(echangeRepo.getEchangesByMatchId(match.getId())));
+//        details.getMatchs().forEach(match -> echanges.addAll(echangeRepo.getEchangesByMatchId(match.getId())));
         details.setCoupsMarques(calculerCoupsMarques(details, echanges));
         details.setCoupsSubis(calculerCoupsSubis(details, echanges));
         return details;

@@ -41,8 +41,8 @@ INSERT INTO ITEM(id, type, code) VALUES
 alter sequence ITEM_SEQ restart with 25;
 
 -- RULESETS
-INSERT INTO ruleset(id, nom, description, timerlimite, timerreverse, vulnerants, cibles)
-VALUES (1, 'Longsword', 'Longsword test', '600', true, '{1, 2, 3 }', '{5, 6, 7, 8, 9}');
+INSERT INTO ruleset(id, nom, description, timerlimite, timerreverse, typesechange, vulnerants, cibles)
+VALUES (1, 'Longsword', 'Longsword test', '600', true, '{21, 22, 23, 24 }', '{1, 2, 3 }', '{5, 6, 7, 8, 9}');
 alter sequence RULESET_SEQ restart with 2;
 
 -- CLUBS

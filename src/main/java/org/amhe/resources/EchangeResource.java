@@ -50,7 +50,7 @@ public class EchangeResource {
     @Path("/match/{match_id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEchangeByMatchId(@PathParam("match_id") final Long match_id) {
-        List<EchangeDto> echanges = echangeMapper.listeBaseVersDto(echangeRepo.getEchangesByMatchId(match_id));
+        List<EchangeDto> echanges = echangeMapper.listeBaseVersDto(echangeLogique.getEchangeByMatchId(match_id));
         if (null == echanges) {
             return Response.status(204).build();
         }
