@@ -31,12 +31,12 @@ INSERT INTO ITEM(id, type, code, libelle) VALUES
 ('19', 'sanction', 'carton rouge', 'Défaite du match en cours'),
 ('20', 'sanction', 'carton noir', 'Défaite et exclusion');
 
--- TAGS
-INSERT INTO ITEM(id, type, code) VALUES
-('21', 'echange', 'clean'),
-('22', 'echange', 'simu'),
-('23', 'echange', 'double'),
-('24', 'echange', 'afterblow');
+-- TYPES-ECHANGE
+INSERT INTO ITEM(id, type, code, libelle, flags) VALUES
+('21', 'type-echange', 'clean', 'Touche seule', '{"toucheClean"}'),
+('22', 'type-echange', 'simu', 'Touches simultanées', '{simu}'),
+('23', 'type-echange', 'double', 'Double touche', '{"prio"}'),
+('24', 'type-echange', 'afterblow', 'Blow/afterblow', '{"prio"}');
 
 alter sequence ITEM_SEQ restart with 25;
 
@@ -57,8 +57,9 @@ insert into INDIVIDU(id, nom, prenom, pseudo, club_id) values
 (1, 'Calliau', 'Alix', 'Makhai', 1),
 (2, 'Goches', 'Alex', 'Walter', 1),
 (3, 'Biron', 'Hyppolyte', null, 2),
-(4, 'Pommellet', 'Adrien', null, 3);
-alter sequence INDIVIDU_SEQ restart with 5;
+(4, 'Pommellet', 'Adrien', null, 3),
+(5, 'Chiadaria', 'Hugo', null, 1);
+alter sequence INDIVIDU_SEQ restart with 6;
 
 -- EVENT
 INSERT INTO evenement(id, nom, description, dateDebut, dateFin, ruleset_id) VALUES

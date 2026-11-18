@@ -1,13 +1,9 @@
 package org.amhe.models.entites;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
-//@DiscriminatorValue("A")
-@Getter
-@Setter
+@DiscriminatorValue("A")
 public class CoupA extends Coup {
-
 }

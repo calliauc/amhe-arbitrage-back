@@ -5,17 +5,18 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-//@DiscriminatorColumn(name = "position_echange")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "inscrit")
 @Getter
 @Setter
-public abstract class Coup {
+public class Coup {
     @Id
     @SequenceGenerator(name = "coup_seq", sequenceName = "COUP_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "coup_seq")
     private Long id;
-    @OneToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "echange_id", referencedColumnName = "id")
+
+    @ManyToOne
+    @JoinColumn(name = "echange_id")
     private Echange echange;
 
     @ManyToOne

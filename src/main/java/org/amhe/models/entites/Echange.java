@@ -22,23 +22,21 @@ public class Echange {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:s")
     private LocalDateTime timecode;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne
     @JoinColumn(name = "inscrit_a_id")
     private Inscrit inscritA;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "coup_a_id", referencedColumnName = "id")
-    private Coup coupA;
     @Column(name = "score_a")
     private Long scoreA;
 
     @ManyToOne
     @JoinColumn(name = "inscrit_b_id")
     private Inscrit inscritB;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "coup_b_id", referencedColumnName = "id")
-    private Coup coupB;
     @Column(name = "score_b")
     private Long scoreB;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private CoupA coupA;
+    @OneToOne(cascade = CascadeType.ALL)
+    private CoupB coupB;
 
 }

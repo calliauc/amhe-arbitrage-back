@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity(name = "ITEM")
 @Getter
@@ -17,4 +18,6 @@ public class Item implements Serializable {
     private String type;
     private String code;
     private String libelle;
+
+    private List<String> flags;
 }

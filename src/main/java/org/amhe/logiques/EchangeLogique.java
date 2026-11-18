@@ -8,6 +8,7 @@ import org.amhe.models.entites.CoupA;
 import org.amhe.models.entites.CoupB;
 import org.amhe.models.entites.Echange;
 import org.amhe.models.entites.Match;
+import org.amhe.repos.CoupRepo;
 import org.amhe.repos.EchangeRepo;
 import org.amhe.repos.ItemRepo;
 
@@ -21,7 +22,7 @@ public class EchangeLogique {
     EchangeMapper mapper;
 
     @Inject
-    EchangeRepo echangeRepo;
+    EchangeRepo repo;
 
     @Inject
     ItemRepo itemRepo;
@@ -29,23 +30,26 @@ public class EchangeLogique {
     @Inject
     MatchLogique matchLogique;
 
+    @Inject
+    CoupRepo coupRepo;
+
 
     public List<Echange> getEchanges() {
-        return echangeRepo.getEchanges();
+        return repo.getEchanges();
     }
 
     public Echange getEchangeById(final Long id) {
-        return echangeRepo.getEchangeById(id);
+        return repo.getEchangeById(id);
     }
 
     public List<Echange> getEchangeByMatchId(final Long id) {
         Match match = matchLogique.getMatchById(id);
-        return echangeRepo.getEchangesByMatchId(match);
+        return repo.getEchangesByMatchId(match);
     }
 
     public Echange creerEchange(final EchangeNouveauDto echangeNouveauDto) {
         Echange echange = mapper.dtoVersBase(echangeNouveauDto);
-        echange = echangeRepo.creerEchange(echange);
+        echange = repo.creerEchange(echange);
 
         if (Objects.isNull(echange.getTimecode()))
             echange.setTimecode(LocalDateTime.now());
@@ -54,11 +58,11 @@ public class EchangeLogique {
         echange.setCoupA(creerCoupA(echange, echangeNouveauDto));
         echange.setCoupB(creerCoupB(echange, echangeNouveauDto));
 
-        return echangeRepo.modifierEchange(echange);
+        return repo.modifierEchange(echange);
     }
 
     public void supprimerEchange(final Long id) {
-        echangeRepo.supprimerEchange(id);
+        repo.supprimerEchange(id);
     }
 
 
@@ -73,7 +77,7 @@ public class EchangeLogique {
             coup.setCible(itemRepo.getItemById(echangeDto.getCibleA()));
         if (Objects.nonNull(echangeDto.getPenaliteA()))
             coup.setPenalite(itemRepo.getItemById(echangeDto.getPenaliteA()));
-        return coup;
+        return coupRepo.createCoup(coup);
     }
 
     private CoupB creerCoupB(Echange echange, EchangeNouveauDto echangeDto) {
@@ -87,7 +91,7 @@ public class EchangeLogique {
             coup.setCible(itemRepo.getItemById(echangeDto.getCibleB()));
         if (Objects.nonNull(echangeDto.getPenaliteB()))
             coup.setPenalite(itemRepo.getItemById(echangeDto.getPenaliteB()));
-        return coup;
+        return coupRepo.createCoup(coup);
     }
 
 }

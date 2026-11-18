@@ -1,11 +1,11 @@
 package org.amhe.models.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,6 +15,6 @@ public class ItemDto implements Serializable {
     private String type;
     private String code;
     private String libelle;
-    @JsonIgnore
-    private boolean checked;
+
+    private List<String> flags;
 }

@@ -5,6 +5,8 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.amhe.models.entites.Coup;
+import org.amhe.models.entites.CoupA;
+import org.amhe.models.entites.CoupB;
 
 import java.util.List;
 
@@ -25,6 +27,16 @@ public class CoupRepo {
 
     @Transactional
     public Coup createCoup(final Coup nouveauCoup) {
+        return em.merge(nouveauCoup);
+    }
+
+    @Transactional
+    public CoupA createCoup(final CoupA nouveauCoup) {
+        return em.merge(nouveauCoup);
+    }
+
+    @Transactional
+    public CoupB createCoup(final CoupB nouveauCoup) {
         return em.merge(nouveauCoup);
     }
 

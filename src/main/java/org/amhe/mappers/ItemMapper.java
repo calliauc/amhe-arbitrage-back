@@ -37,12 +37,15 @@ public class ItemMapper {
         if (Objects.isNull(itemDto)) {
             return null;
         }
-        Item ruleset = new Item();
-        ruleset.setId(itemDto.getId());
-        ruleset.setCode(itemDto.getCode());
-        ruleset.setType(itemDto.getType());
-        ruleset.setLibelle(itemDto.getLibelle());
-        return ruleset;
+        Item item = new Item();
+        item.setId(itemDto.getId());
+        item.setCode(itemDto.getCode());
+        item.setType(itemDto.getType());
+        item.setLibelle(itemDto.getLibelle());
+        if (Objects.nonNull(itemDto.getFlags())) {
+            item.setFlags(new ArrayList<>(itemDto.getFlags()));
+        }
+        return item;
     }
 
     public ItemDto baseVersDto(final Item item) {
@@ -54,6 +57,9 @@ public class ItemMapper {
         itemDto.setCode(item.getCode());
         itemDto.setType(item.getType());
         itemDto.setLibelle(item.getLibelle());
+        if (Objects.nonNull(item.getFlags()) && !item.getFlags().isEmpty()) {
+            itemDto.setFlags(new ArrayList<>(item.getFlags()));
+        }
         return itemDto;
     }
 
