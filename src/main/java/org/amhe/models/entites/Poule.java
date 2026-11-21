@@ -24,7 +24,7 @@ public class Poule implements Serializable {
     @ManyToMany(targetEntity = Inscrit.class, fetch = FetchType.EAGER)
     private List<Inscrit> inscrits;
     @Nullable
-    @OneToMany(targetEntity = Match.class, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Match.class, fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Match> matchs;
     @Nullable
     private List<Long> tags;

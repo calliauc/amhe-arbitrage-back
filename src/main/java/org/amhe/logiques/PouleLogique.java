@@ -15,7 +15,7 @@ import java.util.Objects;
 @ApplicationScoped
 public class PouleLogique {
     @Inject
-    PouleRepo pouleRepo;
+    PouleRepo repo;
 
     @Inject
     EvenementRepo evenementRepo;
@@ -24,56 +24,55 @@ public class PouleLogique {
     InscritRepo inscritRepo;
 
     public List<Poule> getPoules() {
-        return pouleRepo.getPoules();
+        return repo.getPoules();
     }
 
     public Poule getPouleById(final Long id) {
-        return pouleRepo.getPouleById(id);
+        return repo.getPouleById(id);
     }
 
     public List<Poule> getPouleByEvent(final Long id) {
-        return pouleRepo.getPoulesByEvent(id);
+        return repo.getPoulesByEvent(id);
     }
 
     public Poule creerPoule(final Poule nouvellePoule) {
-        return pouleRepo.createPoule(nouvellePoule);
+        return repo.createPoule(nouvellePoule);
     }
 
     public Poule modifierPoule(final Poule poule) {
-        return pouleRepo.editPoule(poule);
+        return repo.editPoule(poule);
     }
 
     public void supprimerPoule(final Long id) {
-        pouleRepo.deletePoule(id);
+        repo.deletePoule(id);
     }
 
-
     public Poule inscrireALaPoule(final Long id, final List<Long> inscritsId) {
-        Poule poule = pouleRepo.getPouleById(id);
+        Poule poule = repo.getPouleById(id);
         Evenement event = evenementRepo.getEvenementById(poule.getEvenement().getId());
         poule.getInscrits().addAll(inscritsId.stream()
                 .map(inscritId -> inscritRepo.getInscritById(inscritId))
                 .filter(inscrit -> Objects.nonNull(inscrit) && Objects.equals(inscrit.getEvenement().getId(), event.getId()))
                 .toList());
-        return pouleRepo.editPoule(poule);
+        return repo.editPoule(poule);
     }
 
     public List<Poule> updateInscritsPoules(final List<Poule> poulesInput) {
         List<Poule> poulesOutput = new ArrayList<>();
         poulesInput.forEach(poule -> {
-            Poule p = pouleRepo.getPouleById(poule.getId());
+            Poule p = repo.getPouleById(poule.getId());
             if (Objects.nonNull(poule.getInscrits())) {
                 p.setInscrits(poule.getInscrits());
             } else {
                 p.setInscrits(new ArrayList<>());
             }
-            pouleRepo.editPoule(p);
+            repo.editPoule(p);
             poulesOutput.add(p);
         });
         return poulesOutput;
     }
 
     public List<Poule> getPoulesByEvent(final Long eventId) {
-        return pouleRepo.getPoulesByEvent(eventId);
+        return repo.getPoulesByEvent(eventId);
     }
 }

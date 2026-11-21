@@ -3,15 +3,15 @@ package org.amhe.logiques;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
-import org.amhe.mappers.InscritMapper;
-import org.amhe.mappers.MatchMapper;
 import org.amhe.models.dtos.MatchPartialUpdateDto;
+import org.amhe.models.entites.Echange;
 import org.amhe.models.entites.Inscrit;
 import org.amhe.models.entites.Match;
 import org.amhe.models.entites.Poule;
 import org.amhe.models.trier.CriteresRechercheMatchs;
 import org.amhe.models.trier.TagsFiltres;
 import org.amhe.repos.MatchRepo;
+import org.amhe.repos.PouleRepo;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -22,11 +22,8 @@ public class MatchLogique {
 
     @Inject
     MatchRepo repo;
-
     @Inject
-    MatchMapper mapper;
-    @Inject
-    InscritMapper inscritMapper;
+    PouleRepo pouleRepo;
 
     @Inject
     InscritLogique inscritLogique;
@@ -135,12 +132,18 @@ public class MatchLogique {
 
     // SUPPRESSION
     public void supprimerMatch(final Long id) {
-        echangeLogique.supprimerEchangesMatch(getMatchById(id));
-//        List<Echange> echanges = echangeLogique.getEchangeByMatchId(id);
-//        if (Objects.nonNull(echanges)) {
-//            echanges.forEach(e -> echangeLogique.supprimerEchange(e.getId()));
-//        }
-        repo.deleteMatch(id);
+        Match match = getMatchById(id);
+        if (Objects.nonNull(match.getPoule().getMatchs())) {
+            match.getPoule().getMatchs().remove(match);
+            pouleRepo.editPoule(match.getPoule());
+        }
+
+        List<Echange> echanges = echangeLogique.getEchangeByMatchId(id);
+        if (Objects.nonNull(echanges)) {
+            echanges.forEach(e -> echangeLogique.supprimerEchange(e.getId()));
+        }
+
+        repo.deleteMatch(match.getId());
     }
 
 

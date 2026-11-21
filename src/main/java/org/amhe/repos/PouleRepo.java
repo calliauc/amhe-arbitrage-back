@@ -31,7 +31,7 @@ public class PouleRepo {
         return em.createQuery("FROM Poule WHERE evenement = :event", Poule.class)
                 .setParameter("event", event).getResultList();
     }
-    
+
     @Transactional
     public Poule createPoule(final Poule nouveauPoule) {
         return em.merge(nouveauPoule);

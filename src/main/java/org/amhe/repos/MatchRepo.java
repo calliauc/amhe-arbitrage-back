@@ -72,8 +72,8 @@ public class MatchRepo {
 
     @Transactional
     public void deleteMatch(final Long matchId) {
-        Match match = getMatchById(matchId);
-        em.remove(match);
+        Match linkedMatch = getMatchById(matchId);
+        em.remove(linkedMatch);
     }
 
 }
