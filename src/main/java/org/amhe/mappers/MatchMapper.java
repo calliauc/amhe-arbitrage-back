@@ -52,7 +52,7 @@ public class MatchMapper {
         Match match = new Match();
         match.setId(matchDto.getId());
         match.setEvenement(evenementMapper.dtoVersBase(matchDto.getEvenement()));
-        match.setPoule(pouleMapper.dtoVersBase(matchDto.getPoule()));
+        match.setPoule(pouleMapper.dtoIdVersBase(matchDto.getPoule()));
         match.setInscritA(inscritMapper.dtoVersBase(matchDto.getInscritA()));
         match.setInscritB(inscritMapper.dtoVersBase(matchDto.getInscritB()));
         match.setScoreA(matchDto.getScoreA());
@@ -89,6 +89,7 @@ public class MatchMapper {
     public MatchDto baseVersApercu(final Match match) {
         MatchDto matchDto = new MatchDto();
         matchDto.setId(match.getId());
+        matchDto.setEvenement(evenementMapper.baseVersApercu(match.getEvenement()));
         matchDto.setPoule(pouleMapper.baseVersApercu(match.getPoule()));
         matchDto.setInscritA(inscritMapper.baseVersDto(match.getInscritA()));
         matchDto.setInscritB(inscritMapper.baseVersDto(match.getInscritB()));

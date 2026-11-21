@@ -53,6 +53,12 @@ public class PouleMapper {
         return poule;
     }
 
+    public Poule dtoIdVersBase(final PouleDto pouleDto) {
+        Poule poule = new Poule();
+        poule.setId(pouleDto.getId());
+        return poule;
+    }
+
     public PouleDto baseVersDto(final Poule poule) {
         PouleDto pouleDto = new PouleDto();
         if (Objects.nonNull(poule)) {

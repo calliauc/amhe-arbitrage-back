@@ -44,7 +44,7 @@ public class PouleRepo {
 
     @Transactional
     public void deletePoule(final Long id) {
-        Poule pouleASpprimer = this.getPouleById(id);
-        em.remove(pouleASpprimer);
+        Poule pouleASupprimer = this.getPouleById(id);
+        em.remove(pouleASupprimer);
     }
 }

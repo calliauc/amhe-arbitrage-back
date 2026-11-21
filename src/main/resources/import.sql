@@ -101,5 +101,8 @@ statut, datecreation, datedebut, datefin
 2,2,0,1,NULL,
 'nouveau','2026-11-28 15:45:30',NULL,NULL
 );
+alter sequence MATCH_SEQ restart with 3;
 
-alter sequence MATCH_SEQ restart with 2;
+-- POULE_INSCRIT
+INSERT INTO poule_match(poule_id, matchs_id) VALUES
+(1, 1);
