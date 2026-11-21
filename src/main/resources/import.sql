@@ -58,7 +58,7 @@ insert into INDIVIDU(id, nom, prenom, pseudo, club_id) values
 (2, 'Goches', 'Alex', 'Walter', 1),
 (3, 'Biron', 'Hyppolyte', null, 2),
 (4, 'Pommellet', 'Adrien', null, 3),
-(5, 'Chiadaria', 'Hugo', null, 1);
+(5, 'Chiaradia', 'Hugo', null, 1);
 alter sequence INDIVIDU_SEQ restart with 6;
 
 -- EVENT
@@ -72,8 +72,9 @@ INSERT INTO inscrit(id, evenement_id, individu_id) VALUES
 (1, 1, 1),
 (2, 1, 2),
 (3, 1, 3),
-(4, 1, 4);
-alter sequence INSCRIT_SEQ restart with 5;
+(4, 1, 4),
+(5, 1, 5);
+alter sequence INSCRIT_SEQ restart with 6;
 
 -- POULE
 INSERT INTO poule(id, nom, description, evenement_id) VALUES
@@ -85,9 +86,10 @@ alter sequence POULE_SEQ restart with 3;
 -- POULE_INSCRIT
 INSERT INTO poule_inscrit(poule_id, inscrits_id) VALUES
 (1, 1),
-(1, 2),
+(2, 2),
 (2, 3),
-(2, 4);
+(2, 4),
+(2, 5);
 
 -- MATCH
 INSERT INTO match(

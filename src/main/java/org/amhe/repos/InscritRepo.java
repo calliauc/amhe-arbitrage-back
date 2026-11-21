@@ -9,6 +9,7 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import org.amhe.models.entites.Evenement;
+import org.amhe.models.entites.Individu;
 import org.amhe.models.entites.Inscrit;
 
 import java.util.List;
@@ -69,5 +70,13 @@ public class InscritRepo {
         event.setId(eventId);
         return em.createQuery("FROM Inscrit WHERE evenement = :event", Inscrit.class)
                 .setParameter("event", event).getResultList();
+    }
+
+    @Transactional
+    public List<Inscrit> getInscritsByIndividu(final Long idIndividu) {
+        Individu individu = new Individu();
+        individu.setId(idIndividu);
+        return em.createQuery("FROM Inscrit WHERE individu = :individu", Inscrit.class)
+                .setParameter("individu", individu).getResultList();
     }
 }

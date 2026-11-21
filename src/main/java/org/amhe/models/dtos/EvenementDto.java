@@ -1,5 +1,6 @@
 package org.amhe.models.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +16,7 @@ public class EvenementDto implements Serializable {
     private String description;
     private LocalDate dateDebut;
     private LocalDate dateFin;
-    //    @JsonIgnoreProperties(value = "evenement")
+    @JsonIgnoreProperties(value = "evenement")
     private List<InscritDto> inscrits;
     private RulesetApercuDto ruleset;
 }

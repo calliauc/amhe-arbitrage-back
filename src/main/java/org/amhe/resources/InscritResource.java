@@ -51,6 +51,17 @@ public class InscritResource {
         return Response.status(200).entity(inscrit).build();
     }
 
+    @GET
+    @Path("/individu/{idIndividu}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getInscritByIndividu(@PathParam("idIndividu") final Long idIndividu) {
+        List<InscritDto> inscrit = inscritMapper.listeBaseVersDto(inscritLogique.getInscritsByIndividu(idIndividu));
+        if (null == inscrit) {
+            return Response.status(204).tag("tag").build();
+        }
+        return Response.status(200).entity(inscrit).build();
+    }
+
     @POST
     @Path("/recherche/nom")
     @Produces(MediaType.APPLICATION_JSON)
@@ -111,12 +122,12 @@ public class InscritResource {
         return Response.status(200).build();
     }
 
-    @POST
-    @Path("/rotationListe")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response rotationInscrits(final List<Inscrit> inscrits) {
-        List<Inscrit> result = inscritLogique.rotationInscrits(inscrits);
-        return Response.status(200).entity(result).build();
-    }
+//    @POST
+//    @Path("/rotationListe")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public Response rotationInscrits(final List<Inscrit> inscrits) {
+//        List<Inscrit> result = inscritLogique.rotationInscrits(inscrits);
+//        return Response.status(200).entity(result).build();
+//    }
 }

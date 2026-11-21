@@ -65,6 +65,9 @@ public class EchangeLogique {
         repo.supprimerEchange(id);
     }
 
+    public void supprimerEchangesMatch(final Match match) {
+        repo.supprimerEchangesMatch(match);
+    }
 
     private CoupA creerCoupA(Echange echange, EchangeNouveauDto echangeDto) {
         CoupA coup = new CoupA();

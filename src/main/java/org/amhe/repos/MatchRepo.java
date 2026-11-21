@@ -44,20 +44,19 @@ public class MatchRepo {
     public List<Match> rechercheMatchsParCriteres(final CriteresRechercheMatchs criteres) {
 
         List<Match> matchs;
-        if (Objects.nonNull(criteres.getIdInscrit())) {
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<Match> query = cb.createQuery(Match.class);
-            Root<Match> root = query.from(Match.class);
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Match> query = cb.createQuery(Match.class);
+        Root<Match> root = query.from(Match.class);
+        Predicate predicate = cb.equal(root.get("evenement").get("id"), criteres.getIdEvenement());
 
+        if (Objects.nonNull(criteres.getIdInscrit())) {
             Predicate aPredicate = cb.equal(root.get("inscritA").get("id"), criteres.getIdInscrit());
             Predicate bPredicate = cb.equal(root.get("inscritB").get("id"), criteres.getIdInscrit());
-            Predicate cpredicate = cb.or(aPredicate, bPredicate);
-            query.select(root).where(cpredicate);
-
-            matchs = em.createQuery(query).getResultList();
-        } else {
-            matchs = getMatchs();
+            Predicate inscritsPredicate = cb.or(aPredicate, bPredicate);
+            predicate = cb.and(predicate, inscritsPredicate);
         }
+        query.select(root).where(predicate);
+        matchs = em.createQuery(query).getResultList();
         return matchs;
     }
 
@@ -67,14 +66,14 @@ public class MatchRepo {
     }
 
     @Transactional
-    public Match editMatch(final Long id, final Match matchModifie) {
+    public Match editMatch(final Match matchModifie) {
         return em.merge(matchModifie);
     }
 
     @Transactional
-    public void deleteMatch(final Long id) {
-        Match matchASpprimer = this.getMatchById(id);
-        em.remove(matchASpprimer);
+    public void deleteMatch(final Long matchId) {
+        Match match = getMatchById(matchId);
+        em.remove(match);
     }
 
 }

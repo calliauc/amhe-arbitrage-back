@@ -9,7 +9,6 @@ import org.amhe.repos.InscritRepo;
 import org.amhe.repos.PouleRepo;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -66,7 +65,7 @@ public class PouleLogique {
             if (Objects.nonNull(poule.getInscrits())) {
                 p.setInscrits(poule.getInscrits());
             } else {
-                p.setInscrits(new HashSet<>());
+                p.setInscrits(new ArrayList<>());
             }
             pouleRepo.editPoule(p);
             poulesOutput.add(p);

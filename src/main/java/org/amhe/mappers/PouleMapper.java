@@ -59,9 +59,20 @@ public class PouleMapper {
             pouleDto.setId(poule.getId());
             pouleDto.setNom(poule.getNom());
             pouleDto.setDescription(poule.getDescription());
-            pouleDto.setEvenement(evenementMapper.baseVersDto(poule.getEvenement()));
+            pouleDto.setEvenement(evenementMapper.baseVersApercu(poule.getEvenement()));
             pouleDto.setInscrits(inscritMapper.listeBaseVersDto(poule.getInscrits()));
-            pouleDto.setMatchs(matchMapper.listeBaseVersDto(poule.getMatchs()));
+            pouleDto.setMatchs(matchMapper.listeBaseVersApercu(poule.getMatchs()));
+            pouleDto.setTags(itemMapper.recupererItems(poule.getTags()));
+        }
+        return pouleDto;
+    }
+
+    public PouleDto baseVersApercu(final Poule poule) {
+        PouleDto pouleDto = new PouleDto();
+        if (Objects.nonNull(poule)) {
+            pouleDto.setId(poule.getId());
+            pouleDto.setNom(poule.getNom());
+            pouleDto.setDescription(poule.getDescription());
             pouleDto.setTags(itemMapper.recupererItems(poule.getTags()));
         }
         return pouleDto;

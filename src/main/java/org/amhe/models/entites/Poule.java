@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,10 +22,10 @@ public class Poule implements Serializable {
     @JoinColumn(name = "evenement_id")
     private Evenement evenement;
     @ManyToMany(targetEntity = Inscrit.class, fetch = FetchType.EAGER)
-    private Set<Inscrit> inscrits;
+    private List<Inscrit> inscrits;
     @Nullable
     @OneToMany(targetEntity = Match.class, fetch = FetchType.EAGER)
-    private Set<Match> matchs;
+    private List<Match> matchs;
     @Nullable
-    private Set<Long> tags;
+    private List<Long> tags;
 }

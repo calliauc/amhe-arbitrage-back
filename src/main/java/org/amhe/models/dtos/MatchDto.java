@@ -15,7 +15,6 @@ public class MatchDto implements Serializable {
     private Long id;
     @JsonIgnoreProperties({"inscrits", "ruleset"})
     private EvenementDto evenement;
-    @JsonIgnoreProperties({"inscrits", "evenement", "matchs"})
     private PouleDto poule;
     private InscritDto inscritA;
     private InscritDto inscritB;

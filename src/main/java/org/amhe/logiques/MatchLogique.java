@@ -3,6 +3,9 @@ package org.amhe.logiques;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
+import org.amhe.mappers.InscritMapper;
+import org.amhe.mappers.MatchMapper;
+import org.amhe.models.dtos.MatchPartialUpdateDto;
 import org.amhe.models.entites.Inscrit;
 import org.amhe.models.entites.Match;
 import org.amhe.models.entites.Poule;
@@ -16,31 +19,40 @@ import java.util.*;
 @Slf4j
 @ApplicationScoped
 public class MatchLogique {
-    @Inject
-    MatchRepo matchRepo;
 
     @Inject
-    PouleLogique pouleLogique;
+    MatchRepo repo;
+
+    @Inject
+    MatchMapper mapper;
+    @Inject
+    InscritMapper inscritMapper;
 
     @Inject
     InscritLogique inscritLogique;
+    @Inject
+    EvenementLogique evenementLogique;
+    @Inject
+    PouleLogique pouleLogique;
+    @Inject
+    EchangeLogique echangeLogique;
 
     // OBTENTION
     public List<Match> getMatchs() {
-        return matchRepo.getMatchs();
+        return repo.getMatchs();
     }
 
     public Match getMatchById(final Long id) {
-        return matchRepo.getMatchById(id);
+        return repo.getMatchById(id);
     }
 
     public List<Match> getMatchsByEvent(final Long eventId) {
-        return matchRepo.getMatchsByEvent(eventId);
+        return repo.getMatchsByEvent(eventId);
     }
 
 
     public List<Match> rechercheMatchsParCriteres(final CriteresRechercheMatchs criteres) {
-        List<Match> matchs = matchRepo.rechercheMatchsParCriteres(criteres);
+        List<Match> matchs = repo.rechercheMatchsParCriteres(criteres);
         if (false) {
 //        if (Objects.nonNull(criteres.getIdTags()) && !criteres.getIdTags().isEmpty()) {
             Set<Long> tagsId = new HashSet<>(criteres.getIdTags());
@@ -58,46 +70,83 @@ public class MatchLogique {
     public Match creerMatch(final Match nouveauMatch) {
         nouveauMatch.setDateCreation(LocalDateTime.now());
         nouveauMatch.setStatut("nouveau");
-        return matchRepo.createMatch(nouveauMatch);
+        return repo.createMatch(nouveauMatch);
     }
 
     public List<Match> genererMatchsPoule(final Long idPoule) {
         Poule poule = pouleLogique.getPouleById(idPoule);
-        pouleLogique.modifierPoule(poule);
         List<Inscrit> inscrits = new ArrayList<>(poule.getInscrits());
         List<Match> matchs = new ArrayList<>();
+        final Match base = creerMatchAuto(poule);
         for (int i = 1; i < inscrits.size() + inscrits.size() % 2; ++i) {
             List<Inscrit> inscritsTour = new ArrayList<>(inscrits);
             while (inscritsTour.size() >= 2) {
-                Match match = new Match();
+                Match match = base.copy();
                 match.setInscritA(inscritsTour.removeFirst());
                 match.setInscritB(inscritsTour.removeLast());
-                match = matchRepo.createMatch(match);
+                match = creerMatch(match);
                 matchs.add(match);
             }
             inscrits = inscritLogique.rotationInscrits(inscrits);
         }
         if (Objects.nonNull(poule.getMatchs()))
-            poule.getMatchs().forEach(match -> matchRepo.deleteMatch(match.getId()));
-        poule.setMatchs(new HashSet<>(matchs));
+            poule.getMatchs().forEach(match -> supprimerMatch(match.getId()));
+        poule.setMatchs(new ArrayList<>(matchs));
         pouleLogique.modifierPoule(poule);
         return matchs;
     }
 
+    private Match creerMatchAuto(final Poule poule) {
+        Match match = new Match();
+        match.setEvenement(poule.getEvenement());
+        match.setPoule(poule);
+        match.setRuleset(poule.getEvenement().getRuleset());
+        match.setTags(poule.getTags());
+        return match;
+    }
+
     // MODIFICATION
     public Match modifierMatch(final Long id, final Match matchExistant) {
-        return matchRepo.editMatch(id, matchExistant);
+        return repo.editMatch(matchExistant);
+    }
+
+    public Match updatePartialMatch(MatchPartialUpdateDto update) {
+        Match match = repo.getMatchById(update.getId());
+        if (Objects.nonNull(update.getScoreA())) {
+            match.setScoreA(update.getScoreA());
+        }
+        if (Objects.nonNull(update.getScoreB())) {
+            match.setScoreB(update.getScoreB());
+        }
+        if (Objects.nonNull(update.getTimer())) {
+            match.setTimer(update.getTimer());
+        }
+        if (Objects.nonNull(update.getStatut())) {
+            match.setStatut(update.getStatut());
+        }
+        if (Objects.nonNull(update.getDateDebut())) {
+            match.setDateDebut(LocalDateTime.parse(update.getDateDebut()));
+        }
+        if (Objects.nonNull(update.getDateFin())) {
+            match.setDateFin(LocalDateTime.parse(update.getDateFin()));
+        }
+        return repo.editMatch(match);
     }
 
     // SUPPRESSION
     public void supprimerMatch(final Long id) {
-        matchRepo.deleteMatch(id);
+        echangeLogique.supprimerEchangesMatch(getMatchById(id));
+//        List<Echange> echanges = echangeLogique.getEchangeByMatchId(id);
+//        if (Objects.nonNull(echanges)) {
+//            echanges.forEach(e -> echangeLogique.supprimerEchange(e.getId()));
+//        }
+        repo.deleteMatch(id);
     }
 
 
     public List<String[]> getMatchsCsvReady() {
         List<String[]> matchsCsvReady = new ArrayList<>();
-        List<Match> matchs = matchRepo.getMatchs();
+        List<Match> matchs = repo.getMatchs();
         matchsCsvReady.add(new String[]{"Fighter 1", "Fighter 2", "Fighter 1 result", "Fighter 2 result", "Round"});
         matchs.stream()
                 .filter(match -> Objects.equals(match.getStatut(), "fini"))

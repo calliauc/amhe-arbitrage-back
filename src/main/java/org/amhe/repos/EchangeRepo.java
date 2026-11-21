@@ -3,6 +3,9 @@ package org.amhe.repos;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaDelete;
+import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import org.amhe.models.entites.Echange;
 import org.amhe.models.entites.Inscrit;
@@ -67,8 +70,17 @@ public class EchangeRepo {
 
     @Transactional
     public void supprimerEchange(final Long id) {
-        Echange echangeASpprimer = this.getEchangeById(id);
-        em.remove(echangeASpprimer);
+        Echange echangeASupprimer = this.getEchangeById(id);
+        em.remove(echangeASupprimer);
+    }
+
+    @Transactional
+    public void supprimerEchangesMatch(final Match match) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaDelete<Echange> criteriaDelete = cb.createCriteriaDelete(Echange.class);
+        Root<Echange> root = criteriaDelete.from(Echange.class);
+        criteriaDelete.where(cb.equal(root.get("match"), match));
+        em.createQuery(criteriaDelete);
     }
 
 }

@@ -1,6 +1,5 @@
 package org.amhe.models.entites;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +18,6 @@ public class Inscrit implements Serializable {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "evenement_id")
-    @JsonIgnoreProperties({"inscrits", "ruleset"})
     private Evenement evenement;
     @ManyToOne
     @JoinColumn(name = "individu_id")

@@ -20,11 +20,10 @@ public class Match implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "evenement_id")
-//    @JsonIgnoreProperties({"inscrits", "ruleset"})
     private Evenement evenement;
+
     @ManyToOne
     @JoinColumn(name = "poule_id")
-//    @JsonIgnoreProperties({"inscrits", "evenement"})
     private Poule poule;
 
     @ManyToOne
@@ -50,4 +49,14 @@ public class Match implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_ruleset")
     private Ruleset ruleset;
+
+    public Match copy() {
+        Match copie = new Match();
+        copie.setEvenement(this.getEvenement());
+        copie.setPoule(this.getPoule());
+        copie.setRuleset(this.getRuleset());
+        copie.setTags(this.getTags());
+        copie.setTimer(this.getTimer());
+        return copie;
+    }
 }

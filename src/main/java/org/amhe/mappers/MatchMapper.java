@@ -6,7 +6,9 @@ import org.amhe.models.dtos.CreationMatchDto;
 import org.amhe.models.dtos.MatchDto;
 import org.amhe.models.entites.Match;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @ApplicationScoped
 public class MatchMapper {
@@ -25,13 +27,6 @@ public class MatchMapper {
     @Inject
     ItemMapper itemMapper;
 
-    public Set<Match> listeDtoVersBase(final Set<MatchDto> matchsDto) {
-        Set<Match> matchs = new HashSet<>();
-        if (Objects.nonNull(matchsDto))
-            matchsDto.forEach(matchDto -> matchs.add(this.dtoVersBase(matchDto)));
-        return matchs;
-    }
-
     public List<Match> listeDtoVersBase(final List<MatchDto> matchsDto) {
         List<Match> matchs = new ArrayList<>();
         if (Objects.nonNull(matchsDto))
@@ -46,10 +41,10 @@ public class MatchMapper {
         return matchsDto;
     }
 
-    public Set<MatchDto> listeBaseVersDto(final Set<Match> matchs) {
-        Set<MatchDto> matchsDto = new HashSet<>();
+    public List<MatchDto> listeBaseVersApercu(final List<Match> matchs) {
+        List<MatchDto> matchsDto = new ArrayList<>();
         if (Objects.nonNull(matchs))
-            matchs.forEach(match -> matchsDto.add(this.baseVersDto(match)));
+            matchs.forEach(match -> matchsDto.add(this.baseVersApercu(match)));
         return matchsDto;
     }
 
@@ -75,8 +70,8 @@ public class MatchMapper {
     public MatchDto baseVersDto(final Match match) {
         MatchDto matchDto = new MatchDto();
         matchDto.setId(match.getId());
-        matchDto.setEvenement(evenementMapper.baseVersDto(match.getEvenement()));
-        matchDto.setPoule(pouleMapper.baseVersDto(match.getPoule()));
+        matchDto.setEvenement(evenementMapper.baseVersApercu(match.getEvenement()));
+        matchDto.setPoule(pouleMapper.baseVersApercu(match.getPoule()));
         matchDto.setInscritA(inscritMapper.baseVersDto(match.getInscritA()));
         matchDto.setInscritB(inscritMapper.baseVersDto(match.getInscritB()));
         matchDto.setScoreA(match.getScoreA());
@@ -87,7 +82,24 @@ public class MatchMapper {
         matchDto.setStatut(match.getStatut());
         matchDto.setTimer(match.getTimer());
         matchDto.setTags(itemMapper.recupererItems(match.getTags()));
-        matchDto.setRuleset(this.rulesetMapper.baseVersDto(match.getRuleset()));
+        matchDto.setRuleset(rulesetMapper.baseVersDto(match.getRuleset()));
+        return matchDto;
+    }
+
+    public MatchDto baseVersApercu(final Match match) {
+        MatchDto matchDto = new MatchDto();
+        matchDto.setId(match.getId());
+        matchDto.setPoule(pouleMapper.baseVersApercu(match.getPoule()));
+        matchDto.setInscritA(inscritMapper.baseVersDto(match.getInscritA()));
+        matchDto.setInscritB(inscritMapper.baseVersDto(match.getInscritB()));
+        matchDto.setScoreA(match.getScoreA());
+        matchDto.setScoreB(match.getScoreB());
+        matchDto.setDateCreation(match.getDateCreation());
+        matchDto.setDateDebut(match.getDateDebut());
+        matchDto.setDateFin(match.getDateFin());
+        matchDto.setStatut(match.getStatut());
+        matchDto.setTimer(match.getTimer());
+        matchDto.setTags(itemMapper.recupererItems(match.getTags()));
         return matchDto;
     }
 
