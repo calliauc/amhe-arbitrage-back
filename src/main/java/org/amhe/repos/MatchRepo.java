@@ -13,6 +13,7 @@ import org.amhe.models.entites.Evenement;
 import org.amhe.models.entites.Match;
 import org.amhe.models.trier.CriteresRechercheMatchs;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,14 +48,29 @@ public class MatchRepo {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Match> query = cb.createQuery(Match.class);
         Root<Match> root = query.from(Match.class);
-        Predicate predicate = cb.equal(root.get("evenement").get("id"), criteres.getIdEvenement());
+        HashMap<String, Predicate> predicates = new HashMap<>();
+        Predicate ePredicate = cb.equal(root.get("evenement").get("id"), criteres.getIdEvenement());
+        predicates.put("event", ePredicate);
+
+        if (Objects.nonNull(criteres.getIdPoule())) {
+            Predicate pPredicate = cb.equal(root.get("poule").get("id"), criteres.getIdPoule());
+            predicates.put("poule", pPredicate);
+        }
 
         if (Objects.nonNull(criteres.getIdInscrit())) {
-            Predicate aPredicate = cb.equal(root.get("inscritA").get("id"), criteres.getIdInscrit());
-            Predicate bPredicate = cb.equal(root.get("inscritB").get("id"), criteres.getIdInscrit());
-            Predicate inscritsPredicate = cb.or(aPredicate, bPredicate);
-            predicate = cb.and(predicate, inscritsPredicate);
+            Predicate iaPredicate = cb.equal(root.get("inscritA").get("id"), criteres.getIdInscrit());
+            Predicate ibPredicate = cb.equal(root.get("inscritB").get("id"), criteres.getIdInscrit());
+            Predicate iPredicate = cb.or(iaPredicate, ibPredicate);
+            predicates.put("inscrit", iPredicate);
         }
+        Predicate predicate = predicates.get("event");
+        if (predicates.containsKey("inscrit")) {
+            predicate = cb.and(predicate, predicates.get("inscrit"));
+        }
+        if (predicates.containsKey("poule")) {
+            predicate = cb.and(predicate, predicates.get("poule"));
+        }
+
         query.select(root).where(predicate);
         matchs = em.createQuery(query).getResultList();
         return matchs;

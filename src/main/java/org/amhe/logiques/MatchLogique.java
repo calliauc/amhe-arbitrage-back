@@ -50,16 +50,6 @@ public class MatchLogique {
 
     public List<Match> rechercheMatchsParCriteres(final CriteresRechercheMatchs criteres) {
         List<Match> matchs = repo.rechercheMatchsParCriteres(criteres);
-        if (false) {
-//        if (Objects.nonNull(criteres.getIdTags()) && !criteres.getIdTags().isEmpty()) {
-            Set<Long> tagsId = new HashSet<>(criteres.getIdTags());
-            matchs = matchs.stream()
-                    .filter(match -> {
-                        Set<Long> tagsMId = new HashSet<>(match.getTags());
-                        return tagsMId.containsAll(tagsId);
-                    })
-                    .toList();
-        }
         return matchs;
     }
 

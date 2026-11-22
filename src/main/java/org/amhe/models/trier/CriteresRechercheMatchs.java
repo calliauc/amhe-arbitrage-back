@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -13,5 +12,5 @@ import java.util.ArrayList;
 public class CriteresRechercheMatchs implements Serializable {
     private Long idEvenement;
     private Long idInscrit;
-    private ArrayList<Long> idTags;
+    private Long idPoule;
 }
