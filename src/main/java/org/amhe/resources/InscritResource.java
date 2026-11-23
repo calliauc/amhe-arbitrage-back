@@ -108,9 +108,9 @@ public class InscritResource {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editInscrit(final Inscrit inscrit) {
-        Inscrit inscritCree = inscritLogique.modifierInscrit(inscrit);
-        return Response.status(200).entity(inscritCree).build();
+    public Response editInscrit(final InscritDto inscritAModif) {
+        InscritDto inscrit = inscritMapper.baseVersDto(inscritLogique.modifierInscrit(inscritMapper.dtoVersBase(inscritAModif)));
+        return Response.status(200).entity(inscrit).build();
     }
 
     @DELETE

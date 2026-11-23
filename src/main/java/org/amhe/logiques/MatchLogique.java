@@ -123,7 +123,7 @@ public class MatchLogique {
     // SUPPRESSION
     public void supprimerMatch(final Long id) {
         Match match = getMatchById(id);
-        if (Objects.nonNull(match.getPoule().getMatchs())) {
+        if (Objects.nonNull(match.getPoule()) && Objects.nonNull(match.getPoule().getMatchs())) {
             match.getPoule().getMatchs().remove(match);
             pouleRepo.editPoule(match.getPoule());
         }
