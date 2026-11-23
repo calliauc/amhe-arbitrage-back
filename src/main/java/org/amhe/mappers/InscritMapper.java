@@ -50,6 +50,8 @@ public class InscritMapper {
         inscrit.setId(inscritDto.getId());
         inscrit.setEvenement(evenementRepo.getEvenementById(inscritDto.getIdEvenement()));
         inscrit.setIndividu(individuRepo.getIndividuById(inscritDto.getIdIndividu()));
+        inscrit.setEstDesinscrit(inscritDto.isEstDesinscrit());
+        inscrit.setEstListeAttente(inscritDto.isEstListeAttente());
         return inscrit;
     }
 
@@ -62,6 +64,8 @@ public class InscritMapper {
         inscritDto.setNom(inscrit.getIndividu().getNom());
         inscritDto.setPrenom(inscrit.getIndividu().getPrenom());
         inscritDto.setClub(inscrit.getIndividu().getClub().getNomCourt());
+        inscritDto.setEstDesinscrit(inscrit.isEstDesinscrit());
+        inscritDto.setEstListeAttente(inscrit.isEstListeAttente());
         return inscritDto;
     }
 

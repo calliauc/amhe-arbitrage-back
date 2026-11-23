@@ -13,5 +13,6 @@ public class CreationEvenementDto implements Serializable {
     private String description;
     private LocalDate dateDebut;
     private LocalDate dateFin;
+    private Long nbPlacesMax;
     private RulesetDto ruleset;
 }

@@ -22,6 +22,7 @@ public class Evenement implements Serializable {
     private LocalDate dateFin;
     @OneToMany(targetEntity = Inscrit.class, mappedBy = "evenement", fetch = FetchType.EAGER)
     private List<Inscrit> inscrits;
+    private Long nbPlacesMax;
     @ManyToOne
     @JoinColumn(name = "ruleset_id")
     private Ruleset ruleset;

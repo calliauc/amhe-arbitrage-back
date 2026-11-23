@@ -62,18 +62,18 @@ insert into INDIVIDU(id, nom, prenom, pseudo, club_id) values
 alter sequence INDIVIDU_SEQ restart with 6;
 
 -- EVENT
-INSERT INTO evenement(id, nom, description, dateDebut, dateFin, ruleset_id) VALUES
-(0, 'Default', 'Pour les orphelins', null, null, null),
-(1, 'Burdigala CUP 2', 'Description', '2026-11-28', '2026-11-29', 1);
+INSERT INTO evenement(id, nom, description, dateDebut, dateFin, nbPlacesMax, ruleset_id) VALUES
+(0, 'Default', 'Pour les orphelins', null, null, null, null),
+(1, 'Burdigala CUP 2', 'Description', '2026-11-28', '2026-11-29', 40, 1);
 alter sequence EVENEMENT_SEQ restart with 2;
 
 -- INSCRITS
-INSERT INTO inscrit(id, evenement_id, individu_id) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 1, 3),
-(4, 1, 4),
-(5, 1, 5);
+INSERT INTO inscrit(id, evenement_id, individu_id, desinscrit, liste_attente) VALUES
+(1, 1, 1, false, false),
+(2, 1, 2, false, false),
+(3, 1, 3, false, false),
+(4, 1, 4, false, false),
+(5, 1, 5, false, false);
 alter sequence INSCRIT_SEQ restart with 6;
 
 -- POULE

@@ -53,6 +53,7 @@ public class EvenementMapper {
         evenementDto.setDescription(evenement.getDescription());
         evenementDto.setDateDebut(evenement.getDateDebut());
         evenementDto.setDateFin(evenement.getDateFin());
+        evenementDto.setNbPlacesMax(evenement.getNbPlacesMax());
         evenementDto.setInscrits(inscritMapper.listeBaseVersDto(evenement.getInscrits()));
         evenementDto.setRuleset(rulesetMapper.baseVersApercuDto(evenement.getRuleset()));
         return evenementDto;
@@ -65,6 +66,7 @@ public class EvenementMapper {
         evenementDto.setDescription(evenement.getDescription());
         evenementDto.setDateDebut(evenement.getDateDebut());
         evenementDto.setDateFin(evenement.getDateFin());
+        evenementDto.setNbPlacesMax(evenement.getNbPlacesMax());
         return evenementDto;
     }
 
@@ -74,6 +76,7 @@ public class EvenementMapper {
         evenement.setDescription(evenementDto.getDescription());
         evenement.setDateDebut(evenementDto.getDateDebut());
         evenement.setDateFin(evenementDto.getDateFin());
+        evenement.setNbPlacesMax(evenementDto.getNbPlacesMax());
         evenement.setRuleset(rulesetRepo.getRulesetById(evenementDto.getRuleset().getId()));
         return evenement;
     }

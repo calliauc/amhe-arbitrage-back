@@ -18,5 +18,6 @@ public class EvenementDto implements Serializable {
     private LocalDate dateFin;
     @JsonIgnoreProperties(value = "evenement")
     private List<InscritDto> inscrits;
+    private Long nbPlacesMax;
     private RulesetApercuDto ruleset;
 }

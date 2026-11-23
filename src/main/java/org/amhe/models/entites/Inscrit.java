@@ -22,6 +22,10 @@ public class Inscrit implements Serializable {
     @ManyToOne
     @JoinColumn(name = "individu_id")
     private Individu individu;
+    @Column(name = "desinscrit")
+    private boolean estDesinscrit = false;
+    @Column(name = "liste_attente")
+    private boolean estListeAttente = false;
     // stats ?
 
 

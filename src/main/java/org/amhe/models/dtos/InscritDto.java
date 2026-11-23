@@ -15,4 +15,6 @@ public class InscritDto implements Serializable {
     private String prenom;
     private String club;
     private String evenement;
+    private boolean estDesinscrit = false;
+    private boolean estListeAttente = false;
 }
