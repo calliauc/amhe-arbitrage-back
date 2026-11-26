@@ -2,7 +2,12 @@ package org.amhe.logiques;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.amhe.models.entites.*;
+import org.amhe.mappers.InscritMapper;
+import org.amhe.models.dtos.InscritDto;
+import org.amhe.models.entites.Evenement;
+import org.amhe.models.entites.Inscrit;
+import org.amhe.models.entites.Match;
+import org.amhe.models.entites.Poule;
 import org.amhe.repos.EvenementRepo;
 import org.amhe.repos.IndividuRepo;
 import org.amhe.repos.InscritRepo;
@@ -25,6 +30,9 @@ public class EvenementLogique {
 
     @Inject
     PouleLogique pouleLogique;
+
+    @Inject
+    InscritMapper inscritMapper;
 
     public List<Evenement> getEvenements() {
         return evenementRepo.getEvenements();
@@ -73,14 +81,16 @@ public class EvenementLogique {
 
     }
 
-    public Evenement inscrireAEvenement(final Long id, final List<Long> individus) {
+    public Evenement inscrireAEvenement(final Long id, final InscritDto inscriptionDto) {
         Evenement event = evenementRepo.getEvenementById(id);
-        List<Inscrit> inscrits = individus.stream().map(indId -> {
-            Individu ind = individuRepo.getIndividuById(indId);
-            Inscrit nouvelInscrit = new Inscrit(event, ind);
-            return inscritRepo.createInscrit(nouvelInscrit);
-        }).toList();
-        event.getInscrits().addAll(inscrits);
+        Inscrit inscription = inscritMapper.dtoVersBase(inscriptionDto);
+        inscription = inscritRepo.createInscrit(inscription);
+        event.getInscrits().add(inscription);
+//        List<Inscrit> inscrits = individus.stream().map(indId -> {
+//            Individu ind = individuRepo.getIndividuById(indId);
+//            Inscrit nouvelInscrit = new Inscrit(event, ind);
+//            return inscritRepo.createInscrit(nouvelInscrit);
+//        }).toList();
 
         return evenementRepo.editEvenement(event);
     }

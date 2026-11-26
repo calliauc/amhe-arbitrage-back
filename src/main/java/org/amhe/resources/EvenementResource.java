@@ -8,6 +8,7 @@ import org.amhe.logiques.EvenementLogique;
 import org.amhe.mappers.EvenementMapper;
 import org.amhe.models.dtos.CreationEvenementDto;
 import org.amhe.models.dtos.EvenementDto;
+import org.amhe.models.dtos.InscritDto;
 import org.amhe.models.entites.Evenement;
 
 import java.util.List;
@@ -65,9 +66,9 @@ public class EvenementResource {
     @Path("/{id}/inscrire")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response inscrireAEvenement(@PathParam("id") final Long id, final List<Long> individus) {
-        EvenementDto evenementCree = evenementMapper.baseVersDto(evenementLogique.inscrireAEvenement(id, individus));
-        return Response.status(200).entity(evenementCree).build();
+    public Response inscrireAEvenement(@PathParam("id") final Long id, final InscritDto inscription) {
+        EvenementDto evenementModife = evenementMapper.baseVersDto(evenementLogique.inscrireAEvenement(id, inscription));
+        return Response.status(200).entity(evenementModife).build();
     }
 
     @DELETE
