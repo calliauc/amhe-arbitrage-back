@@ -44,6 +44,7 @@ public class PouleMapper {
     public Poule dtoVersBase(final PouleDto pouleDto) {
         Poule poule = new Poule();
         poule.setId(pouleDto.getId());
+        poule.setPrefixe(pouleDto.getPrefixe());
         poule.setNom(pouleDto.getNom());
         poule.setDescription(pouleDto.getDescription());
         poule.setEvenement(evenementLogique.getEvenementById(pouleDto.getEvenement().getId()));
@@ -63,6 +64,7 @@ public class PouleMapper {
         PouleDto pouleDto = new PouleDto();
         if (Objects.nonNull(poule)) {
             pouleDto.setId(poule.getId());
+            pouleDto.setPrefixe(poule.getPrefixe());
             pouleDto.setNom(poule.getNom());
             pouleDto.setDescription(poule.getDescription());
             pouleDto.setEvenement(evenementMapper.baseVersApercu(poule.getEvenement()));
@@ -78,6 +80,7 @@ public class PouleMapper {
         if (Objects.nonNull(poule)) {
             pouleDto.setId(poule.getId());
             pouleDto.setNom(poule.getNom());
+            pouleDto.setPrefixe(poule.getPrefixe());
             pouleDto.setDescription(poule.getDescription());
             pouleDto.setTags(itemMapper.recupererItems(poule.getTags()));
         }

@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 public class MatchDto implements Serializable {
     private Long id;
+    private String code;
     @JsonIgnoreProperties({"inscrits", "ruleset"})
     private EvenementDto evenement;
     private PouleDto poule;

@@ -61,6 +61,7 @@ public class MatchLogique {
     }
 
     public List<Match> genererMatchsPoule(final Long idPoule) {
+        Integer numCode = 1;
         Poule poule = pouleLogique.getPouleById(idPoule);
         List<Inscrit> inscrits = new ArrayList<>(poule.getInscrits());
         List<Match> matchs = new ArrayList<>();
@@ -69,10 +70,12 @@ public class MatchLogique {
             List<Inscrit> inscritsTour = new ArrayList<>(inscrits);
             while (inscritsTour.size() >= 2) {
                 Match match = base.copy();
+                match.setCode(poule.getPrefixe().concat("-").concat(numCode.toString()));
                 match.setInscritA(inscritsTour.removeFirst());
                 match.setInscritB(inscritsTour.removeLast());
                 match = creerMatch(match);
                 matchs.add(match);
+                numCode++;
             }
             inscrits = inscritLogique.rotationInscrits(inscrits);
         }

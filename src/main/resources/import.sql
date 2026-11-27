@@ -77,9 +77,9 @@ INSERT INTO inscrit(id, evenement_id, individu_id, desinscrit, liste_attente) VA
 alter sequence INSCRIT_SEQ restart with 6;
 
 -- POULE
-INSERT INTO poule(id, nom, description, evenement_id) VALUES
-(1, 'Poule A', 'Description', 1),
-(2, 'Poule B', 'Description', 1);
+INSERT INTO poule(id, nom, prefixe, description, evenement_id) VALUES
+(1, 'Poule A', 'A', 'Description', 1),
+(2, 'Poule B', 'B', 'Description', 1);
 
 alter sequence POULE_SEQ restart with 3;
 

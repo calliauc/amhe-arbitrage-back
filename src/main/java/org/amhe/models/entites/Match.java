@@ -17,6 +17,7 @@ public class Match implements Serializable {
     @SequenceGenerator(name = "match_seq", sequenceName = "MATCH_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "match_seq")
     private Long id;
+    private String code;
 
     @ManyToOne
     @JoinColumn(name = "evenement_id")
