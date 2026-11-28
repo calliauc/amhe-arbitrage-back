@@ -20,4 +20,12 @@ public class Item implements Serializable {
     private String libelle;
 
     private List<String> flags;
+
+    public boolean estType(String type) {
+        return code.equalsIgnoreCase(this.type);
+    }
+
+    public boolean estCode(String code) {
+        return code.equalsIgnoreCase(this.code);
+    }
 }

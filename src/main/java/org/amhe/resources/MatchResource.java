@@ -69,11 +69,10 @@ public class MatchResource {
     }
 
     @PUT
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editMatch(@PathParam("id") final Long id, final MatchDto match) {
-        MatchDto matchModifie = mapper.baseVersDto(logique.modifierMatch(id, mapper.dtoVersBase(match)));
+    public Response editMatch(final MatchDto match) {
+        MatchDto matchModifie = mapper.baseVersDto(logique.modifierMatch(mapper.dtoVersBase(match)));
         return Response.status(200).entity(matchModifie).build();
 
     }
@@ -84,6 +83,15 @@ public class MatchResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updatePartialMatch(@BeanParam MatchPartialUpdateDto data) {
         logique.updatePartialMatch(data);
+        return Response.status(200).build();
+    }
+
+    @PUT
+    @Path("/resultat")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response enregistrerFinMatch(final MatchDto match) {
+        logique.enregistrerFinMatch(match);
         return Response.status(200).build();
     }
 

@@ -9,6 +9,7 @@ import org.amhe.mappers.PouleMapper;
 import org.amhe.models.dtos.PouleDto;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Path("/poules")
@@ -50,6 +51,18 @@ public class PouleResource {
         }
         return Response.status(200).entity(poules).build();
     }
+
+    @GET
+    @Path("/{id}/scores")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getScoresPoule(@PathParam("id") final Long id) {
+        Map<String, Integer> scores = (pouleLogique.getScores(id));
+        if (Objects.isNull(scores) || scores.isEmpty()) {
+            return Response.status(204).build();
+        }
+        return Response.status(200).entity(scores).build();
+    }
+
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)

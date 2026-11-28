@@ -38,6 +38,11 @@ public class Match implements Serializable {
     @Column(name = "score_b")
     private int scoreB;
 
+    private Boolean matchNull;
+    @ManyToOne
+    @JoinColumn(name = "id_vainqueur")
+    private Inscrit vainqueur;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:s")
     private LocalDateTime dateCreation;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:s")

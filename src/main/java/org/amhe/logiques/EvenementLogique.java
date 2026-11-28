@@ -65,13 +65,14 @@ public class EvenementLogique {
         List<Match> matchs = matchLogique.getMatchsByEvent(id);
         matchs.forEach(match -> {
             match.setEvenement(event);
-            matchLogique.modifierMatch(match.getId(), match);
+            matchLogique.modifierMatch(match);
         });
         List<Inscrit> inscrits = inscritRepo.getInscritsByEvent(id);
         inscrits.forEach(inscrit -> {
             inscrit.setEvenement(event);
             inscritRepo.editInscrit(inscrit);
         });
+
         List<Poule> poules = pouleLogique.getPoulesByEvent(id);
         poules.forEach(poule -> {
             poule.setEvenement(event);

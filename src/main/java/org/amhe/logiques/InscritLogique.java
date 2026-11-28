@@ -8,8 +8,6 @@ import org.amhe.models.entites.Inscrit;
 import org.amhe.models.trier.DetailsCoupsListeElem;
 import org.amhe.models.trier.InscritDetails;
 import org.amhe.models.trier.InscritDetailsCoups;
-import org.amhe.models.trier.TagsFiltres;
-import org.amhe.repos.EchangeRepo;
 import org.amhe.repos.InscritRepo;
 
 import java.util.*;
@@ -21,11 +19,10 @@ public class InscritLogique {
     InscritRepo inscritRepo;
 
     @Inject
-    MatchLogique matchLogique;
+    StatsLogique statsLogique;
 
     @Inject
-    EchangeRepo echangeRepo;
-
+    MatchLogique matchLogique;
 
     public List<Inscrit> getInscrits() {
         return inscritRepo.getInscrits();
@@ -47,10 +44,10 @@ public class InscritLogique {
         return inscritRepo.chercherInscritsParNom(nom);
     }
 
-    public InscritDetails getDetailsInscrit(final Long id, final TagsFiltres tagsFiltres) {
-        InscritDetails details = getDatasDetailsInscrit(id, tagsFiltres);
-        details = calculerScoresInscrit(details);
-        details = calculerCoupsInscrit(details);
+    public InscritDetails getDetailsInscrit(final Long id) {
+        InscritDetails details = getDatasDetailsInscrit(id);
+//        details = calculerScoresInscrit(details);
+//        details = calculerCoupsInscrit(details);
         return details;
     }
 
@@ -82,37 +79,35 @@ public class InscritLogique {
 
     // INTERNES
 
-    protected InscritDetails getDatasDetailsInscrit(final Long id, final TagsFiltres tagsFiltres) {
-        InscritDetails details = new InscritDetails();
-        details.setInscrit(inscritRepo.getInscritById(id));
-        details.setTags(tagsFiltres);
-//        details.setMatchs(matchLogique.getMatchsParInscritIdEtTagsFiltres(id, tagsFiltres));
+    protected InscritDetails getDatasDetailsInscrit(final Long id) {
+        Inscrit inscrit = inscritRepo.getInscritById(id);
+        InscritDetails details = statsLogique.genererStatsInscrit(inscrit);
         return details;
     }
 
-    protected InscritDetails calculerScoresInscrit(InscritDetails details) {
-        details.setPointsMarques(0);
-        details.setPointsPerdus(0);
-        details.getMatchs().forEach(match -> {
-            if (isA(details, match)) {
-                details.setPointsMarques(details.getPointsMarques() + match.getScoreA());
-                details.setPointsPerdus(details.getPointsPerdus() + match.getScoreB());
-            } else {
-                details.setPointsMarques(details.getPointsMarques() + match.getScoreB());
-                details.setPointsPerdus(details.getPointsPerdus() + match.getScoreA());
-            }
-        });
-        return details;
-    }
+//    protected InscritDetails calculerScoresInscrit(InscritDetails details) {
+//        details.setPointsMarques(0);
+//        details.setPointsPerdus(0);
+//        details.getMatchs().forEach(match -> {
+//            if (isA(details, match)) {
+//                details.setPointsMarques(details.getPointsMarques() + match.getScoreA());
+//                details.setPointsPerdus(details.getPointsPerdus() + match.getScoreB());
+//            } else {
+//                details.setPointsMarques(details.getPointsMarques() + match.getScoreB());
+//                details.setPointsPerdus(details.getPointsPerdus() + match.getScoreA());
+//            }
+//        });
+//        return details;
+//    }
 
-    protected InscritDetails calculerCoupsInscrit(InscritDetails details) {
-        List<Echange> echanges = new ArrayList<>();
-//        details.getMatchs().forEach(match -> echanges.addAll(echangeRepo.getEchangesByMatchId(match.getId())));
-        details.setCoupsMarques(calculerCoupsMarques(details, echanges));
-        details.setCoupsSubis(calculerCoupsSubis(details, echanges));
-        return details;
-    }
+//    protected InscritDetails calculerCoupsInscrit(InscritDetails details) {
+//        List<Echange> echanges = new ArrayList<>();
 
+    /// /        details.getMatchs().forEach(match -> echanges.addAll(echangeRepo.getEchangesByMatchId(match.getId())));
+//        details.setCoupsMarques(calculerCoupsMarques(details, echanges));
+//        details.setCoupsSubis(calculerCoupsSubis(details, echanges));
+//        return details;
+//    }
     protected InscritDetailsCoups calculerCoupsMarques(final InscritDetails details, final List<Echange> echanges) {
 //        List<Echange> coupsMarques = echanges.stream()
 //                .filter(echange -> Objects.equals(echange.getInscritA().getId(), details.getInscrit().getId()))

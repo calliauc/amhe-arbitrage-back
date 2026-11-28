@@ -42,6 +42,8 @@ public class PouleMapper {
     }
 
     public Poule dtoVersBase(final PouleDto pouleDto) {
+        if (Objects.isNull(pouleDto))
+            return null;
         Poule poule = new Poule();
         poule.setId(pouleDto.getId());
         poule.setPrefixe(pouleDto.getPrefixe());
@@ -55,6 +57,8 @@ public class PouleMapper {
     }
 
     public Poule dtoIdVersBase(final PouleDto pouleDto) {
+        if (Objects.isNull(pouleDto))
+            return null;
         Poule poule = new Poule();
         poule.setId(pouleDto.getId());
         return poule;

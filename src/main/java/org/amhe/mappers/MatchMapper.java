@@ -50,6 +50,8 @@ public class MatchMapper {
 
     public Match dtoVersBase(final MatchDto matchDto) {
         Match match = new Match();
+        if (Objects.isNull(matchDto))
+            return match;
         match.setId(matchDto.getId());
         match.setCode(match.getCode());
         match.setEvenement(evenementMapper.dtoVersBase(matchDto.getEvenement()));
@@ -58,6 +60,8 @@ public class MatchMapper {
         match.setInscritB(inscritMapper.dtoVersBase(matchDto.getInscritB()));
         match.setScoreA(matchDto.getScoreA());
         match.setScoreB(matchDto.getScoreB());
+        match.setMatchNull(matchDto.getMatchNull());
+        match.setVainqueur(inscritMapper.dtoVersBase(matchDto.getVainqueur()));
         match.setTimer(matchDto.getTimer());
         match.setDateCreation(matchDto.getDateCreation());
         match.setDateDebut(matchDto.getDateDebut());
@@ -70,6 +74,8 @@ public class MatchMapper {
 
     public MatchDto baseVersDto(final Match match) {
         MatchDto matchDto = new MatchDto();
+        if (Objects.isNull(match))
+            return matchDto;
         matchDto.setId(match.getId());
         matchDto.setCode(match.getCode());
         matchDto.setEvenement(evenementMapper.baseVersApercu(match.getEvenement()));
@@ -78,6 +84,8 @@ public class MatchMapper {
         matchDto.setInscritB(inscritMapper.baseVersDto(match.getInscritB()));
         matchDto.setScoreA(match.getScoreA());
         matchDto.setScoreB(match.getScoreB());
+        matchDto.setMatchNull(match.getMatchNull());
+        matchDto.setVainqueur(inscritMapper.baseVersDto(match.getVainqueur()));
         matchDto.setDateCreation(match.getDateCreation());
         matchDto.setDateDebut(match.getDateDebut());
         matchDto.setDateFin(match.getDateFin());
@@ -90,6 +98,8 @@ public class MatchMapper {
 
     public MatchDto baseVersApercu(final Match match) {
         MatchDto matchDto = new MatchDto();
+        if (Objects.isNull(match))
+            return matchDto;
         matchDto.setId(match.getId());
         matchDto.setCode(match.getCode());
         matchDto.setEvenement(evenementMapper.baseVersApercu(match.getEvenement()));
@@ -98,6 +108,8 @@ public class MatchMapper {
         matchDto.setInscritB(inscritMapper.baseVersDto(match.getInscritB()));
         matchDto.setScoreA(match.getScoreA());
         matchDto.setScoreB(match.getScoreB());
+        matchDto.setMatchNull(match.getMatchNull());
+        matchDto.setVainqueur(inscritMapper.baseVersDto(match.getVainqueur()));
         matchDto.setDateCreation(match.getDateCreation());
         matchDto.setDateDebut(match.getDateDebut());
         matchDto.setDateFin(match.getDateFin());
@@ -109,6 +121,8 @@ public class MatchMapper {
 
     public Match dtoCreationVersBase(final CreationMatchDto matchDto) {
         Match match = new Match();
+        if (Objects.isNull(matchDto))
+            return match;
         match.setInscritA(inscritMapper.dtoVersBaseId(matchDto.getInscritA()));
         match.setInscritB(inscritMapper.dtoVersBaseId(matchDto.getInscritB()));
         match.setEvenement(evenementMapper.dtoVersBase(matchDto.getEvenement()));

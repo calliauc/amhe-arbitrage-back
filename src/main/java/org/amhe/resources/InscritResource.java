@@ -8,8 +8,10 @@ import org.amhe.logiques.InscritLogique;
 import org.amhe.mappers.InscritMapper;
 import org.amhe.models.dtos.InscritDto;
 import org.amhe.models.entites.Inscrit;
+import org.amhe.models.trier.InscritDetails;
 
 import java.util.List;
+import java.util.Objects;
 
 @Path("/inscrits")
 public class InscritResource {
@@ -73,29 +75,17 @@ public class InscritResource {
         return Response.status(200).entity(inscrits).build();
     }
 
-//    @POST
-//    @Path("/tags")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response getInscritsByMatchTags(final List<Long> tags) {
-//        Set<Inscrit> inscrits = inscritLogique.getInscritsByMatchTags(tags);
-//        if (inscrits.isEmpty()) {
-//            return Response.status(204).tag("tag").build();
-//        }
-//        return Response.status(200).entity(inscrits).build();
-//    }
-
-//    @POST
-//    @Path("/details/{id}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response getInscritsByMatchTags(@PathParam("id") final Long id, final TagsFiltres tagsFiltres) {
-//        InscritDetails details = inscritLogique.getDetailsInscrit(id, tagsFiltres);
-//        if (Objects.isNull(details)) {
-//            return Response.status(204).build();
-//        }
-//        return Response.status(200).entity(details).build();
-//    }
+    @GET
+    @Path("/{id}/details")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getInscritsByMatchTags(@PathParam("id") final Long id) {
+        InscritDetails details = inscritLogique.getDetailsInscrit(id);
+        if (Objects.isNull(details)) {
+            return Response.status(204).build();
+        }
+        return Response.status(200).entity(details).build();
+    }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)

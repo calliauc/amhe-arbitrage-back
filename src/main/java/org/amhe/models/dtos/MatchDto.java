@@ -22,6 +22,9 @@ public class MatchDto implements Serializable {
     private int scoreA;
     private int scoreB;
 
+    private Boolean matchNull;
+    private InscritDto vainqueur;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:s")
     private LocalDateTime dateCreation;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:s")

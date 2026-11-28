@@ -2,15 +2,16 @@ package org.amhe.logiques;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.amhe.mappers.InscritMapper;
 import org.amhe.models.entites.Evenement;
+import org.amhe.models.entites.Inscrit;
+import org.amhe.models.entites.Match;
 import org.amhe.models.entites.Poule;
 import org.amhe.repos.EvenementRepo;
 import org.amhe.repos.InscritRepo;
 import org.amhe.repos.PouleRepo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @ApplicationScoped
 public class PouleLogique {
@@ -22,6 +23,9 @@ public class PouleLogique {
 
     @Inject
     InscritRepo inscritRepo;
+
+    @Inject
+    InscritMapper inscritMapper;
 
     public List<Poule> getPoules() {
         return repo.getPoules();
@@ -74,5 +78,28 @@ public class PouleLogique {
 
     public List<Poule> getPoulesByEvent(final Long eventId) {
         return repo.getPoulesByEvent(eventId);
+    }
+
+    public Map<String, Integer> getScores(final Long pouleId) {
+        List<Match> matchs = repo.getPouleById(pouleId).getMatchs();
+        Map<Inscrit, Integer> scoreCompute = new HashMap<>();
+        try {
+            matchs.stream().filter(match -> "fini".equalsIgnoreCase(match.getStatut())).forEach(match -> {
+                scoreCompute.merge(match.getInscritA(), match.getScoreA(), (v, vv) -> v + vv);
+                scoreCompute.merge(match.getInscritB(), match.getScoreB(), (v, vv) -> v + vv);
+            });
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        Map<String, Integer> scores = new HashMap<>();
+        if (!scoreCompute.isEmpty()) {
+            scoreCompute.forEach((key, value) -> scores.put(extractNom(key), value));
+        }
+        return scores;
+    }
+
+    private String extractNom(Inscrit i) {
+        return i.getIndividu().getPrenom() + " " + i.getIndividu().getNom();
     }
 }

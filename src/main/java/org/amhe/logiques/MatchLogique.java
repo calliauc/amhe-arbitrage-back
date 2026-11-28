@@ -3,18 +3,21 @@ package org.amhe.logiques;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
+import org.amhe.mappers.InscritMapper;
+import org.amhe.models.dtos.MatchDto;
 import org.amhe.models.dtos.MatchPartialUpdateDto;
 import org.amhe.models.entites.Echange;
 import org.amhe.models.entites.Inscrit;
 import org.amhe.models.entites.Match;
 import org.amhe.models.entites.Poule;
 import org.amhe.models.trier.CriteresRechercheMatchs;
-import org.amhe.models.trier.TagsFiltres;
 import org.amhe.repos.MatchRepo;
 import org.amhe.repos.PouleRepo;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @ApplicationScoped
@@ -28,11 +31,12 @@ public class MatchLogique {
     @Inject
     InscritLogique inscritLogique;
     @Inject
-    EvenementLogique evenementLogique;
-    @Inject
     PouleLogique pouleLogique;
     @Inject
     EchangeLogique echangeLogique;
+
+    @Inject
+    InscritMapper inscritMapper;
 
     // OBTENTION
     public List<Match> getMatchs() {
@@ -96,7 +100,7 @@ public class MatchLogique {
     }
 
     // MODIFICATION
-    public Match modifierMatch(final Long id, final Match matchExistant) {
+    public Match modifierMatch(final Match matchExistant) {
         return repo.editMatch(matchExistant);
     }
 
@@ -121,6 +125,17 @@ public class MatchLogique {
             match.setDateFin(LocalDateTime.parse(update.getDateFin()));
         }
         return repo.editMatch(match);
+    }
+
+    public void enregistrerFinMatch(final MatchDto matchDto) {
+        Match match = repo.getMatchById(matchDto.getId());
+        match.setMatchNull(matchDto.getMatchNull());
+        if (Objects.nonNull(matchDto.getVainqueur()))
+            match.setVainqueur(inscritLogique.getInscritById(matchDto.getVainqueur().getId()));
+        else {
+            match.setVainqueur(null);
+        }
+        repo.editMatch(match);
     }
 
     // SUPPRESSION
@@ -169,28 +184,11 @@ public class MatchLogique {
         return new String[]{a, b, resultA, resultB};
     }
 
-    public List<Match> getMatchsParInscritIdEtTagsFiltres(final Long id, final TagsFiltres tagsFiltres) {
-        List<Match> matchs = getMatchs();
-//        matchs = filtrerMatchsParTagsFiltres(tagsFiltres, matchs);
-//        matchs = filtrerMatchsParInscritId(id, matchs);
-        return matchs;
-    }
-
-    public List<Match> filtrerMatchsParTagsFiltres(final TagsFiltres tagsFiltres, final List<Match> matchs) {
-        // Filtrage des tags exclu
-        // Filtrage des tags obligatoires
-        // Filtrage au moins un des tags optionnels
-        return matchs.stream().filter(match -> tagsFiltres.getTagsExclus().isEmpty() || Collections.disjoint(match.getTags(), tagsFiltres.getTagsExclus()))
-                .filter(match -> tagsFiltres.getTagsRequis().isEmpty() || new HashSet<>(match.getTags()).containsAll(tagsFiltres.getTagsRequis()))
-                .filter(match -> tagsFiltres.getTagsOptions().isEmpty() || !Collections.disjoint(match.getTags(), tagsFiltres.getTagsOptions()))
-                .toList();
-    }
-
-    public List<Match> filtrerMatchsParInscritId(final Long id, final List<Match> matchs) {
-        return matchs.stream()
-                .filter(match ->
-                        Objects.equals(match.getInscritA().getId(), id) || Objects.equals(match.getInscritB().getId(), id))
-                .toList();
+    public List<Match> getMatchsParInscrit(final Inscrit inscrit) {
+        CriteresRechercheMatchs criteres = new CriteresRechercheMatchs();
+        criteres.setIdEvenement(inscrit.getEvenement().getId());
+        criteres.setIdInscrit(inscrit.getId());
+        return repo.rechercheMatchsParCriteres(criteres);
     }
 
 

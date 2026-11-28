@@ -46,6 +46,8 @@ public class InscritMapper {
     }
 
     public Inscrit dtoVersBase(final InscritDto inscritDto) {
+        if (Objects.isNull(inscritDto))
+            return null;
         Inscrit inscrit = new Inscrit();
         inscrit.setId(inscritDto.getId());
         inscrit.setEvenement(evenementRepo.getEvenementById(inscritDto.getIdEvenement()));
@@ -56,6 +58,8 @@ public class InscritMapper {
     }
 
     public InscritDto baseVersDto(final Inscrit inscrit) {
+        if (Objects.isNull(inscrit))
+            return null;
         InscritDto inscritDto = new InscritDto();
         inscritDto.setId(inscrit.getId());
         inscritDto.setIdEvenement(inscrit.getEvenement().getId());
