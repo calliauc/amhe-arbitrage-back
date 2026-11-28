@@ -56,7 +56,7 @@ public class PouleResource {
     @Path("/{id}/scores")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getScoresPoule(@PathParam("id") final Long id) {
-        Map<String, Integer> scores = (pouleLogique.getScores(id));
+        List<Map.Entry<String, Integer>> scores = (pouleLogique.getScores(id));
         if (Objects.isNull(scores) || scores.isEmpty()) {
             return Response.status(204).build();
         }

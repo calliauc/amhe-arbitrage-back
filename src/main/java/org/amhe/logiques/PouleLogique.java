@@ -80,7 +80,7 @@ public class PouleLogique {
         return repo.getPoulesByEvent(eventId);
     }
 
-    public Map<String, Integer> getScores(final Long pouleId) {
+    public List<Map.Entry<String, Integer>> getScores(final Long pouleId) {
         List<Match> matchs = repo.getPouleById(pouleId).getMatchs();
         Map<Inscrit, Integer> scoreCompute = new HashMap<>();
         try {
@@ -93,10 +93,13 @@ public class PouleLogique {
         }
 
         Map<String, Integer> scores = new HashMap<>();
+        List<Map.Entry<String, Integer>> test = new ArrayList<>();
         if (!scoreCompute.isEmpty()) {
             scoreCompute.forEach((key, value) -> scores.put(extractNom(key), value));
+            test.addAll(scores.entrySet());
+            test.sort(Comparator.comparingInt(Map.Entry::getValue));
         }
-        return scores;
+        return test;
     }
 
     private String extractNom(Inscrit i) {
