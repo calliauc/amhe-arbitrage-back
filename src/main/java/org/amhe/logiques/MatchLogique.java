@@ -135,6 +135,7 @@ public class MatchLogique {
         else {
             match.setVainqueur(null);
         }
+        match.setDateFin(LocalDateTime.now());
         repo.editMatch(match);
     }
 
